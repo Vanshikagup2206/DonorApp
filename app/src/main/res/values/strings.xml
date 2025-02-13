@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">DonorApp</string>
+    <string name="home">Home</string>
+    <string name="donate">Donate</string>
+    <string name="requests">Requests</string>
+    <string name="map">Map</string>
+    <string name="profile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

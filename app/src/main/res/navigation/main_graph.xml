@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph.xml"
+    app:startDestination="@id/donateFragment">
+
+    <fragment
+        android:id="@+id/donateFragment"
+        android:name="com.vanshika.donorapp.donate.DonateFragment"
+        android:label="fragment_donate"
+        tools:layout="@layout/fragment_donate" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.vanshika.donorapp.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.vanshika.donorapp.map.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.vanshika.donorapp.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/requestsFragment"
+        android:name="com.vanshika.donorapp.requests.RequestsFragment"
+        android:label="fragment_requests"
+        tools:layout="@layout/fragment_requests" />
+</navigation>
