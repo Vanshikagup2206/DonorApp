@@ -1,10 +1,10 @@
-package com.vanshika.donorapp.requests
+package com.vanshika.donorapp.recipient
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Recipients(
+data class `Recipients DataClass`(
     @PrimaryKey(autoGenerate = true)
     var recipientId : Int = 0,
     var recipientName : String ?= "",

@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class HealthRecords(
+data class `HealthRecords DataClass`(
     @PrimaryKey(autoGenerate = true)
     var healthRecordId : Int = 0,
     var donorId : Int ?= 0,

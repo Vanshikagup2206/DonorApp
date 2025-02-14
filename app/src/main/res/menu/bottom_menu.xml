@@ -7,6 +7,9 @@
     <item android:title="@string/donate"
         android:id="@+id/navDonate"
         android:icon="@drawable/baseline_clean_hands_24"/>
+    <item android:title="@string/recipient"
+        android:id="@+id/navRecipient"
+        android:icon="@drawable/baseline_person_2_24"/>
     <item android:title="@string/requests"
         android:id="@+id/navRequests"
         android:icon="@drawable/baseline_cell_tower_24"/>

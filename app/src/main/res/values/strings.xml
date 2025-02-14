@@ -24,4 +24,14 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="logout">Logout</string>
     <string name="donation_requests">Donation Requests</string>
+    <string name="recipient">Recipient</string>
+    <string name="find_a_donor">Find a Donor</string>
+    <string name="full_name">Full Name</string>
+    <string name="blood_group_e_g_o">Blood Group (e.g., O+)</string>
+    <string name="location">Location</string>
+    <string name="register_as_recipient">Register as Recipient</string>
+    <string name="search_donor_by_blood_type">Search Donor by Blood Type</string>
+    <string name="filter">Filter</string>
+    <string name="recipients_list">Recipients List</string>
+    <string name="emergency_request">Emergency Request</string>
 </resources>

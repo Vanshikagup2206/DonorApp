@@ -4,15 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.vanshika.donorapp.donate.Donors
-import com.vanshika.donorapp.home.SOSRequests
-import com.vanshika.donorapp.profile.Donations
-import com.vanshika.donorapp.profile.HealthRecords
-import com.vanshika.donorapp.requests.Hospitals
-import com.vanshika.donorapp.requests.Recipients
+import com.vanshika.donorapp.donate.`Donors DataClass`
+import com.vanshika.donorapp.home.`SOSRequests DataClass`
+import com.vanshika.donorapp.profile.`Donations DataClass`
+import com.vanshika.donorapp.profile.`HealthRecords DataClass`
+import com.vanshika.donorapp.requests.`Hospitals DataClass`
+import com.vanshika.donorapp.recipient.`Recipients DataClass`
 
 @Database(
-    entities = [Donors::class, Recipients::class, Hospitals::class, Donations::class, HealthRecords::class, SOSRequests::class],
+    entities = [`Donors DataClass`::class, `Recipients DataClass`::class, `Hospitals DataClass`::class, `Donations DataClass`::class, `HealthRecords DataClass`::class, `SOSRequests DataClass`::class],
     version = 1,
     exportSchema = true
 )

@@ -30,4 +30,9 @@
         android:name="com.vanshika.donorapp.requests.RequestsFragment"
         android:label="fragment_requests"
         tools:layout="@layout/fragment_requests" />
+    <fragment
+        android:id="@+id/recipientFragment"
+        android:name="com.vanshika.donorapp.recipient.RecipientFragment"
+        android:label="fragment_recipient"
+        tools:layout="@layout/fragment_recipient" />
 </navigation>

@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Hospitals(
+data class `Hospitals DataClass`(
     @PrimaryKey(autoGenerate = true)
     var hospitalId : Int = 0,
     var hospitalName : String ?= "",

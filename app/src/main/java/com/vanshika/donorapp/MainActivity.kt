@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.navHome -> navController?.navigate(R.id.homeFragment)
                 R.id.navDonate -> navController?.navigate(R.id.donateFragment)
+                R.id.navRecipient -> navController?.navigate(R.id.recipientFragment)
                 R.id.navRequests -> navController?.navigate(R.id.requestsFragment)
                 R.id.navMap -> navController?.navigate(R.id.mapFragment)
                 R.id.navProfile -> navController?.navigate(R.id.profileFragment)
