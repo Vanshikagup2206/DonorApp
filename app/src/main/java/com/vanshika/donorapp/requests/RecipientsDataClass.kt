@@ -1,4 +1,4 @@
-package com.vanshika.donorapp.recipient
+package com.vanshika.donorapp.requests
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

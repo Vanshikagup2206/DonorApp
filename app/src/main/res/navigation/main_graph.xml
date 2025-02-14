@@ -3,18 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph.xml"
-    app:startDestination="@id/donateFragment">
-
-    <fragment
-        android:id="@+id/donateFragment"
-        android:name="com.vanshika.donorapp.donate.DonateFragment"
-        android:label="fragment_donate"
-        tools:layout="@layout/fragment_donate" />
+    app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.vanshika.donorapp.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/donateFragment"
+        android:name="com.vanshika.donorapp.donate.DonateFragment"
+        android:label="fragment_donate"
+        tools:layout="@layout/fragment_donate" />
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.vanshika.donorapp.map.MapFragment"
@@ -30,9 +29,4 @@
         android:name="com.vanshika.donorapp.requests.RequestsFragment"
         android:label="fragment_requests"
         tools:layout="@layout/fragment_requests" />
-    <fragment
-        android:id="@+id/recipientFragment"
-        android:name="com.vanshika.donorapp.recipient.RecipientFragment"
-        android:label="fragment_recipient"
-        tools:layout="@layout/fragment_recipient" />
 </navigation>

@@ -9,7 +9,7 @@ import com.vanshika.donorapp.home.SOSRequestsDataClass
 import com.vanshika.donorapp.profile.DonationsDataClass
 import com.vanshika.donorapp.profile.HealthRecordsDataClass
 import com.vanshika.donorapp.requests.HospitalsDataClass
-import com.vanshika.donorapp.recipient.RecipientsDataClass
+import com.vanshika.donorapp.requests.RecipientsDataClass
 
 @Database(
     entities = [DonorsDataClass::class, RecipientsDataClass::class, HospitalsDataClass::class, DonationsDataClass::class, HealthRecordsDataClass::class, SOSRequestsDataClass::class],
