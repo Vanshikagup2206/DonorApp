@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class `Donors DataClass`(
+data class DonorsDataClass(
     @PrimaryKey(autoGenerate = true)
     var donorId : Int = 0,
     var donorName : String ?= "",

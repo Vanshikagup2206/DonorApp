@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class `SOSRequests DataClass`(
+data class SOSRequestsDataClass(
     @PrimaryKey(autoGenerate = true)
     var SosId : Int = 0,
 //    var location,
