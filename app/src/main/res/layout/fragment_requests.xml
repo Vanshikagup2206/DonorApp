@@ -1,14 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_bg"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_16"
     tools:context=".requests.RequestsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/donation_requests"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_22"
+        android:textStyle="bold" />
 
-</FrameLayout>
+    <!-- Filters -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnBlood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/neumorphic_button"
+            android:padding="@dimen/dp_8"
+            android:text="@string/blood"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btnOrgans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:background="@drawable/neumorphic_button"
+            android:padding="@dimen/dp_8"
+            android:text="@string/organs"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btnMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/neumorphic_button"
+            android:padding="@dimen/dp_8"
+            android:text="@string/money"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btnMedicine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:background="@drawable/neumorphic_button"
+            android:padding="@dimen/dp_8"
+            android:text="@string/medicine"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <!-- Requests List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRequests"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_10" />
+
+</LinearLayout>

@@ -7,4 +7,21 @@
     <string name="profile">Profile</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_user">Hello User!</string>
+    <string name="emergency_sos">EMERGENCY SOS</string>
+    <string name="active_requests">Active Requests</string>
+    <string name="make_a_donation">Make a donation</string>
+    <string name="blood">Blood</string>
+    <string name="organs">Organs</string>
+    <string name="money">Money</string>
+    <string name="medicine">Medicine</string>
+    <string name="active_donation_requests">Active donation requests</string>
+    <string name="donate_now">Donate Now</string>
+    <string name="name">Name</string>
+    <string name="blood_group">Blood Group</string>
+    <string name="donation_streak">Donation Streak</string>
+    <string name="donation_history">Donation History</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="logout">Logout</string>
+    <string name="donation_requests">Donation Requests</string>
 </resources>
