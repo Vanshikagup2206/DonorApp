@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vanshika.donorapp.R
+import org.w3c.dom.Text
 
 class EmergencyRequestAdapter(var emergencyRequestList:ArrayList<RecipientsDataClass>):
     RecyclerView.Adapter<EmergencyRequestAdapter.ViewHolder>() {
@@ -15,10 +16,10 @@ class EmergencyRequestAdapter(var emergencyRequestList:ArrayList<RecipientsDataC
         var tvRecipientName: TextView = view.findViewById(R.id.tvRecipientName)
         var tvRequirement: TextView = view.findViewById(R.id.tvRequirement)
         var tvHospitalLocation : TextView = view.findViewById(R.id.tvHospitalLocation)
-        var tvContactNumber : LinearLayout = view.findViewById(R.id.tvContactNumber)
-        var tvUrgency : LinearLayout = view.findViewById(R.id.tvUrgency)
-        var btnEdit : LinearLayout = view.findViewById(R.id.btnEdit)
-        var btnDelete  : LinearLayout = view.findViewById(R.id.btnDelete)
+        var tvContactNumber : TextView = view.findViewById(R.id.tvContactNumber)
+        var tvUrgency : TextView = view.findViewById(R.id.tvUrgency)
+        var btnEdit : TextView = view.findViewById(R.id.btnEdit)
+        var btnDelete  : TextView = view.findViewById(R.id.btnDelete)
 
     }
 

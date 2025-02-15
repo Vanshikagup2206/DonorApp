@@ -30,7 +30,6 @@ class RequestsFragment : Fragment() {
     var binding: FragmentRequestsBinding? = null
     var recipientsDataClass = RecipientsDataClass()
     lateinit var linearLayoutManager: LinearLayoutManager
-
     var emergencyRequestList = arrayListOf<RecipientsDataClass>()
 lateinit var emergencyRequestAdapter: EmergencyRequestAdapter
     lateinit var donationDatabase: DonationDatabase
@@ -55,7 +54,7 @@ lateinit var emergencyRequestAdapter: EmergencyRequestAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         donationDatabase = DonationDatabase.getInstance(requireContext())
-        emergencyRequestList() = EmergencyRequestAdapter(emergencyRequestList,this)
+        emergencyRequestAdapter = EmergencyRequestAdapter(emergencyRequestList)
         linearLayoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
