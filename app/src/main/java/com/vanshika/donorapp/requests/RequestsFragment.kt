@@ -23,25 +23,20 @@ private const val ARG_PARAM2 = "param2"
  * Use the [RequestsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class RequestsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class RequestsFragment : Fragment(),RequestInterface {
+
     var binding: FragmentRequestsBinding? = null
     var recipientsDataClass = RecipientsDataClass()
     lateinit var linearLayoutManager: LinearLayoutManager
 
     var emergencyRequestList = arrayListOf<RecipientsDataClass>()
-lateinit var emergencyRequestAdapter: EmergencyRequestAdapter
+    lateinit var emergencyRequestAdapter: EmergencyRequestAdapter
     lateinit var donationDatabase: DonationDatabase
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -55,12 +50,13 @@ lateinit var emergencyRequestAdapter: EmergencyRequestAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         donationDatabase = DonationDatabase.getInstance(requireContext())
-        emergencyRequestList() = EmergencyRequestAdapter(emergencyRequestList,this)
+        emergencyRequestAdapter=EmergencyRequestAdapter(emergencyRequestList,this)
         linearLayoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
+        binding?.rvRecipients?.adapter=emergencyRequestAdapter
+
         binding?.rvRecipients?.layoutManager = linearLayoutManager
-        binding?.rvRecipients?.adapter = emergencyRequestAdapter
         getEmergencyRequestList()
         binding?.btnEmergencyRequest?.setOnClickListener {
             findNavController().navigate(R.id.emergencyRequestFragment)

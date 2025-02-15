@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vanshika.donorapp.R
 
-class EmergencyRequestAdapter(var emergencyRequestList:ArrayList<RecipientsDataClass>):
+class EmergencyRequestAdapter(var emergencyRequestList:ArrayList<RecipientsDataClass>,var requestInterface: RequestInterface):
     RecyclerView.Adapter<EmergencyRequestAdapter.ViewHolder>() {
     class ViewHolder(var view:View): RecyclerView.ViewHolder(view){
         var tvRecipientName: TextView = view.findViewById(R.id.tvRecipientName)
