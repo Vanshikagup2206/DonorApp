@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentEmergencyRequestBinding
 import com.vanshika.donorapp.databinding.FragmentRequestsBinding
@@ -24,6 +27,8 @@ class EmergencyRequestFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var binding: FragmentEmergencyRequestBinding? = null
+    var recipientsDataClass = RecipientsDataClass()
+    lateinit var donationDatabase: DonationDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +48,25 @@ class EmergencyRequestFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        donationDatabase = DonationDatabase.getInstance(requireContext())
+
+        binding?.btnSubmitRequest?.setOnClickListener {
+            if (binding?.tvRecipientName?.text?.trim()?.isEmpty() == true) {
+                binding?.tvRecipientName?.error = resources.getString(R.string.enter_recipient_name)
+            } else if (binding?.tvContactHospital?.text?.trim()?.isEmpty() == true) {
+                binding?.tvContactHospital?.error =
+                    resources.getString(R.string.enter_hospital_contact)
+
+            } else {
+                donationDatabase.DonationDao().insertEmergencyRequest(
+                    RecipientsDataClass(
+//                            recipientId = ,
+                        recipientName = binding?.tvRecipientName?.text?.toString()
+                    )
+                )
+                findNavController().popBackStack()
+            }
+        }
     }
 
     companion object {

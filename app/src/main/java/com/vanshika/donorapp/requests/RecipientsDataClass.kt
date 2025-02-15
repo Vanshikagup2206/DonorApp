@@ -9,6 +9,7 @@ data class RecipientsDataClass(
     var recipientId : Int = 0,
     var recipientName : String ?= "",
     var requestedItem : String ?= "",
-    var urgencyLevel : Int ?= 0,
+    var location: String ?= "",
+    var urgencyLevel : String ?= "",
 //    var recipientLocation
 )

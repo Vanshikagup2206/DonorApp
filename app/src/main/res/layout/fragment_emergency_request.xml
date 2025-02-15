@@ -34,24 +34,35 @@
                 android:textSize="@dimen/sp_18"
                 android:textStyle="bold"
                 android:textColor="@color/black"/>
+            <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select Requirement"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="10dp"/>
 
-            <EditText
-                android:id="@+id/tvRecipientBloodGroup"
+                    <Spinner
+                        android:id="@+id/spinnerRequirement"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/neumorphic_edittext"
+                        android:padding="8dp"/>
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/blood_group"
-                android:textSize="@dimen/sp_16"
+                android:text="Select Location"
+                android:textSize="16sp"
                 android:textColor="@color/black"
-                android:layout_marginTop="@dimen/dp_6"/>
+                android:layout_marginTop="10dp"/>
 
-            <EditText
-                android:id="@+id/tvRecipientLocation"
-                android:layout_width="wrap_content"
+            <Spinner
+                android:id="@+id/spinnerLocation"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/Location"
-                android:textSize="@dimen/sp_16"
-                android:textColor="@color/black"
-                android:layout_marginTop="@dimen/dp_6"/>
+                android:background="@drawable/neumorphic_edittext"
+                android:padding="8dp"/>
+
 
             <EditText
                 android:id="@+id/tvContactHospital"
@@ -61,6 +72,54 @@
                 android:textSize="@dimen/sp_16"
                 android:textColor="@color/black"
                 android:paddingTop="@dimen/dp_10" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Urgency Level"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="12dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="6dp">
+
+                <Button
+                    android:id="@+id/btnLowUrgency"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Low"
+                    android:backgroundTint="@color/green"
+                    android:textColor="@color/white"
+                    android:padding="8dp"/>
+
+                <Button
+                    android:id="@+id/btnMediumUrgency"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Medium"
+                    android:backgroundTint="@color/yellow"
+                    android:textColor="@color/black"
+                    android:padding="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"/>
+
+                <Button
+                    android:id="@+id/btnHighUrgency"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="High"
+                    android:backgroundTint="@color/red"
+                    android:textColor="@color/white"
+                    android:padding="8dp"/>
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/btnSubmitRequest"
@@ -75,6 +134,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
 
 
 

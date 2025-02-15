@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <?xml version="1.0" encoding="utf-8"?>
     <androidx.cardview.widget.CardView  xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:cardCornerRadius="12dp"
-        android:cardElevation="6dp"
-        android:background="@color/white">
+    android:background="@color/white">
+<!--        android:cardCornerRadius="12dp"-->
+<!--        android:cardElevation="6dp"-->
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,8 +62,15 @@
                     android:textSize="16sp"
                     android:textColor="@color/black"
                     />
-            </LinearLayout>
 
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tvUrgency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                />
             <!-- Action Buttons -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -72,7 +79,7 @@
                 android:gravity="center"
                 android:layout_marginTop="8dp">
 
-                <!-- Call Button -->
+                <!-- Edit Button -->
                 <Button
                     android:id="@+id/btnEdit"
                     android:layout_width="wrap_content"
@@ -83,7 +90,7 @@
                     android:padding="8dp"
                     android:layout_weight="1" />
 
-                <!-- Message Button -->
+                <!-- Delete Button -->
                 <Button
                     android:id="@+id/btnDelete"
                     android:layout_width="wrap_content"

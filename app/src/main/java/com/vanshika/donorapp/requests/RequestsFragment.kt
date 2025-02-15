@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentRequestsBinding
 import java.text.SimpleDateFormat
@@ -25,13 +28,13 @@ class RequestsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var binding: FragmentRequestsBinding? = null
-//    var booksDataClass = BooksDataClass()
-//    var booksSpecificationDataClass = BooksSpecificationDataClass()
-//    lateinit var libraryDatabase: LibraryDatabase
-//    var dateFormat = SimpleDateFormat("dd/MMM/yyy")
-//    var calendar = Calendar.getInstance()
-//    var formatDate: String? = null
-//    var booksId = 0
+    var recipientsDataClass = RecipientsDataClass()
+    lateinit var linearLayoutManager: LinearLayoutManager
+
+    var emergencyRequestList = arrayListOf<RecipientsDataClass>()
+lateinit var emergencyRequestAdapter: EmergencyRequestAdapter
+    lateinit var donationDatabase: DonationDatabase
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +54,30 @@ class RequestsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        donationDatabase = DonationDatabase.getInstance(requireContext())
+        emergencyRequestList() = EmergencyRequestAdapter(emergencyRequestList,this)
+        linearLayoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+        binding?.rvRecipients?.layoutManager = linearLayoutManager
+        binding?.rvRecipients?.adapter = emergencyRequestAdapter
+        getEmergencyRequestList()
+        binding?.btnEmergencyRequest?.setOnClickListener {
+            findNavController().navigate(R.id.emergencyRequestFragment)
+        }
+
     }
+
+    private fun getEmergencyRequestList() {
+        emergencyRequestList.clear()
+        emergencyRequestList.addAll(donationDatabase.DonationDao().getEmergencyRequestList())
+        emergencyRequestAdapter.notifyDataSetChanged()
+    }
+
+
+
+
+
 
     companion object {
         /**

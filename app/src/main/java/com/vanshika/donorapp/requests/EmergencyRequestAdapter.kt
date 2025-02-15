@@ -3,12 +3,22 @@ package com.vanshika.donorapp.requests
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vanshika.donorapp.R
 
 class EmergencyRequestAdapter(var emergencyRequestList:ArrayList<RecipientsDataClass>):
     RecyclerView.Adapter<EmergencyRequestAdapter.ViewHolder>() {
     class ViewHolder(var view:View): RecyclerView.ViewHolder(view){
+        var tvRecipientName: TextView = view.findViewById(R.id.tvRecipientName)
+        var tvRequirement: TextView = view.findViewById(R.id.tvRequirement)
+        var tvHospitalLocation : TextView = view.findViewById(R.id.tvHospitalLocation)
+        var tvContactNumber : LinearLayout = view.findViewById(R.id.tvContactNumber)
+        var tvUrgency : LinearLayout = view.findViewById(R.id.tvUrgency)
+        var btnEdit : LinearLayout = view.findViewById(R.id.btnEdit)
+        var btnDelete  : LinearLayout = view.findViewById(R.id.btnDelete)
 
     }
 
@@ -23,5 +33,23 @@ class EmergencyRequestAdapter(var emergencyRequestList:ArrayList<RecipientsDataC
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val recipient = emergencyRequestList[position]
+        holder.tvRecipientName.setText(emergencyRequestList[position].recipientName)
+        holder.tvRequirement.setText(emergencyRequestList[position].requestedItem)
+        holder.tvHospitalLocation.setText(emergencyRequestList[position].location)
+
+
+
+        // Handle Edit button click
+        holder.btnEdit.setOnClickListener {
+            // Add edit functionality here
+        }
+
+        // Handle Delete button click
+        holder.btnDelete.setOnClickListener {
+            emergencyRequestList.removeAt(position)
+            notifyItemRemoved(position)
+        }
+
     }
 }

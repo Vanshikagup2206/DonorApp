@@ -29,4 +29,9 @@
         android:name="com.vanshika.donorapp.requests.RequestsFragment"
         android:label="fragment_requests"
         tools:layout="@layout/fragment_requests" />
+    <fragment
+        android:id="@+id/emergencyRequestFragment"
+        android:name="com.vanshika.donorapp.requests.EmergencyRequestFragment"
+        android:label="fragment_emergency_request"
+        tools:layout="@layout/fragment_emergency_request" />
 </navigation>

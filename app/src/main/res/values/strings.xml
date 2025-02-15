@@ -56,4 +56,6 @@
     <string name="Contact_Number">Contact number</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="enter_recipient_name">Enter Recipient Name</string>
+    <string name="enter_hospital_contact">Enter Hospital Contact</string>
 </resources>
