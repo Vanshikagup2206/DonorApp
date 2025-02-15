@@ -36,4 +36,8 @@
     <string name="emergency_request">Emergency Request</string>
     <string name="SignIn">SignIn</string>
     <string name="Register">Register</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
 </resources>

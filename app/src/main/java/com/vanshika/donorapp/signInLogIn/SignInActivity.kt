@@ -1,4 +1,4 @@
-package com.vanshika.donorapp.SignIn_LogIn
+package com.vanshika.donorapp.signInLogIn
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.vanshika.donorapp.R
-import com.vanshika.donorapp.databinding.ActivityMainBinding
 import com.vanshika.donorapp.databinding.ActivitySignInBinding
 
 class SignInActivity : AppCompatActivity() {

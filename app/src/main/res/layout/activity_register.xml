@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignIn_LogIn.RegisterActivity">
+    tools:context=".signInLogIn.RegisterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,22 +24,20 @@
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Email"
+            android:hint="@string/enter_email"
             android:inputType="textEmailAddress" />
-
-
 
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Password"
+            android:hint="@string/enter_password"
             android:inputType="textPassword" />
         <Button
             android:id="@+id/btnSignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign Up" />
+            android:text="@string/sign_up" />
     </LinearLayout>
 
 

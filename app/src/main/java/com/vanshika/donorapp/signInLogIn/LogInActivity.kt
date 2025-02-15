@@ -1,4 +1,4 @@
-package com.vanshika.donorapp.SignIn_LogIn
+package com.vanshika.donorapp.signInLogIn
 
 import android.content.Intent
 import android.os.Bundle
