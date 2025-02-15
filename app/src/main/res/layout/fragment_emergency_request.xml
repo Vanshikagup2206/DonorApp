@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dp_16"
+    android:orientation="vertical"
+    android:background="@color/light_bg"
+    tools:context=".requests.EmergencyRequestFragment">
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/emergency_request_details"
+            android:textSize="@dimen/sp_22"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_10"/>
+
+        <!-- Card for Recipient Details -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/neumorphic_card"
+            android:padding="@dimen/dp_16"
+            android:orientation="vertical"
+            android:elevation="4dp">
+
+            <EditText
+                android:id="@+id/tvRecipientName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/name"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <EditText
+                android:id="@+id/tvRecipientBloodGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/blood_group"
+                android:textSize="@dimen/sp_16"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/dp_6"/>
+
+            <EditText
+                android:id="@+id/tvRecipientLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/Location"
+                android:textSize="@dimen/sp_16"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/dp_6"/>
+
+            <EditText
+                android:id="@+id/tvContactHospital"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/contact_hospital"
+                android:textSize="@dimen/sp_16"
+                android:textColor="@color/black"
+                android:paddingTop="@dimen/dp_10" />
+
+            <Button
+                android:id="@+id/btnSubmitRequest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/submit"
+                android:background="@drawable/neumorphic_button"
+                android:textColor="@color/white"
+                android:padding="@dimen/dp_12"
+                android:layout_marginTop="@dimen/dp_10"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+

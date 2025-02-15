@@ -47,4 +47,13 @@
     <string name="already_have_account">Already have an account?</string>
     <string name="from">From</string>
     <string name="to">To</string>
+    <string name="emergency_request_details">Emergency Request Details</string>
+    <string name="Location">Location:Hospital address</string>
+    <string name="contact_hospital">Hospital contact</string>
+    <string name="submit">Submit</string>
+    <string name="Requirement">Requirement</string>
+    <string name="Hospital_loaction">Hospital Location</string>
+    <string name="Contact_Number">Contact number</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>
