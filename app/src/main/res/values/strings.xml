@@ -34,4 +34,6 @@
     <string name="filter">Filter</string>
     <string name="recipients_list">Recipients List</string>
     <string name="emergency_request">Emergency Request</string>
+    <string name="SignIn">SignIn</string>
+    <string name="Register">Register</string>
 </resources>

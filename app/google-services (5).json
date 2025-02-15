@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "759216773360",
+    "project_id": "donorapp-3ba19",
+    "storage_bucket": "donorapp-3ba19.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:759216773360:android:287104b018731e5c000a35",
+        "android_client_info": {
+          "package_name": "com.vanshika.donorapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7Evr-yfdG02qD41NcOejndvqeI-JXsnY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
