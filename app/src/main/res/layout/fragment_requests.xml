@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/neumorphic_button"
-            android:padding="@dimen/dp_8"
+            android:padding="@dimen/dp_2"
             android:text="@string/blood"
             android:textColor="@color/black" />
 
@@ -41,9 +41,9 @@
             android:id="@+id/btnOrgans"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_4"
             android:background="@drawable/neumorphic_button"
-            android:padding="@dimen/dp_8"
+            android:padding="@dimen/dp_2"
             android:text="@string/organs"
             android:textColor="@color/black" />
 
@@ -51,9 +51,9 @@
             android:id="@+id/btnMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/dp_4"
             android:background="@drawable/neumorphic_button"
-            android:padding="@dimen/dp_8"
+            android:padding="@dimen/dp_2"
             android:text="@string/money"
             android:textColor="@color/black" />
 
@@ -61,74 +61,74 @@
             android:id="@+id/btnMedicine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_4"
             android:background="@drawable/neumorphic_button"
-            android:padding="@dimen/dp_8"
+            android:padding="@dimen/dp_2"
             android:text="@string/medicine"
             android:textColor="@color/black" />
     </LinearLayout>
 
     <!-- Requests List -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvRequests"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10" />
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/rvRequests"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/dp_10" />-->
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/find_a_donor"
-        android:textSize="@dimen/sp_22"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_gravity="center"/>
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/find_a_donor"-->
+<!--        android:textSize="@dimen/sp_22"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:layout_gravity="center"/>-->
 
-    <!-- Recipient Registration Form -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/neumorphic_card"
-        android:orientation="vertical"
-        android:padding="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_10">
+<!--    &lt;!&ndash; Recipient Registration Form &ndash;&gt;-->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/neumorphic_card"-->
+<!--        android:orientation="vertical"-->
+<!--        android:padding="@dimen/dp_16"-->
+<!--        android:layout_marginTop="@dimen/dp_10">-->
 
-        <EditText
-            android:id="@+id/et_recipient_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/full_name"
-            android:background="@drawable/neumorphic_edittext"
-            android:padding="@dimen/dp_10"/>
+<!--        <EditText-->
+<!--            android:id="@+id/et_recipient_name"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="@string/full_name"-->
+<!--            android:background="@drawable/neumorphic_edittext"-->
+<!--            android:padding="@dimen/dp_10"/>-->
 
-        <EditText
-            android:id="@+id/etRecipientBloodGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/blood_group_e_g_o"
-            android:background="@drawable/neumorphic_edittext"
-            android:padding="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_8"/>
+<!--        <EditText-->
+<!--            android:id="@+id/etRecipientBloodGroup"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="@string/blood_group_e_g_o"-->
+<!--            android:background="@drawable/neumorphic_edittext"-->
+<!--            android:padding="@dimen/dp_10"-->
+<!--            android:layout_marginTop="@dimen/dp_8"/>-->
 
-        <EditText
-            android:id="@+id/etRecipientLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/location"
-            android:background="@drawable/neumorphic_edittext"
-            android:padding="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_8"/>
+<!--        <EditText-->
+<!--            android:id="@+id/etRecipientLocation"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="@string/location"-->
+<!--            android:background="@drawable/neumorphic_edittext"-->
+<!--            android:padding="@dimen/dp_10"-->
+<!--            android:layout_marginTop="@dimen/dp_8"/>-->
 
-        <Button
-            android:id="@+id/btnRegisterRecipient"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/register_as_recipient"
-            android:background="@drawable/neumorphic_button"
-            android:textColor="@color/black"
-            android:padding="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_10"/>
-    </LinearLayout>
+<!--        <Button-->
+<!--            android:id="@+id/btnRegisterRecipient"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/register_as_recipient"-->
+<!--            android:background="@drawable/neumorphic_button"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:padding="@dimen/dp_10"-->
+<!--            android:layout_marginTop="@dimen/dp_10"/>-->
+<!--    </LinearLayout>-->
 
     <!-- Search & Filters -->
     <LinearLayout

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dp_16"
+    android:orientation="vertical"
+    android:background="@color/light_bg"
+    tools:context=".requests.EmergencyRequestFragment">
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/emergency_request_details"
+            android:textSize="@dimen/sp_22"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_10"/>
+
+        <!-- Card for Recipient Details -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/neumorphic_card"
+            android:padding="@dimen/dp_16"
+            android:orientation="vertical"
+            android:elevation="4dp">
+
+            <EditText
+                android:id="@+id/tvRecipientName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Requirement"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerRequirement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/neumorphic_edittext"
+                android:padding="8dp"/>
+
+            <!-- Dynamic Spinner for Blood Groups or Organ Types -->
+            <TextView
+                android:id="@+id/tvDynamicSelection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select an Option"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"/>  <!-- Initially hidden -->
+
+            <Spinner
+                android:id="@+id/spinnerDynamic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/neumorphic_edittext"
+                android:padding="8dp"
+                android:visibility="gone"/>  <!-- Initially hidden -->
+
+            <!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Select Requirement"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:layout_marginTop="10dp"/>-->
+
+<!--            <Spinner-->
+<!--                android:id="@+id/spinnerRequirement"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@drawable/neumorphic_edittext"-->
+<!--                android:padding="8dp"/>-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Location"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/Location"
+                android:background="@drawable/neumorphic_edittext"
+                android:padding="8dp"/>
+
+
+            <EditText
+                android:id="@+id/tvContactHospital"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/contact_hospital"
+                android:textSize="@dimen/sp_16"
+                android:textColor="@color/black"
+                android:paddingTop="@dimen/dp_10" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Urgency Level"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="12dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="6dp">
+
+                <Button
+                    android:id="@+id/btnLowUrgency"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Low"
+                    android:backgroundTint="@color/green"
+                    android:textColor="@color/white"
+                    android:padding="8dp"/>
+
+                <Button
+                    android:id="@+id/btnMediumUrgency"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Medium"
+                    android:backgroundTint="@color/yellow"
+                    android:textColor="@color/black"
+                    android:padding="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"/>
+
+                <Button
+                    android:id="@+id/btnHighUrgency"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="High"
+                    android:backgroundTint="@color/red"
+                    android:textColor="@color/white"
+                    android:padding="8dp"/>
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/btnSubmitRequest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/submit"
+                android:background="@drawable/neumorphic_button"
+                android:textColor="@color/white"
+                android:padding="@dimen/dp_12"
+                android:layout_marginTop="@dimen/dp_10"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+

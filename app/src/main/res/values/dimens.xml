@@ -22,4 +22,8 @@
         <item>Medicine Donation</item>
     </string-array>
 
+
+    <dimen name="dp_24">24dp</dimen>
+    <dimen name="dp_2">2dp</dimen>
+
 </resources>

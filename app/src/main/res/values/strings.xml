@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">DonorApp</string>
+    <string name="google_map_api_key">AIzaSyDAmv2cnlP-wQz8MRmKAgW-5U-U0NwfCns</string>
     <string name="home">Home</string>
     <string name="donate">Donate</string>
     <string name="requests">Requests</string>
@@ -42,4 +43,31 @@
     <string name="entervalidnumber">Enter valid number</string>
     <string name="bloodtype">Bloodtype?</string>
     <string name="donateionquote">We make a living by what we get, but we make a life by what we give.\n</string>
+
+    <string name="SignIn">SignIn</string>
+    <string name="Register">Register</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="forgot_password">Forget Password</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="emergency_request_details">Emergency Request Details</string>
+    <string name="Location">Location:Hospital address</string>
+    <string name="contact_hospital">Hospital contact</string>
+    <string name="submit">Submit</string>
+    <string name="Requirement">Requirement</string>
+    <string name="Hospital_loaction">Hospital Location</string>
+    <string name="Contact_Number">Contact number</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="enter_recipient_name">Enter Recipient Name</string>
+    <string name="enter_hospital_contact">Enter Hospital Contact</string>
+    <string name="search">Search</string>
 </resources>
+
+

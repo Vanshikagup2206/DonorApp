@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.vanshika.donorapp.donate.DonorsDataClass
+import com.vanshika.donorapp.requests.RecipientsDataClass
 
 @Dao
 interface DonationDao {
@@ -13,4 +14,8 @@ interface DonationDao {
     // Get donor by ID
     @Query("SELECT * FROM DonorsDataClass WHERE donorId = :id")
     fun getDonorById(id: Int): DonorsDataClass
+    fun insertEmergencyRequest(recipientsDataClass: RecipientsDataClass)
+
+    @Query("SELECT * FROM RecipientsDataClass")
+    fun getEmergencyRequestList(): List<RecipientsDataClass>
 }
