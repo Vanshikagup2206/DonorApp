@@ -1,17 +1,15 @@
 package com.vanshika.donorapp.requests
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentRequestsBinding
-import java.text.SimpleDateFormat
-import java.util.Calendar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,8 +38,7 @@ class RequestsFragment : Fragment(),RequestInterface {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRequestsBinding.inflate(inflater)
         return binding?.root
@@ -61,7 +58,6 @@ class RequestsFragment : Fragment(),RequestInterface {
         binding?.btnEmergencyRequest?.setOnClickListener {
             findNavController().navigate(R.id.emergencyRequestFragment)
         }
-
     }
 
     private fun getEmergencyRequestList() {
@@ -69,11 +65,6 @@ class RequestsFragment : Fragment(),RequestInterface {
         emergencyRequestList.addAll(donationDatabase.DonationDao().getEmergencyRequestList())
         emergencyRequestAdapter.notifyDataSetChanged()
     }
-
-
-
-
-
 
     companion object {
         /**
@@ -86,13 +77,12 @@ class RequestsFragment : Fragment(),RequestInterface {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RequestsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        fun newInstance(param1: String, param2: String) = RequestsFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_PARAM1, param1)
+                putString(ARG_PARAM2, param2)
             }
+        }
     }
 
     override fun editRequest(position: Int) {
