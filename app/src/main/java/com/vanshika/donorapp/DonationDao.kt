@@ -14,6 +14,8 @@ interface DonationDao {
     // Get donor by ID
     @Query("SELECT * FROM DonorsDataClass WHERE donorId = :id")
     fun getDonorById(id: Int): DonorsDataClass
+
+    @Insert
     fun insertEmergencyRequest(recipientsDataClass: RecipientsDataClass)
 
     @Query("SELECT * FROM RecipientsDataClass")

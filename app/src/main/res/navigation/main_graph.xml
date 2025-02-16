@@ -49,6 +49,11 @@
         android:name="com.vanshika.donorapp.donate.Organ_donation"
         android:label="fragment_organ_donation"
         tools:layout="@layout/fragment_organ_donation" />
+    <fragment
+        android:id="@+id/emergencyRequestFragment"
+        android:name="com.vanshika.donorapp.requests.EmergencyRequestFragment"
+        android:label="fragment_emergency_request"
+        tools:layout="@layout/fragment_emergency_request" />
 
 
 </navigation>
