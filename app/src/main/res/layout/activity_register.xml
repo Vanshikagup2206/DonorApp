@@ -9,39 +9,6 @@
     android:background="@drawable/gradient_background"
     tools:context=".signInLogIn.RegisterActivity">
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="vertical"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        android:layout_marginVertical="40dp">-->
-<!--        <EditText-->
-<!--            android:id="@+id/etName"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="Enter Name" />-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/etEmail"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="@string/enter_email"-->
-<!--            android:inputType="textEmailAddress" />-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/etPassword"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="@string/enter_password"-->
-<!--            android:inputType="textPassword" />-->
-<!--        <Button-->
-<!--            android:id="@+id/btnSignup"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/sign_up" />-->
-<!--    </LinearLayout>-->
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
