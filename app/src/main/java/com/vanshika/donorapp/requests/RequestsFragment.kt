@@ -94,4 +94,11 @@ class RequestsFragment : Fragment(),RequestInterface {
                 }
             }
     }
+
+    override fun editRequest(position: Int) {
+
+    }
+
+    override fun deleteRequest(position: Int) {
+    }
 }

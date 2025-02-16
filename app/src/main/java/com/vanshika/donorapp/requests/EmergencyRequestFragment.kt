@@ -30,8 +30,11 @@ class EmergencyRequestFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var binding: FragmentEmergencyRequestBinding? = null
+    var requiredArray = arrayOf("Blood", "Organ")
+    var locationArray = arrayOf("City Hospital,Delhi","Capital Hospital,Jalandhar")
     var recipientsDataClass = RecipientsDataClass()
     lateinit var donationDatabase: DonationDatabase
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,23 +57,33 @@ class EmergencyRequestFragment : Fragment() {
         donationDatabase = DonationDatabase.getInstance(requireContext())
         // Load requirement options (Blood, Organ)
         val requirementOptions = resources.getStringArray(R.array.requirement_options)
-        val requirementAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, requirementOptions)
+        val requirementAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            requirementOptions
+        )
         binding?.spinnerRequirement?.adapter = requirementAdapter
 
         // Set a listener to dynamically update the second Spinner
-        binding?.spinnerRequirement?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedRequirement = requirementOptions[position]
+        binding?.spinnerRequirement?.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedRequirement = requirementOptions[position]
 
-                when (selectedRequirement) {
-                    "Blood" -> updateDynamicSpinner(R.array.blood_groups, "Select Blood Group")
-                    "Organ" -> updateDynamicSpinner(R.array.organ_types, "Select Organ Type")
+                    when (selectedRequirement) {
+                        "Blood" -> updateDynamicSpinner(R.array.blood_groups, "Select Blood Group")
+                        "Organ" -> updateDynamicSpinner(R.array.organ_types, "Select Organ Type")
+                    }
                 }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
-    
         binding?.btnSubmitRequest?.setOnClickListener {
             if (binding?.tvRecipientName?.text?.isEmpty() == true) {
                 binding?.tvRecipientName?.error = resources.getString(R.string.enter_recipient_name)
@@ -83,7 +96,10 @@ class EmergencyRequestFragment : Fragment() {
                     RecipientsDataClass(
 //                            recipientId = ,
 
-                        recipientName = binding?.tvRecipientName?.text?.toString()
+                        recipientName = binding?.tvRecipientName?.text?.toString(),
+                        requestedItem = binding?.spinnerRequirement?.toString(),
+                        location = binding?.spinnerLocation?.toString(),
+                        contact = binding?.tvContactHospital?.text?.toString(),
                     )
                 )
                 findNavController().popBackStack()
@@ -93,18 +109,19 @@ class EmergencyRequestFragment : Fragment() {
     }
 
     private fun updateDynamicSpinner(bloodGroups: Int, s: String) {
-            val options = resources.getStringArray(bloodGroups)
-            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, options)
+        val options = resources.getStringArray(bloodGroups)
+        val adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, options)
 
-            binding?.tvDynamicSelection?.text = s
-            binding?.tvDynamicSelection?.visibility = View.VISIBLE
-            binding?.spinnerDynamic?.adapter = adapter
-            binding?.spinnerDynamic?.visibility = View.VISIBLE
-        }
+        binding?.tvDynamicSelection?.text = s
+        binding?.tvDynamicSelection?.visibility = View.VISIBLE
+        binding?.spinnerDynamic?.adapter = adapter
+        binding?.spinnerDynamic?.visibility = View.VISIBLE
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
     }
-
 
 
     companion object {

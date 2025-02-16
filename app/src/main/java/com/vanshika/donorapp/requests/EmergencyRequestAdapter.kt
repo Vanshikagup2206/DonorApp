@@ -10,22 +10,27 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vanshika.donorapp.R
 import org.w3c.dom.Text
 
-class EmergencyRequestAdapter(var emergencyRequestList:ArrayList<RecipientsDataClass>,var requestInterface: RequestInterface):
+class EmergencyRequestAdapter(
+    var emergencyRequestList: ArrayList<RecipientsDataClass>,
+    var requestInterface: RequestInterface
+) :
     RecyclerView.Adapter<EmergencyRequestAdapter.ViewHolder>() {
-    class ViewHolder(var view:View): RecyclerView.ViewHolder(view){
+    class ViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
         var tvRecipientName: TextView = view.findViewById(R.id.tvRecipientName)
         var tvRequirement: TextView = view.findViewById(R.id.tvRequirement)
-        var tvHospitalLocation : TextView = view.findViewById(R.id.tvHospitalLocation)
-        var tvContactNumber : TextView = view.findViewById(R.id.tvContactNumber)
-        var tvUrgency : TextView = view.findViewById(R.id.tvUrgency)
-        var btnEdit : TextView = view.findViewById(R.id.btnEdit)
-        var btnDelete  : TextView = view.findViewById(R.id.btnDelete)
+        var tvHospitalLocation: TextView = view.findViewById(R.id.tvHospitalLocation)
+        var tvContactNumber: TextView = view.findViewById(R.id.tvContactNumber)
+        var tvUrgency: TextView = view.findViewById(R.id.tvUrgency)
+        var btnEdit: TextView = view.findViewById(R.id.btnEdit)
+        var btnDelete: TextView = view.findViewById(R.id.btnDelete)
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var view = LayoutInflater.from(parent
-            .context).inflate(R.layout.item_emergency_request,parent,false)
+        var view = LayoutInflater.from(
+            parent
+                .context
+        ).inflate(R.layout.item_emergency_request, parent, false)
         return ViewHolder(view)
     }
 
@@ -38,19 +43,18 @@ class EmergencyRequestAdapter(var emergencyRequestList:ArrayList<RecipientsDataC
         holder.tvRecipientName.setText(emergencyRequestList[position].recipientName)
         holder.tvRequirement.setText(emergencyRequestList[position].requestedItem)
         holder.tvHospitalLocation.setText(emergencyRequestList[position].location)
-
-
-
-//        // Handle Edit button click
-//        holder.btnEdit.setOnClickListener {
-//            // Add edit functionality here
-//        }
-//
-//        // Handle Delete button click
-//        holder.btnDelete.setOnClickListener {
-//            emergencyRequestList.removeAt(position)
-//            notifyItemRemoved(position)
-//        }
+        holder.tvContactNumber.setText(emergencyRequestList[position].contact)
+        holder.tvUrgency.text = when (emergencyRequestList[position].urgencyLevel) {
+            1 -> "Low"
+            2 -> "Medium"
+            else -> "High"
+        }
+        holder.btnEdit.setOnClickListener {
+            requestInterface.editRequest(position)
+        }
+        holder.btnDelete.setOnClickListener {
+            requestInterface.deleteRequest(position)
+        }
 
     }
 }
