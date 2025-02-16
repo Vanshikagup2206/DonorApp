@@ -1,10 +1,13 @@
 package com.vanshika.donorapp.requests
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.vanshika.donorapp.DonationDatabase
@@ -49,11 +52,29 @@ class EmergencyRequestFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         donationDatabase = DonationDatabase.getInstance(requireContext())
+        // Load requirement options (Blood, Organ)
+        val requirementOptions = resources.getStringArray(R.array.requirement_options)
+        val requirementAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, requirementOptions)
+        binding?.spinnerRequirement?.adapter = requirementAdapter
 
+        // Set a listener to dynamically update the second Spinner
+        binding?.spinnerRequirement?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedRequirement = requirementOptions[position]
+
+                when (selectedRequirement) {
+                    "Blood" -> updateDynamicSpinner(R.array.blood_groups, "Select Blood Group")
+                    "Organ" -> updateDynamicSpinner(R.array.organ_types, "Select Organ Type")
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    
         binding?.btnSubmitRequest?.setOnClickListener {
-            if (binding?.tvRecipientName?.text?.trim()?.isEmpty() == true) {
+            if (binding?.tvRecipientName?.text?.isEmpty() == true) {
                 binding?.tvRecipientName?.error = resources.getString(R.string.enter_recipient_name)
-            } else if (binding?.tvContactHospital?.text?.trim()?.isEmpty() == true) {
+            } else if (binding?.tvContactHospital?.text?.isEmpty() == true) {
                 binding?.tvContactHospital?.error =
                     resources.getString(R.string.enter_hospital_contact)
 
@@ -61,13 +82,30 @@ class EmergencyRequestFragment : Fragment() {
                 donationDatabase.DonationDao().insertEmergencyRequest(
                     RecipientsDataClass(
 //                            recipientId = ,
+
                         recipientName = binding?.tvRecipientName?.text?.toString()
                     )
                 )
                 findNavController().popBackStack()
             }
         }
+
     }
+
+    private fun updateDynamicSpinner(bloodGroups: Int, s: String) {
+            val options = resources.getStringArray(bloodGroups)
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, options)
+
+            binding?.tvDynamicSelection?.text = s
+            binding?.tvDynamicSelection?.visibility = View.VISIBLE
+            binding?.spinnerDynamic?.adapter = adapter
+            binding?.spinnerDynamic?.visibility = View.VISIBLE
+        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
+
+
 
     companion object {
         /**

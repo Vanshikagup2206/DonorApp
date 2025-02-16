@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="requirement_options">
+        <item>Blood</item>
+        <item>Organ</item>
+    </string-array>
+
+    <!-- Blood Groups -->
+    <string-array name="blood_groups">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>O+</item>
+        <item>O-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+    </string-array>
+
+    <!-- Organ Types -->
+    <string-array name="organ_types">
+        <item>Heart</item>
+        <item>Liver</item>
+        <item>Kidney</item>
+        <item>Lung</item>
+        <item>Pancreas</item>
+        <item>Intestine</item>
+    </string-array>
+    <string-array name="Location">
+        <item name="city_Hospital_Delhi"> City Hospital,Delhi</item>
+        <item name="capital_Hospital_Jalandhar">Capital Hospital,Jalandhar</item>
+    </string-array>
+
+</resources>

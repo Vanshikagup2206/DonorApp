@@ -28,26 +28,61 @@
 
             <EditText
                 android:id="@+id/tvRecipientName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/name"
                 android:textSize="@dimen/sp_18"
                 android:textStyle="bold"
                 android:textColor="@color/black"/>
             <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Select Requirement"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:layout_marginTop="10dp"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Requirement"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"/>
 
-                    <Spinner
-                        android:id="@+id/spinnerRequirement"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/neumorphic_edittext"
-                        android:padding="8dp"/>
+            <Spinner
+                android:id="@+id/spinnerRequirement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/neumorphic_edittext"
+                android:padding="8dp"/>
+
+            <!-- Dynamic Spinner for Blood Groups or Organ Types -->
+            <TextView
+                android:id="@+id/tvDynamicSelection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select an Option"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"/>  <!-- Initially hidden -->
+
+            <Spinner
+                android:id="@+id/spinnerDynamic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/neumorphic_edittext"
+                android:padding="8dp"
+                android:visibility="gone"/>  <!-- Initially hidden -->
+
+            <!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Select Requirement"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:layout_marginTop="10dp"/>-->
+
+<!--            <Spinner-->
+<!--                android:id="@+id/spinnerRequirement"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@drawable/neumorphic_edittext"-->
+<!--                android:padding="8dp"/>-->
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,13 +95,14 @@
                 android:id="@+id/spinnerLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:entries="@array/Location"
                 android:background="@drawable/neumorphic_edittext"
                 android:padding="8dp"/>
 
 
             <EditText
                 android:id="@+id/tvContactHospital"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/contact_hospital"
                 android:textSize="@dimen/sp_16"

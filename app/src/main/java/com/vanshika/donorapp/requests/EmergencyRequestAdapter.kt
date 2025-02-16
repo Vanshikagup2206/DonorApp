@@ -41,16 +41,16 @@ class EmergencyRequestAdapter(var emergencyRequestList:ArrayList<RecipientsDataC
 
 
 
-        // Handle Edit button click
-        holder.btnEdit.setOnClickListener {
-            // Add edit functionality here
-        }
-
-        // Handle Delete button click
-        holder.btnDelete.setOnClickListener {
-            emergencyRequestList.removeAt(position)
-            notifyItemRemoved(position)
-        }
+//        // Handle Edit button click
+//        holder.btnEdit.setOnClickListener {
+//            // Add edit functionality here
+//        }
+//
+//        // Handle Delete button click
+//        holder.btnDelete.setOnClickListener {
+//            emergencyRequestList.removeAt(position)
+//            notifyItemRemoved(position)
+//        }
 
     }
 }
