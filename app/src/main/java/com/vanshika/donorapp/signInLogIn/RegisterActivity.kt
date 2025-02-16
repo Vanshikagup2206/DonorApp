@@ -36,6 +36,12 @@ class RegisterActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("R.string.app_name", MODE_PRIVATE)
         editor = sharedPreferences?.edit()
 
+        registerBinding?.tvLogin?.setOnClickListener {
+            startActivity(Intent(this,LogInActivity::class.java))
+            finish()
+
+        }
+
         registerBinding?.btnSignup?.setOnClickListener {
             val name = registerBinding?.etName?.text.toString()
             val email = registerBinding?.etEmail?.text.toString()
@@ -75,6 +81,8 @@ class RegisterActivity : AppCompatActivity() {
                         editor?.putString("qrData", qrData)
                         editor?.apply()
                         Toast.makeText(this, "Registration complete!", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this,MainActivity::class.java))
+                        finish()
                     }
                     .addOnFailureListener {
                         Toast.makeText(this, "Failed to store user data", Toast.LENGTH_SHORT).show()

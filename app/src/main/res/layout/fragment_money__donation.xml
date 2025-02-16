@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".donate.money_Donation">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
 
 
     <!-- CardView with a quote -->
@@ -27,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
+            android:padding="@dimen/dp_10"
             android:text="“Money is a tool that, when used right, can change the lives of many.”"
             android:textAlignment="center"
             android:textColor="#333333"
@@ -39,9 +46,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:paddingTop="16dp"
+        android:padding="@dimen/dp_10"
         android:text="Please enter your name:"
         android:textColor="#000000"
+        android:layout_marginTop="@dimen/dp_10"
         android:textSize="16sp" />
 
     <EditText
@@ -58,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:paddingTop="16dp"
+        android:padding="@dimen/dp_10"
         android:text="Please enter your contact number:"
         android:textColor="#000000"
         android:textSize="16sp" />
@@ -77,7 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:paddingTop="16dp"
+        android:padding="@dimen/dp_10"
         android:text="Please enter your age:"
         android:textColor="#000000"
         android:textSize="16sp" />
@@ -96,7 +104,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:paddingTop="16dp"
+        android:padding="@dimen/dp_10"
         android:text="Please select your gender:"
         android:textColor="#000000"
         android:textSize="16sp" />
@@ -117,7 +125,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_20"
         android:fontFamily="sans-serif-medium"
-        android:paddingTop="16dp"
+        android:padding="@dimen/dp_10"
         android:text="Please enter the amount you'd like to donate:"
         android:textColor="#000000"
         android:textSize="16sp" />
@@ -134,11 +142,14 @@
     <!-- Submit Button -->
     <Button
         android:id="@+id/submit_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingTop="24dp"
-        android:text="Submit" />
+        android:padding="@dimen/dp_10"
+        android:layout_margin="@dimen/dp_20"
+        android:text="Donate Money" />
+
+    </LinearLayout>
 
 
-</LinearLayout>
+</ScrollView>

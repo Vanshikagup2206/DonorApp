@@ -21,8 +21,8 @@ import com.google.zxing.common.BitMatrix
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.vanshika.donorapp.databinding.DeleteDailogBinding
 import com.vanshika.donorapp.databinding.FragmentProfileBinding
+import com.vanshika.donorapp.signInLogIn.LogInActivity
 import com.vanshika.donorapp.signInLogIn.RegisterActivity
-import com.vanshika.donorapp.signInLogIn.SignInActivity
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -72,7 +72,7 @@ class ProfileFragment : Fragment() {
 
         binding?.btnLogout?.setOnClickListener {
             auth?.signOut()
-            startActivity(Intent(requireContext(), SignInActivity::class.java))
+            startActivity(Intent(requireContext(), LogInActivity::class.java))
             Toast.makeText(requireContext(), "User Signed Out", Toast.LENGTH_LONG).show()
         }
 

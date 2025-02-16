@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".donate.Medicine_donation">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_20"
-        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_margin="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_20"
-        android:backgroundTint="#EB6060"
-
-        android:padding="16dp">
+        android:backgroundTint="#EB6060">
 
 
         <!-- Quote text in the CardView -->
@@ -25,6 +27,7 @@
             android:fontFamily="sans-serif"
             android:text="“A donation of medicine can be a lifeline for those in need. Your generosity counts.”"
             android:textAlignment="center"
+            android:padding="@dimen/dp_10"
             android:textColor="#333333"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -35,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:paddingTop="24dp"
+        android:padding="@dimen/dp_10"
         android:text="Could your contribution of medicine help provide relief to someone in need?"
         android:textAlignment="center"
         android:textColor="#000000"
@@ -48,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_20"
         android:fontFamily="sans-serif-medium"
-        android:paddingTop="16dp"
+        android:padding="@dimen/dp_10"
         android:text="Please enter your name:"
         android:textColor="#000000"
         android:textSize="16sp" />
@@ -67,7 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:paddingTop="16dp"
+        android:padding="@dimen/dp_10"
         android:text="Please enter your contact number:"
         android:textColor="#000000"
         android:textSize="16sp" />
@@ -85,7 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:paddingTop="16dp"
+        android:padding="@dimen/dp_10"
         android:text="Gender"
         android:textColor="#000000"
         android:textSize="16sp" />
@@ -102,7 +105,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:paddingTop="16dp"
+        android:padding="@dimen/dp_10"
         android:text="Age"
         android:textColor="#000000"
         android:textSize="16sp" />
@@ -121,7 +124,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:paddingTop="16dp"
+        android:padding="@dimen/dp_10"
         android:text="What type of medicine would you like to donate?"
         android:textColor="#000000"
         android:textSize="16sp" />
@@ -140,7 +143,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:paddingTop="16dp"
+        android:padding="@dimen/dp_10"
         android:text="Please enter the amount of medicine you'd like to donate:"
         android:textColor="#000000"
         android:textSize="16sp" />
@@ -159,7 +162,10 @@
         android:id="@+id/submit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="24dp"
-        android:text="Submit Donation" />
+        android:layout_margin="@dimen/dp_20"
+        android:padding="@dimen/dp_10"
+        android:text="Donate Medicine" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

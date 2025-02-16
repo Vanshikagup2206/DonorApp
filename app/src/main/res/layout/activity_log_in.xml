@@ -107,13 +107,16 @@
                 android:id="@+id/tvForgotPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="end"
+                android:minHeight="48dp"
+                android:padding="@dimen/dp_10"
                 android:text="@string/forgot_password"
                 android:textColor="@color/primary"
-                android:textStyle="bold"
-                android:layout_marginTop="@dimen/dp_8"
-                android:gravity="end"
-                android:clickable="true"
-                android:focusable="true" />
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold" />
 
             <!-- Login Button -->
             <com.google.android.material.button.MaterialButton
@@ -121,6 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/login"
+                android:textSize="@dimen/sp_20"
                 android:textAllCaps="false"
                 android:layout_marginTop="@dimen/dp_16"
                 app:cornerRadius="@dimen/dp_12"
@@ -132,19 +136,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:minHeight="48dp"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/dp_12">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dont_have_account" />
+                    android:text="@string/dont_have_account"
+                    android:textSize="@dimen/sp_18"/>
 
                 <TextView
                     android:id="@+id/tvSignUp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/sign_up"
+                    android:contextClickable="true"
+                    android:textSize="@dimen/sp_18"
                     android:textColor="@color/primary"
                     android:textStyle="bold"
                     android:layout_marginStart="4dp"

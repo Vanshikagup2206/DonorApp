@@ -27,6 +27,11 @@ class LogInActivity : AppCompatActivity() {
         }
         auth=FirebaseAuth.getInstance()
 
+        logInBinding?.tvSignUp?.setOnClickListener {
+            startActivity(Intent(this,RegisterActivity::class.java))
+            finish()
+        }
+
         logInBinding?.btnLogin?.setOnClickListener {
             val email =logInBinding?.etEmail?.text.toString()
             val password =logInBinding?.etPassword?.text.toString()
@@ -37,6 +42,24 @@ class LogInActivity : AppCompatActivity() {
             else{
                 logInBinding?.etEmail?.error="Email can't be empty"
                 logInBinding?.etPassword?.error="Password can't be empty"
+            }
+        }
+
+        logInBinding?.tvForgotPassword?.setOnClickListener {
+
+            val email =logInBinding?.etEmail?.text.toString()
+            val password =logInBinding?.etPassword?.text.toString()
+
+            if(email.isNotEmpty()&& password.isNotEmpty()){
+
+                auth?.sendPasswordResetEmail(email)?.addOnSuccessListener {
+
+                    Toast.makeText(this,"Reset password email is sent",Toast.LENGTH_LONG).show()
+                    startActivity(Intent(this, LogInActivity::class.java)) // Redirect to login
+                    finish()
+                }?.addOnFailureListener { e ->
+                        Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
             }
         }
     }

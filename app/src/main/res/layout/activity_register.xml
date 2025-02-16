@@ -125,6 +125,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/login"
+                    android:contextClickable="true"
                     android:textColor="@color/primary"
                     android:textStyle="bold"
                     android:layout_marginStart="@dimen/dp_4"

@@ -68,6 +68,7 @@
     <string name="enter_recipient_name">Enter Recipient Name</string>
     <string name="enter_hospital_contact">Enter Hospital Contact</string>
     <string name="search">Search</string>
+    <string name="Delete_acc">Delete Account</string>
 </resources>
 
 

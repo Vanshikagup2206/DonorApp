@@ -9,8 +9,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.vanshika.donorapp.signInLogIn.LogInActivity
 import com.vanshika.donorapp.signInLogIn.RegisterActivity
-import com.vanshika.donorapp.signInLogIn.SignInActivity
 
 class SplashScreen : AppCompatActivity() {
     var sharedPreferences:SharedPreferences? = null
@@ -39,7 +39,7 @@ class SplashScreen : AppCompatActivity() {
                 startActivity(
                     Intent(
                         this,
-                        SignInActivity::class.java
+                        LogInActivity::class.java
                     )
                 )
                 finish()

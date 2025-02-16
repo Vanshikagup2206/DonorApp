@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,12 +7,19 @@
     android:orientation="vertical"
     tools:context=".donate.Blood_donation">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_20"
+        android:layout_margin="@dimen/dp_20"
         android:backgroundTint="#E76464"
         android:padding="@dimen/dp_30"
+
         app:cardCornerRadius="@dimen/dp_20">
 
 
@@ -22,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="sans-serif-light"
-            android:paddingBottom="20dp"
+            android:padding="@dimen/dp_10"
             android:text="A single donation can save up to three lives."
             android:textAlignment="center"
             android:textSize="18sp"
@@ -34,8 +41,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_20"
-        android:paddingBottom="8dp"
+        android:padding="@dimen/dp_10"
         android:text="Name"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
@@ -55,8 +61,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp"
+        android:padding="@dimen/dp_10"
         android:text="Age"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
@@ -75,8 +80,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp"
+        android:padding="@dimen/dp_10"
         android:text="Gender"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
@@ -94,8 +98,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp"
+        android:padding="@dimen/dp_10"
         android:text="Contact Number"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
@@ -115,8 +118,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp"
+        android:padding="@dimen/dp_10"
         android:text="Blood Group"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
@@ -135,8 +137,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp"
+        android:padding="@dimen/dp_10"
         android:text="How often can you donate blood?"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
@@ -154,15 +155,16 @@
     <!-- Submit Button -->
     <Button
         android:id="@+id/submitButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_margin="@dimen/dp_20"
         android:background="#2196F3 "
         android:gravity="center"
         android:padding="16dp"
-        android:text="Submit"
-        android:textColor="@android:color/white"
+        android:text="Donate Blood"
+        android:textColor="@android:color/black"
         android:textSize="18sp" />
+    </LinearLayout>
 
-</LinearLayout>
+</ScrollView>
