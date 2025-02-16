@@ -34,4 +34,12 @@
     <string name="filter">Filter</string>
     <string name="recipients_list">Recipients List</string>
     <string name="emergency_request">Emergency Request</string>
+    <string name="whatisyourname">Your Name?</string>
+    <string name="enter">Enter</string>
+    <string name="address">Your Address</string>
+    <string name="city">city name</string>
+    <string name="number">Mobile Number</string>
+    <string name="entervalidnumber">Enter valid number</string>
+    <string name="bloodtype">Bloodtype?</string>
+    <string name="donateionquote">We make a living by what we get, but we make a life by what we give.\n</string>
 </resources>

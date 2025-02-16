@@ -29,4 +29,25 @@
         android:name="com.vanshika.donorapp.requests.RequestsFragment"
         android:label="fragment_requests"
         tools:layout="@layout/fragment_requests" />
+    <fragment
+        android:id="@+id/blood_donation"
+        android:name="com.vanshika.donorapp.donate.Blood_donation"
+        android:label="fragment_blood_donation"
+        tools:layout="@layout/fragment_blood_donation" />
+    <fragment
+        android:id="@+id/medicine_donation"
+        android:name="com.vanshika.donorapp.donate.Medicine_donation"
+        android:label="fragment_medicine_donation"
+        tools:layout="@layout/fragment_medicine_donation" />
+    <fragment
+        android:id="@+id/money_Donation"
+        android:name="com.vanshika.donorapp.donate.money_Donation"
+        android:label="fragment_money__donation"
+        tools:layout="@layout/fragment_money__donation" />
+    <fragment
+        android:id="@+id/organ_donation"
+        android:name="com.vanshika.donorapp.donate.Organ_donation"
+        android:label="fragment_organ_donation"
+        tools:layout="@layout/fragment_organ_donation" />
+
 </navigation>

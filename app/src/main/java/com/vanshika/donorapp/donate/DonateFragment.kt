@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.vanshika.donorapp.R
+import com.vanshika.donorapp.databinding.FragmentDonateBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,7 +24,8 @@ class DonateFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    var binding: FragmentDonateBinding? = null
+    private var navController: NavController? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -35,7 +39,28 @@ class DonateFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_donate, container, false)
+        binding = FragmentDonateBinding.inflate(layoutInflater)
+        return binding?.root
+        // return inflater.inflate(R.layout.fragment_donate, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding?.blood?.setOnClickListener {
+            findNavController().navigate(R.id.blood_donation)
+        }
+        binding?.organ?.setOnClickListener {
+            findNavController().navigate(R.id.organ_donation)
+        }
+        binding?.money?.setOnClickListener {
+            findNavController().navigate(R.id.money_Donation)
+        }
+        binding?.medicine?.setOnClickListener {
+            findNavController().navigate(R.id.medicine_donation)
+        }
+//        binding?.btnDonateNow?.setOnClickListener {
+//            findNavController().navigate(R.id.donate_Queries)
+//        }
     }
 
     companion object {

@@ -12,4 +12,14 @@
     <dimen name="dp_6">6dp</dimen>
     <dimen name="sp_14">14sp</dimen>
     <dimen name="sp_22">22sp</dimen>
+    <dimen name="dp_50">50dp</dimen>
+    <dimen name="dp_5">5dp</dimen>
+    <dimen name="dp_30">30dp</dimen>
+    <string-array name="donation_categories">
+        <item>Blood Donation</item>
+        <item>Organ Donation</item>
+        <item>Money Donation</item>
+        <item>Medicine Donation</item>
+    </string-array>
+
 </resources>
