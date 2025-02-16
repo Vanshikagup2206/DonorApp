@@ -1,6 +1,7 @@
 package com.vanshika.donorapp.signInLogIn
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -14,6 +15,8 @@ import com.vanshika.donorapp.databinding.ActivityRegisterBinding
 class RegisterActivity : AppCompatActivity() {
     var auth:FirebaseAuth ?= null
     var registerBinding:ActivityRegisterBinding?=null
+    var sharedPreferences: SharedPreferences?= null
+    var editor: SharedPreferences.Editor?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -26,6 +29,8 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         auth = FirebaseAuth.getInstance()
+        sharedPreferences= getSharedPreferences("R.string.app_name", MODE_PRIVATE)
+        editor=sharedPreferences?.edit()
 
         registerBinding?.btnSignup?.setOnClickListener {
             val name = registerBinding?.etName?.text.toString()
@@ -33,7 +38,12 @@ class RegisterActivity : AppCompatActivity() {
             val password= registerBinding?.etPassword?.text.toString()
 
             if (name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
-                    registerUser(email, password)
+
+                registerUser(email, password)
+                editor?.putString("username",name)
+                editor?.putString("email",email)
+                editor?.apply()
+
                 } else {
                     Toast.makeText(this, "Fill all Fields", Toast.LENGTH_LONG).show()
                 }

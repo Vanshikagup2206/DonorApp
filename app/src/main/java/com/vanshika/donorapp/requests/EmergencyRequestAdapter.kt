@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vanshika.donorapp.R
 import org.w3c.dom.Text
 
-class EmergencyRequestAdapter(var emergencyRequestList:ArrayList<RecipientsDataClass>):
+class EmergencyRequestAdapter(var emergencyRequestList:ArrayList<RecipientsDataClass>,var requestInterface: RequestInterface):
     RecyclerView.Adapter<EmergencyRequestAdapter.ViewHolder>() {
     class ViewHolder(var view:View): RecyclerView.ViewHolder(view){
         var tvRecipientName: TextView = view.findViewById(R.id.tvRecipientName)
@@ -41,16 +41,16 @@ class EmergencyRequestAdapter(var emergencyRequestList:ArrayList<RecipientsDataC
 
 
 
-        // Handle Edit button click
-        holder.btnEdit.setOnClickListener {
-            // Add edit functionality here
-        }
-
-        // Handle Delete button click
-        holder.btnDelete.setOnClickListener {
-            emergencyRequestList.removeAt(position)
-            notifyItemRemoved(position)
-        }
+//        // Handle Edit button click
+//        holder.btnEdit.setOnClickListener {
+//            // Add edit functionality here
+//        }
+//
+//        // Handle Delete button click
+//        holder.btnDelete.setOnClickListener {
+//            emergencyRequestList.removeAt(position)
+//            notifyItemRemoved(position)
+//        }
 
     }
 }
