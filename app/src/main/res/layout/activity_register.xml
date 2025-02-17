@@ -75,6 +75,27 @@
                     android:padding="@dimen/dp_12" />
             </com.google.android.material.textfield.TextInputLayout>
 
+<!--            Aadhaar Input-->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_12"
+                app:boxStrokeColor="@color/primary"
+                app:boxCornerRadiusTopStart="@dimen/dp_12"
+                app:boxCornerRadiusTopEnd="@dimen/dp_12"
+                app:boxCornerRadiusBottomStart="@dimen/dp_12"
+                app:boxCornerRadiusBottomEnd="@dimen/dp_12">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etAadhaarNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_aadhaar_no"
+                    android:inputType="textEmailAddress"
+                    android:padding="@dimen/dp_12" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <!-- Password Input -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

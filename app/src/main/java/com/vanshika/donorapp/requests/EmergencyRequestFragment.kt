@@ -80,7 +80,6 @@ class EmergencyRequestFragment : Fragment() {
                         "Organ" -> updateDynamicSpinner(R.array.organ_types, "Select Organ Type")
                     }
                 }
-
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
 
@@ -95,7 +94,6 @@ class EmergencyRequestFragment : Fragment() {
                 donationDatabase.DonationDao().insertEmergencyRequest(
                     RecipientsDataClass(
 //                            recipientId = ,
-
                         recipientName = binding?.tvRecipientName?.text?.toString(),
                         requestedItem = binding?.spinnerRequirement?.toString(),
                         location = binding?.spinnerLocation?.toString(),
@@ -105,7 +103,6 @@ class EmergencyRequestFragment : Fragment() {
                 findNavController().popBackStack()
             }
         }
-
     }
 
     private fun updateDynamicSpinner(bloodGroups: Int, s: String) {
