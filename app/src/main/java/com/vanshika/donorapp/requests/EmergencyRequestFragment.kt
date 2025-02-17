@@ -83,7 +83,6 @@ class EmergencyRequestFragment : Fragment() {
                         "Organ" -> updateDynamicSpinner(R.array.organ_types, "Select Organ Type")
                     }
                 }
-
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         arrayAdapter =
@@ -136,6 +135,7 @@ class EmergencyRequestFragment : Fragment() {
             } else {
                 donationDatabase.DonationDao().insertEmergencyRequest(
                     RecipientsDataClass(
+
                         recipientName = binding?.tvRecipientName?.text?.toString(),
                         requestedItem = requestedItem,
                         specificRequirement = specificRequirement,
@@ -147,7 +147,6 @@ class EmergencyRequestFragment : Fragment() {
                 findNavController().popBackStack()
             }
         }
-
     }
 
 

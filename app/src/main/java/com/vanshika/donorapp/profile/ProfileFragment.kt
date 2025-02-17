@@ -58,6 +58,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         auth = FirebaseAuth.getInstance()
+        fireStore = FirebaseFirestore.getInstance()
         sharedPreferences = requireActivity().getSharedPreferences(
             "R.string.app_name",
             AppCompatActivity.MODE_PRIVATE

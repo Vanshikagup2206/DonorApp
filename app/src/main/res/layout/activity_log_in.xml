@@ -8,33 +8,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
     tools:context=".signInLogIn.LogInActivity">
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="vertical"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent">-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/etEmail"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="@string/enter_email"-->
-<!--            android:inputType="textEmailAddress" />-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/etPassword"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="@string/enter_password"-->
-<!--            android:inputType="textPassword" />-->
-
-<!--        <Button-->
-<!--            android:id="@+id/btnLogin"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/login" />-->
-<!--    </LinearLayout>-->
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
