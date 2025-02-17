@@ -106,6 +106,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/contact_hospital"
                 android:textSize="@dimen/sp_16"
+                android:inputType="number"
+                android:maxLength="10"
                 android:textColor="@color/black"
                 android:paddingTop="@dimen/dp_10" />
             <TextView
@@ -115,47 +117,49 @@
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_marginTop="12dp"/>
-
-            <LinearLayout
+            <RadioGroup
+                android:id="@+id/urgencyRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
                 android:layout_marginTop="6dp">
 
-                <Button
-                    android:id="@+id/btnLowUrgency"
+                <RadioButton
+                    android:id="@+id/rbLowUrgency"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="Low"
-                    android:backgroundTint="@color/green"
+                    android:background="@drawable/radio_button_selector"
                     android:textColor="@color/white"
-                    android:padding="8dp"/>
+                    android:button="@android:color/transparent"
+                    android:padding="10dp"/>
 
-                <Button
-                    android:id="@+id/btnMediumUrgency"
+                <RadioButton
+                    android:id="@+id/rbMediumUrgency"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="Medium"
-                    android:backgroundTint="@color/yellow"
-                    android:textColor="@color/black"
-                    android:padding="8dp"
+                    android:background="@drawable/radio_button_selector"
+                    android:textColor="@color/white"
+                    android:button="@android:color/transparent"
+                    android:padding="10dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"/>
 
-                <Button
-                    android:id="@+id/btnHighUrgency"
+                <RadioButton
+                    android:id="@+id/rbHighUrgency"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="High"
-                    android:backgroundTint="@color/red"
+                    android:background="@drawable/radio_button_selector"
                     android:textColor="@color/white"
-                    android:padding="8dp"/>
-            </LinearLayout>
-
+                    android:button="@android:color/transparent"
+                    android:padding="10dp"/>
+            </RadioGroup>
 
             <Button
                 android:id="@+id/btnSubmitRequest"

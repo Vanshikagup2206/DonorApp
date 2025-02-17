@@ -1,5 +1,6 @@
 package com.vanshika.donorapp.requests
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -86,9 +87,21 @@ class RequestsFragment : Fragment(),RequestInterface {
     }
 
     override fun editRequest(position: Int) {
-
+//        val bundle = Bundle().apply {
+//            putInt("recipientId", position.recipientId)
+//        }
+//        findNavController().navigate(R.id.action_editRecipient, bundle)
     }
 
     override fun deleteRequest(position: Int) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Confirm Delete")
+            .setMessage("Are you sure you want to delete this request?")
+            .setPositiveButton("Delete") { _, _ ->
+                donationDatabase.DonationDao().deleteEmergencyRequest(emergencyRequestList[position])
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
+
 }

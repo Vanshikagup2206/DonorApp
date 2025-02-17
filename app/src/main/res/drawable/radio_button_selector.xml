@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/primary"/> <!-- Change this to your selected color -->
+            <corners android:radius="8dp"/>
+            <padding android:left="10dp" android:right="10dp"/>
+        </shape>
+    </item>
+
+    <!-- Default (Unselected) state -->
+    <item android:state_checked="false">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/gray"/> <!-- Change this to your default color -->
+            <corners android:radius="8dp"/>
+            <padding android:left="10dp" android:right="10dp"/>
+        </shape>
+    </item>
+</selector>
