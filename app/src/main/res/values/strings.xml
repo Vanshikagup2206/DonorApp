@@ -73,6 +73,8 @@
     <string name="select_Urgency">Select Urgency</string>
 
     <string name="enter_aadhaar_no">Enter Aadhaar No.</string>
+    <string name="chooseme">Choose Me!</string>
+    <string name="addresss">Address</string>
 </resources>
 
 

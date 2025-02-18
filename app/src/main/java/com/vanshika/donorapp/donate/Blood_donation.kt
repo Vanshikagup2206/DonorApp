@@ -51,9 +51,12 @@ class Blood_donation : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding?.submitButton?.setOnClickListener {
             if (binding?.nameEditText?.text.toString().isNullOrEmpty()) {
-                binding?.bloodGroupEditText?.setError("Fill Your Name")
+                binding?.nameEditText?.setError("Fill Your Name")
             } else if (binding?.ageEditText?.text.toString().isNullOrEmpty()) {
                 binding?.ageEditText?.setError("Fill Your Age")
+            } else if (binding?.addrEditText?.text?.toString().isNullOrEmpty()) {
+                binding?.addrEditText?.setError("Fill Your Age")
+
             } else if (binding?.genderEdittext?.text.toString().isNullOrEmpty()) {
                 binding?.genderEdittext?.setError("Your Gender?")
             } else if (binding?.contactEditText?.text.toString().isNullOrEmpty()) {
@@ -72,8 +75,9 @@ class Blood_donation : Fragment() {
 
                 donorDatabase.DonationDao().insertDonor(
                     DonorsDataClass(
-//                        donorId = id,
+                        donorId = id,
                         donorName = binding?.nameEditText?.text?.toString(),
+                        address = binding?.addrEditText?.text?.toString(),
                         age = binding?.ageEditText?.text?.toString(),
                         gender = binding?.genderEdittext?.text?.toString(),
                         number = binding?.contactEditText?.text?.toString(),

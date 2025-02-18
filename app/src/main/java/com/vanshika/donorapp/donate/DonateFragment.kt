@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.vanshika.donorapp.R
@@ -46,6 +47,8 @@ class DonateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Toast.makeText(requireContext(), "Choose any category to donate", Toast.LENGTH_LONG).show()
+
         binding?.blood?.setOnClickListener {
             findNavController().navigate(R.id.blood_donation)
         }
