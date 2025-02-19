@@ -75,9 +75,11 @@
     <string name="enter_aadhaar_no">Enter Aadhaar No.</string>
     <string name="chooseme">Choose Me!</string>
     <string name="addresss">Address</string>
+
     <string name="donationtype">Donation Type :</string>
     <string name="date">Date :</string>
     <string name="mydonation">My donation</string>
+    <string name="all">All</string>
 </resources>
 
 

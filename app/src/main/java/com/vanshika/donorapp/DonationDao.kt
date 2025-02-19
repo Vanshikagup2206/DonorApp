@@ -32,5 +32,11 @@ interface DonationDao {
 
     @Delete
     fun deleteEmergencyRequest(recipient: RecipientsDataClass)
+
+    @Query("SELECT * FROM RecipientsDataClass WHERE requestedItem =:typeOfRequirement")
+    fun getRecipientListAccToReq(typeOfRequirement : String): List<RecipientsDataClass>
+
+    @Query("SELECT * FROM RecipientsDataClass WHERE urgencyLevel =:urgencyLevel")
+    fun getHighEmergencyList(urgencyLevel : Int) : List<RecipientsDataClass>
 }
 
