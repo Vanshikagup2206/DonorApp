@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/light_bg"
     android:orientation="vertical"
     android:padding="@dimen/dp_16"
@@ -21,52 +22,137 @@
         android:textStyle="bold" />
 
     <!-- Filters -->
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
         android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnBlood"
+        <androidx.constraintlayout.widget.Guideline
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/neumorphic_button"
+            app:layout_constraintGuide_percent=".18"
+            android:id="@+id/gl_v_18"
+            android:orientation="vertical"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent=".2"
+            android:id="@+id/gl_v_2"
+            android:orientation="vertical"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent=".38"
+            android:id="@+id/gl_v_38"
+            android:orientation="vertical"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent=".4"
+            android:id="@+id/gl_v_4"
+            android:orientation="vertical"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent=".58"
+            android:id="@+id/gl_v_58"
+            android:orientation="vertical"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent=".6"
+            android:id="@+id/gl_v_6"
+            android:orientation="vertical"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent=".78"
+            android:id="@+id/gl_v_78"
+            android:orientation="vertical"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent=".8"
+            android:id="@+id/gl_v_8"
+            android:orientation="vertical"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent=".99"
+            android:id="@+id/gl_v_98"
+            android:orientation="vertical"/>
+
+        <Button
+            android:id="@+id/btnAll"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/all"
             android:padding="@dimen/dp_2"
+            android:background="@drawable/neumorphic_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/gl_v_18"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btnBlood"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="@dimen/dp_2"
+            android:background="@drawable/neumorphic_button"
             android:text="@string/blood"
+            app:layout_constraintStart_toStartOf="@id/gl_v_2"
+            app:layout_constraintEnd_toEndOf="@id/gl_v_38"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:textColor="@color/black" />
 
         <Button
             android:id="@+id/btnOrgans"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginStart="@dimen/dp_4"
-            android:background="@drawable/neumorphic_button"
             android:padding="@dimen/dp_2"
+            android:background="@drawable/neumorphic_button"
+            app:layout_constraintStart_toStartOf="@id/gl_v_4"
+            app:layout_constraintEnd_toEndOf="@id/gl_v_58"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:text="@string/organs"
             android:textColor="@color/black" />
 
         <Button
             android:id="@+id/btnMoney"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginStart="@dimen/dp_4"
             android:background="@drawable/neumorphic_button"
             android:padding="@dimen/dp_2"
             android:text="@string/money"
+            app:layout_constraintStart_toStartOf="@id/gl_v_6"
+            app:layout_constraintEnd_toEndOf="@id/gl_v_78"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:textColor="@color/black" />
 
         <Button
             android:id="@+id/btnMedicine"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_4"
+            android:layout_marginEnd="@dimen/dp_4"
             android:background="@drawable/neumorphic_button"
             android:padding="@dimen/dp_2"
             android:text="@string/medicine"
+            app:layout_constraintStart_toStartOf="@id/gl_v_8"
+            app:layout_constraintEnd_toEndOf="@id/gl_v_98"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:textColor="@color/black" />
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Requests List -->
 <!--    <androidx.recyclerview.widget.RecyclerView-->

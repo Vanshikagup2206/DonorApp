@@ -75,6 +75,7 @@
     <string name="enter_aadhaar_no">Enter Aadhaar No.</string>
     <string name="chooseme">Choose Me!</string>
     <string name="addresss">Address</string>
+    <string name="all">All</string>
 </resources>
 
 
