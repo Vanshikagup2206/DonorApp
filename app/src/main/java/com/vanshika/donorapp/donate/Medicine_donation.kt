@@ -10,6 +10,8 @@ import androidx.navigation.fragment.findNavController
 import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentMedicineDonationBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +29,8 @@ class Medicine_donation : Fragment() {
     private var param2: String? = null
     var binding: FragmentMedicineDonationBinding? = null
     lateinit var donardatabase: DonationDatabase
+    var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+
     var donationlist = arrayListOf<DonorsDataClass>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,6 +79,7 @@ class Medicine_donation : Fragment() {
                         donationfrequency = binding?.editAmount?.text?.toString(),
                         gender = binding?.editGender?.text?.toString(),
                         number = binding?.editNumber?.text?.toString(),
+//                        createddate = Calendar.getInstance().time
 
                         )
                 )

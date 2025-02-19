@@ -17,11 +17,15 @@ interface DonationDao {
     @Query("SELECT * FROM DonorsDataClass WHERE donorId = :id")
     fun getDonorById(id: Int): DonorsDataClass
 
+    @Query("SELECT * FROM DonorsDataClass")
+    fun getDonatonList(): List<DonorsDataClass>
+
     @Insert
     fun insertEmergencyRequest(recipientsDataClass: RecipientsDataClass)
 
     @Query("SELECT * FROM RecipientsDataClass")
     fun getEmergencyRequestList(): List<RecipientsDataClass>
+
     //
     @Update
     fun updateEmergencyRequest(recipient: RecipientsDataClass)

@@ -32,7 +32,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@drawable/boundary"
         android:columnCount="2">
 
         <!-- Blood Donation -->
@@ -42,7 +41,7 @@
             android:layout_margin="@dimen/dp_8"
             android:layout_marginLeft="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_20"
-            android:background="@drawable/ripplr"
+            android:background="@drawable/boundary"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="@dimen/dp_10">
@@ -68,7 +67,7 @@
             android:layout_width="160dp"
             android:layout_height="120dp"
             android:layout_marginTop="@dimen/dp_20"
-            android:background="@drawable/ripplr"
+            android:background="@drawable/boundary"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="@dimen/dp_10">
@@ -95,7 +94,7 @@
             android:layout_height="120dp"
             android:layout_marginLeft="@dimen/dp_20"
             android:layout_marginBottom="@dimen/dp_20"
-            android:background="@drawable/ripplr"
+            android:background="@drawable/boundary"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="@dimen/dp_10">
@@ -120,7 +119,7 @@
         <LinearLayout
             android:layout_width="160dp"
             android:layout_height="120dp"
-            android:background="@drawable/ripplr"
+            android:background="@drawable/boundary"
             android:gravity="center"
             android:layout_marginEnd="@dimen/dp_20"
             android:orientation="vertical"

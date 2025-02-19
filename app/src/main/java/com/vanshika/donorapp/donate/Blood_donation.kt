@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentBloodDonationBinding
+import java.util.Calendar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -75,7 +76,6 @@ class Blood_donation : Fragment() {
 
                 donorDatabase.DonationDao().insertDonor(
                     DonorsDataClass(
-                        donorId = id,
                         donorName = binding?.nameEditText?.text?.toString(),
                         address = binding?.addrEditText?.text?.toString(),
                         age = binding?.ageEditText?.text?.toString(),
@@ -83,7 +83,8 @@ class Blood_donation : Fragment() {
                         number = binding?.contactEditText?.text?.toString(),
                         bloodType = binding?.bloodGroupEditText?.text.toString(),
                         donationfrequency = binding?.donationFrequencyEditText?.text?.toString(),
-                        donationType = "Blood"
+                        donationType = "Blood",
+//                        createddate = Calendar.getInstance().time
 
                     )
                 )

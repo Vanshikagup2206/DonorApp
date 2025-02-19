@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.vanshika.donorapp.donate.DonorsDataClass
 import com.vanshika.donorapp.home.SOSRequestsDataClass
 import com.vanshika.donorapp.profile.DonationsDataClass
