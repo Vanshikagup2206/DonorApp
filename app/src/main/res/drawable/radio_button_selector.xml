@@ -2,18 +2,38 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_checked="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/primary"/> <!-- Change this to your selected color -->
-            <corners android:radius="8dp"/>
-            <padding android:left="10dp" android:right="10dp"/>
+            <gradient android:startColor="@color/dark_green" android:endColor="@color/light_green" android:angle="90"/>
+            <corners android:radius="16dp"/>
         </shape>
     </item>
-
-    <!-- Default (Unselected) state -->
-    <item android:state_checked="false">
+    <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/gray"/> <!-- Change this to your default color -->
-            <corners android:radius="8dp"/>
-            <padding android:left="10dp" android:right="10dp"/>
+            <solid android:color="@color/light_green"/>
+            <corners android:radius="16dp"/>
+        </shape>
+    </item>
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <gradient android:startColor="@color/dark_yellow" android:endColor="@color/light_yellow" android:angle="90"/>
+            <corners android:radius="16dp"/>
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/light_yellow"/>
+            <corners android:radius="16dp"/>
+        </shape>
+    </item>
+    <item android:state_checked="true">
+    <shape android:shape="rectangle">
+        <gradient android:startColor="@color/dark_red" android:endColor="@color/light_red" android:angle="90"/>
+        <corners android:radius="16dp"/>
+    </shape>
+</item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/light_red"/>
+            <corners android:radius="16dp"/>
         </shape>
     </item>
 </selector>

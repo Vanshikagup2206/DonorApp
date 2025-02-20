@@ -10,6 +10,23 @@
     <color name="green">#02786C</color>
     <color name="dark_gray">#3A3232</color>
     <color name="gray">#BDBDBD</color> <!-- Unselected Color -->
+<!--    <color name="light_green">#B2D8B2</color>  &lt;!&ndash; Lighter Green &ndash;&gt;-->
+<!--    <color name="light_yellow">#FFE4B2</color>  &lt;!&ndash; Lighter Yellow &ndash;&gt;-->
+<!--    <color name="light_red">#F4A5A5</color> - Dark Red &ndash;&gt;-->
+    <color name="light_green">#DFFFD6</color>  <!-- Very Light Green -->
+    <color name="light_yellow">#FFF9D6</color>  <!-- Very Light Yellow -->
+    <color name="light_red">#FFD6D6</color>  <!-- Very Light Red -->
+
+    <color name="dark_green">#008B00</color>  <!-- Deep Green -->
+<!--&lt;!&ndash;    <color name="dark_yellow">#FFB300</color>  &lt;!&ndash; Deep Yellow &ndash;&gt;&ndash;&gt;-->
+<!--    <color name="dark_red">#D32F2F</color>  &lt;!&ndash; Deep Red &ndash;&gt;-->
+    <color name="light_peach">#FFDAB9</color>  <!-- Light Peach -->
+<!-- <color name="light_yellow">#FAFAD2</color> -->
+    <color name="light_pink">#FFB6C1</color>  <!-- Light Pink -->
+
+    <color name="dark_orange">#FF8C00</color>  <!-- Darker Orange -->
+    <color name="dark_yellow">#FFA500</color>  <!-- Darker Yellow -->
+    <color name="dark_red">#B22222</color>  <!-- Darker Red -->
 
 
     <color name="primary">#FF6F61</color>

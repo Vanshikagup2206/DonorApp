@@ -18,6 +18,7 @@ class EmergencyRequestAdapter(
     class ViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
         var tvRecipientName: TextView = view.findViewById(R.id.tvRecipientName)
         var tvRequirement: TextView = view.findViewById(R.id.tvRequirement)
+        var tvDetails: TextView = view.findViewById(R.id.tvDetails)
         var tvHospitalLocation: TextView = view.findViewById(R.id.tvHospitalLocation)
         var tvContactNumber: TextView = view.findViewById(R.id.tvContactNumber)
         var tvUrgency: TextView = view.findViewById(R.id.tvUrgency)
@@ -42,7 +43,7 @@ class EmergencyRequestAdapter(
         val recipient = emergencyRequestList[position]
         holder.tvRecipientName.setText(emergencyRequestList[position].recipientName)
 //        holder.tvRequirement.setText(emergencyRequestList[position].requestedItem)
-        holder.tvRequirement.text = "${recipient.requestedItem}: ${recipient.specificRequirement}}"
+//        holder.tvRequirement.text = "${recipient.requestedItem}: ${recipient.specificRequirement}}"
         holder.tvHospitalLocation.setText(emergencyRequestList[position].location)
         holder.tvContactNumber.setText(emergencyRequestList[position].contact)
         holder.tvUrgency.text = when (emergencyRequestList[position].urgencyLevel) {
@@ -50,6 +51,13 @@ class EmergencyRequestAdapter(
             2 -> "Medium"
             else -> "High"
         }
+        holder.tvRequirement.text = "Requirement: ${emergencyRequestList[position].requestedItem}"
+        holder.tvDetails.text = when (emergencyRequestList[position].requestedItem) {
+            "Blood", "Organ" -> "Type: ${emergencyRequestList[position].bloodOrganRequirement}"
+            "Medicine", "Money" -> "Details: ${emergencyRequestList[position].medicineMoneyDetails}"
+            else -> ""
+        }
+
         holder.btnEdit.setOnClickListener {
             requestInterface.editRequest(position)
         }

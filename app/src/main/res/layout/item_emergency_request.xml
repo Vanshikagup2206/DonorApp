@@ -26,14 +26,30 @@
             android:textStyle="bold" />
 
         <!-- Requirement Type -->
+<!--        <TextView-->
+<!--            android:id="@+id/tvRequirement"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:paddingBottom="4dp"-->
+<!--            android:text="@string/Requirement"-->
+<!--            android:textColor="@color/dark_gray"-->
+<!--            android:textSize="16sp" />-->
         <TextView
             android:id="@+id/tvRequirement"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="4dp"
-            android:text="@string/Requirement"
-            android:textColor="@color/dark_gray"
-            android:textSize="16sp" />
+            android:text="Requirement:"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Details:"
+            android:textSize="14sp"
+            android:textColor="@color/black"/>
 
         <!-- Hospital Location -->
         <TextView

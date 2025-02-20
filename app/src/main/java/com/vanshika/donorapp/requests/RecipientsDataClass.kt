@@ -9,9 +9,8 @@ data class RecipientsDataClass(
     val recipientId : Int = 0,
     var recipientName : String ?= "",
     var requestedItem : String ?= "",
-    var specificRequirement: String?= "",
-    var medicineDetail: String?="",
-    var moneyDetails: String?= "",
+    var bloodOrganRequirement: String?= "",
+    var medicineMoneyDetails: String?="",
     var location: String ?= "",
     var contact: String ?= "",
     var urgencyLevel : Int = 0

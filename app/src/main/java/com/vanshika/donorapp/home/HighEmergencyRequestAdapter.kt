@@ -32,7 +32,7 @@ class HighEmergencyRequestAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recipient = emergencyRequestList[position]
         holder.tvRecipientName.setText(emergencyRequestList[position].recipientName)
-        holder.tvRequirement.text = "${recipient.requestedItem}: ${recipient.specificRequirement}"
+        holder.tvRequirement.text = "${recipient.requestedItem}: ${recipient.bloodOrganRequirement}"
         holder.tvHospitalLocation.setText(emergencyRequestList[position].location)
         holder.tvContactNumber.setText(emergencyRequestList[position].contact)
         holder.tvUrgency.text = when (emergencyRequestList[position].urgencyLevel) {
