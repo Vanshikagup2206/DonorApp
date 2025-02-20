@@ -42,7 +42,7 @@ class EmergencyRequestAdapter(
         val recipient = emergencyRequestList[position]
         holder.tvRecipientName.setText(emergencyRequestList[position].recipientName)
 //        holder.tvRequirement.setText(emergencyRequestList[position].requestedItem)
-        holder.tvRequirement.text = "${recipient.requestedItem}: ${recipient.specificRequirement}"
+        holder.tvRequirement.text = "${recipient.requestedItem}: ${recipient.specificRequirement}}"
         holder.tvHospitalLocation.setText(emergencyRequestList[position].location)
         holder.tvContactNumber.setText(emergencyRequestList[position].contact)
         holder.tvUrgency.text = when (emergencyRequestList[position].urgencyLevel) {

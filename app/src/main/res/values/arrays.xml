@@ -3,6 +3,9 @@
     <string-array name="requirement_options">
         <item>Blood</item>
         <item>Organ</item>
+        <item>Medicine</item>
+        <item>Money</item>
+
     </string-array>
 
     <!-- Blood Groups -->
@@ -26,6 +29,7 @@
         <item>Pancreas</item>
         <item>Intestine</item>
     </string-array>
+
     <string-array name="Location">
         <item name="city_Hospital_Delhi"> City Hospital,Delhi</item>
         <item name="capital_Hospital_Jalandhar">Capital Hospital,Jalandhar</item>

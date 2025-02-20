@@ -1,5 +1,6 @@
 package com.vanshika.donorapp.requests
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -32,7 +33,7 @@ class EmergencyRequestFragment : Fragment() {
     var binding: FragmentEmergencyRequestBinding? = null
     lateinit var arrayAdapter: ArrayAdapter<String>
     private var selectedUrgency: Int = 1
-    var requiredArray = arrayOf("Blood", "Organ")
+    var requiredArray = arrayOf("Blood", "Organ","Medicine","Money")
     var locationArray = arrayOf("City Hospital,Delhi", "Capital Hospital,Jalandhar")
     var recipientsDataClass = RecipientsDataClass()
     lateinit var donationDatabase: DonationDatabase
@@ -77,11 +78,43 @@ class EmergencyRequestFragment : Fragment() {
                     id: Long
                 ) {
                     val selectedRequirement = requirementOptions[position]
+                    var specificRequirement = ""
 
-                    when (selectedRequirement) {
-                        "Blood" -> updateDynamicSpinner(R.array.blood_groups, "Select Blood Group")
-                        "Organ" -> updateDynamicSpinner(R.array.organ_types, "Select Organ Type")
-                    }
+//                    when (selectedRequirement) {
+//                        "Blood"->{
+//                            updateDynamicSpinner(R.array.blood_groups, "Select Blood Group")
+//                            specificRequirement = binding?.spinnerDynamic?.selectedItem?.toString() ?: ""
+//                        }
+//                        "Organ" -> {
+//                            updateDynamicSpinner(R.array.organ_types, "Select Organ Type")
+//                            specificRequirement = binding?.spinnerDynamic?.selectedItem?.toString() ?: ""
+//                        }
+//                        "Medicine" -> {
+//                            binding?.llMedicine?.visibility = View.VISIBLE
+//                            binding?.tvDynamicSelection?.visibility = View.GONE
+//                            binding?.spinnerDynamic?.visibility = View.GONE
+//                            specificRequirement = binding?.etMedicine?.text?.toString() ?: ""
+//                        }
+//                        "Money" -> {
+//                            binding?.llMoney?.visibility = View.VISIBLE
+//                        binding?.tvDynamicSelection?.visibility = View.GONE
+//                           binding?.spinnerDynamic?.visibility = View.GONE
+//                            specificRequirement = binding?.etMoney?.text?.toString() ?: ""
+//                        }
+//                        "Blood" -> updateDynamicSpinner(R.array.blood_groups, "Select Blood Group")
+//                        "Organ" -> updateDynamicSpinner(R.array.organ_types, "Select Organ Type")
+//                        "Medicine" -> {
+//                            binding?.llMedicine?.visibility = View.VISIBLE
+//
+//                            binding?.tvDynamicSelection?.visibility = View.GONE
+//                            binding?.spinnerDynamic?.visibility = View.GONE
+//                        }
+//                        "Money" ->{ binding?.llMoney?.visibility = View.VISIBLE
+//
+//                        binding?.tvDynamicSelection?.visibility = View.GONE
+//                           binding?.spinnerDynamic?.visibility = View.GONE
+//                        }
+//                    }
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
@@ -117,35 +150,65 @@ class EmergencyRequestFragment : Fragment() {
         binding?.btnSubmitRequest?.setOnClickListener {
             val recipientName = binding?.tvRecipientName?.text?.toString()?.trim() ?: ""
             val requestedItem = binding?.spinnerRequirement?.selectedItem.toString()
-            val specificRequirement = binding?.spinnerDynamic?.selectedItem.toString()
+            var specificRequirement = ""
+//            val specificRequirement = binding?.spinnerDynamic?.selectedItem.toString()
             val hospitalLocation = binding?.tvContactHospital?.text?.toString()?.trim() ?: ""
+            when (requestedItem) {
+                "Blood" -> {
+//                    updateDynamicSpinner(R.array.blood_groups, "Select Blood Group")
+                    specificRequirement = binding?.spinnerDynamic?.selectedItem?.toString() ?: ""
+                }
 
-            if (binding?.tvRecipientName?.text?.isEmpty() == true) {
-                binding?.tvRecipientName?.error = resources.getString(R.string.enter_recipient_name)
-            } else if (binding?.tvContactHospital?.text?.isEmpty() == true) {
-                binding?.tvContactHospital?.error =
-                    resources.getString(R.string.enter_hospital_contact)
-            } else if (binding?.urgencyRadioGroup?.checkedRadioButtonId == -1) {
-                Toast.makeText(
-                    requireContext(),
-                    resources.getString(R.string.select_Urgency),
-                    Toast.LENGTH_SHORT
-                ).show()
+                "Organ" -> {
+//                    updateDynamicSpinner(R.array.organ_types, "Select Organ Type")
+                    specificRequirement = binding?.spinnerDynamic?.selectedItem?.toString() ?: ""
+                }
 
-            } else {
-                donationDatabase.DonationDao().insertEmergencyRequest(
-                    RecipientsDataClass(
+                "Medicine" -> {
+                    binding?.llMedicine?.visibility = View.VISIBLE
+                    binding?.tvDynamicSelection?.visibility = View.GONE
+                    binding?.spinnerDynamic?.visibility = View.GONE
+                    specificRequirement = binding?.etMedicine?.text?.toString() ?: ""
+                }
 
-                        recipientName = binding?.tvRecipientName?.text?.toString(),
-                        requestedItem = requestedItem,
-                        specificRequirement = specificRequirement,
-                        location = selectedLocation,
-                        contact = binding?.tvContactHospital?.text?.toString(),
-                        urgencyLevel = selectedUrgency
-                    )
-                )
-                findNavController().popBackStack()
+                "Money" -> {
+                    binding?.llMoney?.visibility = View.VISIBLE
+                    binding?.tvDynamicSelection?.visibility = View.GONE
+                    binding?.spinnerDynamic?.visibility = View.GONE
+                    specificRequirement = binding?.etMoney?.text?.toString() ?: ""
+                }
             }
+
+                if (binding?.tvRecipientName?.text?.isEmpty() == true) {
+                    binding?.tvRecipientName?.error =
+                        resources.getString(R.string.enter_recipient_name)
+                } else if (binding?.tvContactHospital?.text?.isEmpty() == true) {
+                    binding?.tvContactHospital?.error =
+                        resources.getString(R.string.enter_hospital_contact)
+                } else if (binding?.urgencyRadioGroup?.checkedRadioButtonId == -1) {
+                    Toast.makeText(
+                        requireContext(),
+                        resources.getString(R.string.select_Urgency),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                } else {
+                    donationDatabase.DonationDao().insertEmergencyRequest(
+                        RecipientsDataClass(
+                            recipientName = binding?.tvRecipientName?.text?.toString(),
+                            requestedItem = requestedItem,
+                            specificRequirement = specificRequirement,
+                            location = selectedLocation,
+                            contact = binding?.tvContactHospital?.text?.toString(),
+                            urgencyLevel = selectedUrgency,
+                            moneyDetails = if (requestedItem == "Money") specificRequirement else "",
+                            medicineDetail = if (requestedItem == "Medicine") specificRequirement else ""
+
+                        )
+                    )
+                    findNavController().popBackStack()
+                }
+
         }
     }
 
