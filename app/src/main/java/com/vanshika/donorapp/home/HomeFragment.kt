@@ -7,8 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentHomeBinding
+import com.vanshika.donorapp.requests.RecipientsDataClass
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +29,11 @@ class HomeFragment : Fragment() {
     private var param2: String? = null
     var sharedPreferences:SharedPreferences?=null
     var editor:SharedPreferences.Editor?=null
-    var homeBinding:FragmentHomeBinding?= null
+    var binding:FragmentHomeBinding?= null
+    lateinit var linearLayoutManager: LinearLayoutManager
+    var emergencyList = arrayListOf<RecipientsDataClass>()
+    lateinit var donationDatabase: DonationDatabase
+    lateinit var highEmergencyRequestAdapter: HighEmergencyRequestAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +47,8 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeBinding=FragmentHomeBinding.inflate(layoutInflater)
-        return homeBinding?.root
+        binding = FragmentHomeBinding.inflate(layoutInflater)
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,7 +56,21 @@ class HomeFragment : Fragment() {
         sharedPreferences=requireActivity().getSharedPreferences("R.string.app_name", AppCompatActivity.MODE_PRIVATE)
         editor=sharedPreferences?.edit()
 
-        homeBinding?.tvUsername?.setText("Hi! ${sharedPreferences?.getString("username", "")}")
+        binding?.tvUsername?.setText("Hi! ${sharedPreferences?.getString("username", "")}")
+
+        donationDatabase = DonationDatabase.getInstance(requireContext())
+        highEmergencyRequestAdapter = HighEmergencyRequestAdapter(emergencyList)
+        linearLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+        binding?.rvRequests?.adapter = highEmergencyRequestAdapter
+        binding?.rvRequests?.layoutManager = linearLayoutManager
+        getHighEmergencyList()
+    }
+
+    private fun getHighEmergencyList() {
+        emergencyList.clear()
+        emergencyList.addAll(donationDatabase.DonationDao().getHighEmergencyList(3))
+        highEmergencyRequestAdapter.notifyDataSetChanged()
     }
 
     companion object {

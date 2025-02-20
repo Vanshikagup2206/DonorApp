@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentOrganDonationBinding
+import java.util.Calendar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,7 +73,8 @@ class Organ_donation : Fragment() {
                         age = binding?.ageEditText?.text?.toString(),
                         gender = binding?.GenderEditText?.text.toString(),
                         number = binding?.numberEditText?.text?.toString(),
-                        donationType = "Organ"
+                        donationType = "Organ",
+//                        createddate = Calendar.getInstance().time
 
                     )
                 )

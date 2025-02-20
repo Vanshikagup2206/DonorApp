@@ -12,6 +12,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -19,6 +21,7 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.DeleteDailogBinding
 import com.vanshika.donorapp.databinding.FragmentProfileBinding
 import com.vanshika.donorapp.signInLogIn.LogInActivity
@@ -33,6 +36,8 @@ class ProfileFragment : Fragment() {
     var binding: FragmentProfileBinding? = null
     var sharedPreferences: SharedPreferences? = null
     var editor: SharedPreferences.Editor? = null
+    private var navController: NavController? = null
+
     private var fireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private var param1: String? = null
@@ -56,7 +61,9 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding?.btnMydonation?.setOnClickListener {
+           findNavController().navigate(R.id.myDonation)
+        }
         auth = FirebaseAuth.getInstance()
         fireStore = FirebaseFirestore.getInstance()
         sharedPreferences = requireActivity().getSharedPreferences(
@@ -66,7 +73,7 @@ class ProfileFragment : Fragment() {
         editor = sharedPreferences?.edit()
 
         val currentUser = auth?.currentUser
-        if (currentUser != null){
+        if (currentUser != null) {
             loadUserData(currentUser)
             generateQRCode(currentUser.email ?: "Unknown")
         }
@@ -135,7 +142,7 @@ class ProfileFragment : Fragment() {
             val bitMatrix: BitMatrix = barcodeEncoder.encode(data, BarcodeFormat.QR_CODE, 400, 400)
             val bitmap: Bitmap = barcodeEncoder.createBitmap(bitMatrix)
             binding?.ivQrCode?.setImageBitmap(bitmap)
-        } catch (e: WriterException){
+        } catch (e: WriterException) {
             Log.e("QRCode", "Error generating QR Code", e)
             Toast.makeText(requireContext(), "Error generating QR Code", Toast.LENGTH_SHORT).show()
         }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,16 +28,10 @@ class RequestsFragment : Fragment(),RequestInterface {
     var binding: FragmentRequestsBinding? = null
     var recipientsDataClass = RecipientsDataClass()
     lateinit var linearLayoutManager: LinearLayoutManager
-
     var emergencyRequestList = arrayListOf<RecipientsDataClass>()
     lateinit var emergencyRequestAdapter: EmergencyRequestAdapter
     lateinit var donationDatabase: DonationDatabase
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -59,6 +54,50 @@ class RequestsFragment : Fragment(),RequestInterface {
         binding?.btnEmergencyRequest?.setOnClickListener {
             findNavController().navigate(R.id.emergencyRequestFragment)
         }
+
+        binding?.btnAll?.setOnClickListener {
+            getEmergencyRequestList()
+        }
+        binding?.btnBlood?.setOnClickListener {
+            getBloodList()
+        }
+        binding?.btnOrgans?.setOnClickListener {
+            getOrganList()
+        }
+        binding?.btnMedicine?.setOnClickListener {
+            getMedicineList()
+        }
+        binding?.btnMoney?.setOnClickListener {
+            getMoneyList()
+        }
+    }
+
+    private fun getMoneyList() {
+        val typeOfRequirement = "Money"
+        emergencyRequestList.clear()
+        emergencyRequestList.addAll(donationDatabase.DonationDao().getRecipientListAccToReq(typeOfRequirement))
+        emergencyRequestAdapter.notifyDataSetChanged()
+    }
+
+    private fun getMedicineList() {
+        val typeOfRequirement = "Medicine"
+        emergencyRequestList.clear()
+        emergencyRequestList.addAll(donationDatabase.DonationDao().getRecipientListAccToReq(typeOfRequirement))
+        emergencyRequestAdapter.notifyDataSetChanged()
+    }
+
+    private fun getOrganList() {
+        val typeOfRequirement = "Organ"
+        emergencyRequestList.clear()
+        emergencyRequestList.addAll(donationDatabase.DonationDao().getRecipientListAccToReq(typeOfRequirement))
+        emergencyRequestAdapter.notifyDataSetChanged()
+    }
+
+    private fun getBloodList() {
+        val typeOfRequirement = "Blood"
+        emergencyRequestList.clear()
+        emergencyRequestList.addAll(donationDatabase.DonationDao().getRecipientListAccToReq(typeOfRequirement))
+        emergencyRequestAdapter.notifyDataSetChanged()
     }
 
     private fun getEmergencyRequestList() {

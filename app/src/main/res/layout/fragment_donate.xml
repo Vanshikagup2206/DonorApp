@@ -21,10 +21,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/make_a_donation"
+            android:padding="@dimen/dp_10"
+            android:text="@string/chooseme"
             android:textColor="@color/black"
             android:textSize="22sp"
-            android:padding="@dimen/dp_10"
             android:textStyle="bold" />
     </androidx.cardview.widget.CardView>
 
@@ -39,7 +39,9 @@
             android:layout_width="160dp"
             android:layout_height="120dp"
             android:layout_margin="@dimen/dp_8"
-            android:background="@drawable/neumorphic_card"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/boundary"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="@dimen/dp_10">
@@ -48,6 +50,7 @@
                 android:id="@+id/blood"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:background="@drawable/ripplr"
                 android:src="@drawable/baseline_bloodtype_24"
                 app:tint="@color/red" />
 
@@ -63,8 +66,8 @@
         <LinearLayout
             android:layout_width="160dp"
             android:layout_height="120dp"
-            android:layout_margin="@dimen/dp_8"
-            android:background="@drawable/neumorphic_card"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/boundary"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="@dimen/dp_10">
@@ -73,6 +76,7 @@
                 android:id="@+id/organ"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:background="@drawable/ripplr"
                 android:src="@drawable/baseline_local_hospital_24"
                 app:tint="@color/green" />
 
@@ -88,8 +92,9 @@
         <LinearLayout
             android:layout_width="160dp"
             android:layout_height="120dp"
-            android:layout_margin="@dimen/dp_8"
-            android:background="@drawable/neumorphic_card"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:background="@drawable/boundary"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="@dimen/dp_10">
@@ -98,6 +103,7 @@
                 android:id="@+id/money"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:background="@drawable/ripplr"
                 android:src="@drawable/baseline_attach_money_24"
                 app:tint="@color/yellow" />
 
@@ -113,16 +119,17 @@
         <LinearLayout
             android:layout_width="160dp"
             android:layout_height="120dp"
-            android:layout_margin="@dimen/dp_8"
-            android:background="@drawable/neumorphic_card"
+            android:background="@drawable/boundary"
             android:gravity="center"
+            android:layout_marginEnd="@dimen/dp_20"
             android:orientation="vertical"
             android:padding="@dimen/dp_10">
 
             <ImageView
                 android:id="@+id/medicine"
                 android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_height="47dp"
+                android:background="@drawable/ripplr"
                 android:src="@drawable/baseline_medical_services_24"
                 app:tint="@color/blue" />
 
@@ -144,14 +151,14 @@
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
-        android:backgroundTint="#C8C8C8"
+        android:backgroundTint="#CA4141"
         app:cardCornerRadius="@dimen/dp_20">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/dp_10"
             android:gravity="center"
+            android:padding="@dimen/dp_10"
             android:text="@string/donateionquote"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_16"
@@ -168,15 +175,21 @@
         <!--            android:textStyle="bold" />-->
     </androidx.cardview.widget.CardView>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_20"
-        android:layout_marginEnd="@dimen/dp_20"
-        android:layout_marginBottom="@dimen/dp_20"
-        android:src="@drawable/donation" />
+<!--    <com.airbnb.lottie.LottieAnimationView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--android:src="bloo"        />-->
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:src="@drawable/donation"
+            />
 
 
 </LinearLayout>
