@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentBloodDonationBinding
-import java.util.Calendar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,10 +18,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Blood_donation.newInstance] factory method to
+ * Use the [BloodDonation.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Blood_donation : Fragment() {
+class BloodDonation : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -52,25 +51,25 @@ class Blood_donation : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding?.submitButton?.setOnClickListener {
             if (binding?.nameEditText?.text.toString().isNullOrEmpty()) {
-                binding?.nameEditText?.setError("Fill Your Name")
+                binding?.nameEditText?.error = "Fill Your Name"
             } else if (binding?.ageEditText?.text.toString().isNullOrEmpty()) {
-                binding?.ageEditText?.setError("Fill Your Age")
+                binding?.ageEditText?.error = "Fill Your Age"
             } else if (binding?.addrEditText?.text?.toString().isNullOrEmpty()) {
-                binding?.addrEditText?.setError("Fill Your Age")
+                binding?.addrEditText?.error = "Fill Your Age"
 
             } else if (binding?.genderEdittext?.text.toString().isNullOrEmpty()) {
-                binding?.genderEdittext?.setError("Your Gender?")
+                binding?.genderEdittext?.error = "Your Gender?"
             } else if (binding?.contactEditText?.text.toString().isNullOrEmpty()) {
-                binding?.contactEditText?.setError("Enter Your Mobile Number")
+                binding?.contactEditText?.error = "Enter Your Mobile Number"
             } else if (binding?.contactEditText?.length() != 10) {
-                binding?.contactEditText?.setError("Enter Your 10 digit Number")
+                binding?.contactEditText?.error = "Enter Your 10 digit Number"
 
             } else if (binding?.donationFrequencyEditText?.text.toString().isNullOrEmpty()) {
                 binding?.donationFrequencyEditText?.setError("Fill the frequency")
             } else {
                 Toast.makeText(
                     requireContext(),
-                    "Your Details is Filled Successfuly!",
+                    "Your Details is Filled Successfully!",
                     Toast.LENGTH_SHORT
                 ).show();
 
@@ -100,12 +99,12 @@ class Blood_donation : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Blood_donation.
+         * @return A new instance of fragment BloodDonation.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Blood_donation().apply {
+            BloodDonation().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

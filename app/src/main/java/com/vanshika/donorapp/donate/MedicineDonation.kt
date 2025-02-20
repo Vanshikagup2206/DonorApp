@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
-import com.vanshika.donorapp.databinding.FragmentOrganDonationBinding
-import java.util.Calendar
+import com.vanshika.donorapp.databinding.FragmentMedicineDonationBinding
+import java.text.SimpleDateFormat
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,16 +19,18 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Organ_donation.newInstance] factory method to
+ * Use the [MedicineDonation.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Organ_donation : Fragment() {
+class MedicineDonation : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    var binding: FragmentOrganDonationBinding? = null
-    lateinit var donarDatabase: DonationDatabase
-    var donation = arrayListOf<DonorsDataClass>()
+    var binding: FragmentMedicineDonationBinding? = null
+    lateinit var donardatabase: DonationDatabase
+    var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+
+    var donationlist = arrayListOf<DonorsDataClass>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,43 +44,46 @@ class Organ_donation : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        donarDatabase = DonationDatabase.getInstance(requireContext())
-        binding = FragmentOrganDonationBinding.inflate(layoutInflater)
+        donardatabase = DonationDatabase.getInstance(requireContext())
+        binding = FragmentMedicineDonationBinding.inflate(layoutInflater)
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.submitButton?.setOnClickListener {
-            if (binding?.nameEditText?.text?.toString().isNullOrEmpty()) {
-                binding?.nameEditText?.setError("Your Name")
-            } else if (binding?.ageEditText?.text?.toString().isNullOrEmpty()) {
-                binding?.ageEditText?.setError("Enter age")
-            } else if (binding?.numberEditText?.length() != 10) {
-                binding?.numberEditText?.setError("Enter 10 digit number")
-            } else if (binding?.GenderEditText?.text?.toString().isNullOrEmpty()) {
-                binding?.GenderEditText?.setError("Enter gender")
-            } else if (binding?.consentEditText?.text?.toString().isNullOrEmpty()) {
-                binding?.consentEditText?.setError("Enter Your Wish")
+            if (binding?.editName?.text?.toString().isNullOrEmpty()) {
+                binding?.editName?.setError("Enter your Name")
+            } else if (binding?.editAmount?.text?.toString().isNullOrEmpty()) {
+                binding?.editAmount?.setError("Enter amount")
+            } else if (binding?.editMedicineType?.text?.toString().isNullOrEmpty()) {
+                binding?.askMedicineType?.setError("Enter type")
+            } else if (binding?.editNumber?.length() != 10) {
+                binding?.editNumber?.setError("Enter your Name")
+            } else if (binding?.editGender?.text?.toString().isNullOrEmpty()) {
+                binding?.editGender?.setError("Enter your Name")
+            } else if (binding?.editAge?.text?.toString().isNullOrEmpty()) {
+                binding?.editAge?.setError("Enter your Name")
             } else {
                 Toast.makeText(
                     requireContext(),
                     "Your Details is Filled Successfuly!",
                     Toast.LENGTH_SHORT
                 ).show();
-                donarDatabase.DonationDao().insertDonor(
+                donardatabase.DonationDao().insertDonor(
                     DonorsDataClass(
-                        donorName = binding?.nameEditText?.text?.toString(),
-                        age = binding?.ageEditText?.text?.toString(),
-                        gender = binding?.GenderEditText?.text.toString(),
-                        number = binding?.numberEditText?.text?.toString(),
-                        donationType = "Organ",
+                        donationType = "Medicine",
+                        donorName = binding?.editName?.text?.toString(),
+                        age = binding?.editAge?.text?.toString(),
+                        donationfrequency = binding?.editAmount?.text?.toString(),
+                        gender = binding?.editGender?.text?.toString(),
+                        number = binding?.editNumber?.text?.toString(),
 //                        createddate = Calendar.getInstance().time
 
-                    )
+                        )
                 )
                 findNavController().navigate(R.id.donateFragment)
+
             }
 
         }
@@ -91,12 +96,12 @@ class Organ_donation : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Organ_donation.
+         * @return A new instance of fragment MedicineDonation.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Organ_donation().apply {
+            MedicineDonation().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

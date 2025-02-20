@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentMoneyDonationBinding
-import java.util.Calendar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,10 +18,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [money_Donation.newInstance] factory method to
+ * Use the [MoneyDonation.newInstance] factory method to
  * create an instance of this fragment.
  */
-class money_Donation : Fragment() {
+class MoneyDonation : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -91,12 +90,12 @@ class money_Donation : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment money_Donation.
+         * @return A new instance of fragment MoneyDonation.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            money_Donation().apply {
+            MoneyDonation().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
