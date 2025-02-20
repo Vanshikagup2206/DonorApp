@@ -9,29 +9,9 @@
     android:padding="@dimen/dp_16"
     tools:context=".donate.DonateFragment">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#CA4141"
-        app:cardCornerRadius="@dimen/dp_20">
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="@dimen/dp_10"
-            android:text="@string/chooseme"
-            android:textColor="@color/black"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-    </androidx.cardview.widget.CardView>
-
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:columnCount="2">
 
         <!-- Blood Donation -->
@@ -153,43 +133,11 @@
         android:layout_marginRight="@dimen/dp_20"
         android:backgroundTint="#CA4141"
         app:cardCornerRadius="@dimen/dp_20">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:padding="@dimen/dp_10"
-            android:text="@string/donateionquote"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_16"
-            android:textStyle="bold" />
-
-        <!--        <TextView-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:layout_marginTop="@dimen/dp_50"-->
-        <!--            android:background="@color/cardview_light_background"-->
-        <!--            android:text="@string/donateionquote"-->
-        <!--            android:textColor="@color/black"-->
-        <!--            android:textStyle="bold" />-->
     </androidx.cardview.widget.CardView>
 
-<!--    <com.airbnb.lottie.LottieAnimationView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--android:src="bloo"        />-->
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginEnd="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_20"
-            android:src="@drawable/donation"
-            />
-
-
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/donate_now"
+        android:textColor="@color/white"/>
 </LinearLayout>
