@@ -102,6 +102,7 @@ class RequestsFragment : Fragment(),RequestInterface {
             }
             .setNegativeButton("Cancel", null)
             .show()
+        emergencyRequestAdapter.notifyDataSetChanged()
     }
 
 }

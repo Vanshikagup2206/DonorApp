@@ -10,6 +10,8 @@ data class RecipientsDataClass(
     var recipientName : String ?= "",
     var requestedItem : String ?= "",
     var specificRequirement: String?= "",
+    var medicineDetail: String?="",
+    var moneyDetails: String?= "",
     var location: String ?= "",
     var contact: String ?= "",
     var urgencyLevel : Int = 0
