@@ -59,6 +59,11 @@
         android:name="com.vanshika.donorapp.donate.MyDonation"
         android:label="fragment_my_donation"
         tools:layout="@layout/fragment_my_donation" />
+    <fragment
+        android:id="@+id/updateEmergencyFragment"
+        android:name="com.vanshika.donorapp.requests.UpdateEmergencyFragment"
+        android:label="fragment_update_emergency"
+        tools:layout="@layout/fragment_update_emergency" />
 
 
 </navigation>

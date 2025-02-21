@@ -26,6 +26,9 @@ interface DonationDao {
     @Query("SELECT * FROM RecipientsDataClass")
     fun getEmergencyRequestList(): List<RecipientsDataClass>
 
+    @Query("SELECT * FROM RecipientsDataClass WHERE recipientId =:recipientId")
+    fun getEmergencyRequestAccToId(recipientId : Int) : RecipientsDataClass
+
     //
     @Update
     fun updateEmergencyRequest(recipient: RecipientsDataClass)

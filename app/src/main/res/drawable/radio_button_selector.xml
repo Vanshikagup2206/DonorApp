@@ -1,39 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_checked="true">
-        <shape android:shape="rectangle">
-            <gradient android:startColor="@color/dark_green" android:endColor="@color/light_green" android:angle="90"/>
-            <corners android:radius="16dp"/>
-        </shape>
-    </item>
-    <item>
-        <shape android:shape="rectangle">
-            <solid android:color="@color/light_green"/>
-            <corners android:radius="16dp"/>
-        </shape>
-    </item>
-    <item android:state_checked="true">
-        <shape android:shape="rectangle">
-            <gradient android:startColor="@color/dark_yellow" android:endColor="@color/light_yellow" android:angle="90"/>
-            <corners android:radius="16dp"/>
-        </shape>
-    </item>
-    <item>
-        <shape android:shape="rectangle">
-            <solid android:color="@color/light_yellow"/>
-            <corners android:radius="16dp"/>
-        </shape>
-    </item>
-    <item android:state_checked="true">
     <shape android:shape="rectangle">
-        <gradient android:startColor="@color/dark_red" android:endColor="@color/light_red" android:angle="90"/>
-        <corners android:radius="16dp"/>
+        <solid android:color="@color/dark_red" /> <!-- Dark Red for Selected -->
+        <corners android:radius="12dp" />
+        <padding android:left="10dp" android:right="10dp" android:top="5dp" android:bottom="5dp" />
     </shape>
-</item>
-    <item>
+    </item>
+    <!-- Default (Unselected) State -->
+    <item android:state_checked="false">
         <shape android:shape="rectangle">
-            <solid android:color="@color/light_red"/>
-            <corners android:radius="16dp"/>
+            <solid android:color="@color/light_red" /> <!-- Light Red for Default -->
+            <corners android:radius="12dp" />
+            <padding android:left="10dp" android:right="10dp" android:top="5dp" android:bottom="5dp" />
         </shape>
     </item>
 </selector>
