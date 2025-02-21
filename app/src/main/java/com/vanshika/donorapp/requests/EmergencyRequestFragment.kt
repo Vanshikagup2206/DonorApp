@@ -122,7 +122,7 @@ class EmergencyRequestFragment : Fragment() {
                             binding?.spinnerDynamic?.visibility = View.GONE
                         }
                     }
-//
+
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -172,50 +172,23 @@ class EmergencyRequestFragment : Fragment() {
 
 
         binding?.btnSubmitRequest?.setOnClickListener {
-            //  val recipientName = binding?.tvRecipientName?.text?.toString()?.trim() ?: ""
+
+
+                if (binding?.tvRecipientName?.text?.isEmpty() == true) {
+                    binding?.tvRecipientName?.error =
+                        resources.getString(R.string.enter_recipient_name)
+                } else if (binding?.tvContactHospital?.text?.isEmpty() == true) {
+                    binding?.tvContactHospital?.error =
+                        resources.getString(R.string.enter_hospital_contact)
+                } else if (binding?.urgencyRadioGroup?.checkedRadioButtonId == -1) {
+                    Toast.makeText(
+                        requireContext(),
+                        resources.getString(R.string.select_Urgency),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             val requestedItem = binding?.spinnerRequirement?.selectedItem.toString()
-////            var specificRequirement = ""
-//////            val specificRequirement = binding?.spinnerDynamic?.selectedItem.toString()
-////            val hospitalLocation = binding?.tvContactHospital?.text?.toString()?.trim() ?: ""
-////            when (requestedItem) {
-////                "Blood" -> {
-//////                    updateDynamicSpinner(R.array.blood_groups, "Select Blood Group")
-////                    specificRequirement = binding?.spinnerDynamic?.selectedItem?.toString() ?: ""
-////                }
-////
-////                "Organ" -> {
-//////                    updateDynamicSpinner(R.array.organ_types, "Select Organ Type")
-////                    specificRequirement = binding?.spinnerDynamic?.selectedItem?.toString() ?: ""
-////                }
-////
-////                "Medicine" -> {
-////                    binding?.llMedicine?.visibility = View.VISIBLE
-////                    binding?.tvDynamicSelection?.visibility = View.GONE
-////                    binding?.spinnerDynamic?.visibility = View.GONE
-////                    specificRequirement = binding?.etMedicine?.text?.toString() ?: ""
-////                }
-////
-////                "Money" -> {
-////                    binding?.llMoney?.visibility = View.VISIBLE
-////                    binding?.tvDynamicSelection?.visibility = View.GONE
-////                    binding?.spinnerDynamic?.visibility = View.GONE
-////                    specificRequirement = binding?.etMoney?.text?.toString() ?: ""
-////                }
-//           // }
-//
-//                if (binding?.tvRecipientName?.text?.isEmpty() == true) {
-//                    binding?.tvRecipientName?.error =
-//                        resources.getString(R.string.enter_recipient_name)
-//                } else if (binding?.tvContactHospital?.text?.isEmpty() == true) {
-//                    binding?.tvContactHospital?.error =
-//                        resources.getString(R.string.enter_hospital_contact)
-//                } else if (binding?.urgencyRadioGroup?.checkedRadioButtonId == -1) {
-//                    Toast.makeText(
-//                        requireContext(),
-//                        resources.getString(R.string.select_Urgency),
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-            val recipientName = binding?.tvRecipientName?.text?.toString()?.trim()
+            val recipientName = binding?.tvRecipientName?.text?.toString()?.trim() ?:" "
             val selectedRequirement = binding?.spinnerRequirement?.selectedItem?.toString()
             val selectedLocation = binding?.spinnerLocation?.selectedItem?.toString()
             val contact = binding?.tvContactHospital?.text?.toString()?.trim()
@@ -236,29 +209,30 @@ class EmergencyRequestFragment : Fragment() {
                     .show()
                 return@setOnClickListener
             }
-                // donationDatabase.DonationDao().insertEmergencyRequest(
-                val recipient = RecipientsDataClass(
-                    recipientName = binding?.tvRecipientName?.text?.toString(),
-                    requestedItem = requestedItem,
-                    bloodOrganRequirement = bloodOrganRequirement,
-                    location = selectedLocation,
-                    contact = binding?.tvContactHospital?.text?.toString(),
-                    urgencyLevel = selectedUrgency,
-                    medicineMoneyDetails = medicineMoneyDetails
 
-                )
+            val recipient = RecipientsDataClass(
+                recipientName = binding?.tvRecipientName?.text?.toString(),
+                requestedItem = requestedItem,
+                bloodOrganRequirement = bloodOrganRequirement,
+                location = selectedLocation,
+                contact = binding?.tvContactHospital?.text?.toString(),
+                urgencyLevel = selectedUrgency,
+                medicineMoneyDetails = medicineMoneyDetails
 
-                CoroutineScope(Dispatchers.IO).launch {
-                    donationDatabase.DonationDao().insertEmergencyRequest(recipient)
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "Request Submitted", Toast.LENGTH_SHORT)
-                            .show()
-                        findNavController().popBackStack()
-                    }
+            )
 
+            CoroutineScope(Dispatchers.IO).launch {
+                donationDatabase.DonationDao().insertEmergencyRequest(recipient)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "Request Submitted", Toast.LENGTH_SHORT)
+                        .show()
+                    findNavController().popBackStack()
                 }
+
             }
         }
+    }
+
     private fun setupUrgencyButtons() {
         val radioGroup = view?.findViewById<RadioGroup>(R.id.urgencyRadioGroup)
         val lowUrgency = view?.findViewById<RadioButton>(R.id.rbLowUrgency)
@@ -268,91 +242,49 @@ class EmergencyRequestFragment : Fragment() {
         radioGroup?.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.rbLowUrgency -> {
-                    highlightSelectedButton(lowUrgency, R.color.dark_orange)
-                    resetOtherButtons(mediumUrgency, R.color.light_yellow, highUrgency, R.color.light_pink)
+                    animateButton(lowUrgency, 1.1f)
+                    animateButton(mediumUrgency, 1.0f)
+                    animateButton(highUrgency, 1.0f)
                 }
+
                 R.id.rbMediumUrgency -> {
-                    highlightSelectedButton(mediumUrgency, R.color.dark_yellow)
-                    resetOtherButtons(lowUrgency, R.color.light_peach, highUrgency, R.color.light_pink)
+                    animateButton(lowUrgency, 1.0f)
+                    animateButton(mediumUrgency, 1.1f)
+                    animateButton(highUrgency, 1.0f)
                 }
+
                 R.id.rbHighUrgency -> {
-                    highlightSelectedButton(highUrgency, R.color.dark_red)
-                    resetOtherButtons(lowUrgency, R.color.light_peach, mediumUrgency, R.color.light_yellow)
+                    animateButton(lowUrgency, 1.0f)
+                    animateButton(mediumUrgency, 1.0f)
+                    animateButton(highUrgency, 1.1f)
                 }
             }
         }
     }
 
-    private fun highlightSelectedButton(selectedButton: RadioButton?, color: Int) {
-        selectedButton?.setBackgroundColor(ContextCompat.getColor(requireContext(), color))
-        selectedButton?.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-        selectedButton?.animate()?.scaleX(1.1f)?.scaleY(1.1f)?.setDuration(200)?.start()
+    private fun animateButton(lowUrgency: RadioButton?, fl: Float) {
+        lowUrgency?.animate()?.scaleX(fl)?.scaleY(fl)?.setDuration(200)?.start()
     }
-
-    private fun resetOtherButtons(button1: RadioButton?, color1: Int, button2: RadioButton?, color2: Int) {
-        button1?.setBackgroundColor(ContextCompat.getColor(requireContext(), color1))
-        button1?.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-        button1?.animate()?.scaleX(1.0f)?.scaleY(1.0f)?.setDuration(200)?.start()
-
-        button2?.setBackgroundColor(ContextCompat.getColor(requireContext(), color2))
-        button2?.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-        button2?.animate()?.scaleX(1.0f)?.scaleY(1.0f)?.setDuration(200)?.start()
-    }
-
-//    private fun setupUrgencyButtons() {
-//            val radioGroup = view?.findViewById<RadioGroup>(R.id.urgencyRadioGroup)
-//            val lowUrgency = view?.findViewById<RadioButton>(R.id.rbLowUrgency)
-//            val mediumUrgency = view?.findViewById<RadioButton>(R.id.rbMediumUrgency)
-//            val highUrgency = view?.findViewById<RadioButton>(R.id.rbHighUrgency)
-//
-//            radioGroup?.setOnCheckedChangeListener { _, checkedId ->
-//                when (checkedId) {
-//                    R.id.rbLowUrgency -> {
-//                        animateButton(lowUrgency, 1.1f)
-//                        animateButton(mediumUrgency, 1.0f)
-//                        animateButton(highUrgency, 1.0f)
-//                    }
-//
-//                    R.id.rbMediumUrgency -> {
-//                        animateButton(lowUrgency, 1.0f)
-//                        animateButton(mediumUrgency, 1.1f)
-//                        animateButton(highUrgency, 1.0f)
-//                    }
-//
-//                    R.id.rbHighUrgency -> {
-//                        animateButton(lowUrgency, 1.0f)
-//                        animateButton(mediumUrgency, 1.0f)
-//                        animateButton(highUrgency, 1.1f)
-//                    }
-//                }
-//            }
-//        }
-//
-//    private fun animateButton(lowUrgency: RadioButton?, fl: Float) {
-//        lowUrgency?.animate()?.scaleX(fl)?.scaleY(fl)?.setDuration(200)?.start()
-//
-//    }
 
 
     private fun updateDynamicSpinner(bloodGroups: Int, s: String) {
-            val options = resources.getStringArray(bloodGroups)
-            val adapter =
-                ArrayAdapter(
-                    requireContext(),
-                    android.R.layout.simple_spinner_dropdown_item,
-                    options
-                )
+        val options = resources.getStringArray(bloodGroups)
+        val adapter =
+            ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                options
+            )
 
-            binding?.tvDynamicSelection?.text = s
-            binding?.tvDynamicSelection?.visibility = View.VISIBLE
-            binding?.spinnerDynamic?.adapter = adapter
-            binding?.spinnerDynamic?.visibility = View.VISIBLE
-        }
+        binding?.tvDynamicSelection?.text = s
+        binding?.tvDynamicSelection?.visibility = View.VISIBLE
+        binding?.spinnerDynamic?.adapter = adapter
+        binding?.spinnerDynamic?.visibility = View.VISIBLE
+    }
 
-        override fun onDestroyView() {
-            super.onDestroyView()
-        }
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
 
 
     companion object {
