@@ -13,7 +13,7 @@ data class DonorsDataClass(
     var gender: String? = "",
     var address : String ?= "",
     var age: String? = "",
-//    var createddate: Date ?= null,
+    var createdDate: String ?="",
     var donationType: String? = "",
     var donationfrequency: String? = "",
     var bloodType: String? = "",

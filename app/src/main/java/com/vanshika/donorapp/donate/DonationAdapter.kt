@@ -13,8 +13,9 @@ import java.text.SimpleDateFormat
 
 class DonationAdapter(
     var donation: ArrayList<DonorsDataClass>,
+    var donationInterface: DonationInterfae,
 
-) :
+    ) :
     RecyclerView.Adapter<DonationAdapter.ViewHolder>() {
     class ViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
         var donationType: TextView = view.findViewById(R.id.textDonationtype)
@@ -36,6 +37,10 @@ class DonationAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.donationType.setText(donation[position].donationType)
+        holder.date.setText(donation[position].createdDate)
+        holder?.itemView?.setOnClickListener {
+            donationInterface.clickInterface(position)
+        }
 //        var calendar = Calendar.getInstance().also {
 //            it.time = donation[position].createddate
 //        }

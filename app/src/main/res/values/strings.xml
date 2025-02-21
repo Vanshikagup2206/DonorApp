@@ -82,6 +82,8 @@
     <string name="date">Date :</string>
     <string name="mydonation">My donation</string>
     <string name="all">All</string>
+    <string name="Enter_date">Enter Date</string>
+    <string name="Name">Name</string>
 </resources>
 
 
