@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentUpdateEmergencyBinding
@@ -25,8 +29,14 @@ class UpdateEmergencyFragment : Fragment() {
     private var param2: String? = null
     var binding: FragmentUpdateEmergencyBinding? = null
     lateinit var donationDatabase: DonationDatabase
+    lateinit var arrayAdapter: ArrayAdapter<String>
+    var locationArray = arrayOf("City Hospital,Delhi", "Capital Hospital,Jalandhar")
+
     var recipientsDataClass = RecipientsDataClass()
     var emergencyRequestList = arrayListOf<RecipientsDataClass>()
+    private var selectedUrgency: Int = 1
+    private var selectedLocation: String = ""
+    private var bloodOrganRequirement: String? = null
     var recipientId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +62,107 @@ class UpdateEmergencyFragment : Fragment() {
 
         donationDatabase = DonationDatabase.getInstance(requireContext())
         getRecipientList()
+        val requirementOptions = resources.getStringArray(R.array.requirement_options)
+        val requirementAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            requirementOptions
+        )
+        binding?.spinnerRequirement?.adapter = requirementAdapter
 
+        // Set a listener to dynamically update the second Spinner
+        binding?.spinnerRequirement?.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedRequirement = requirementOptions[position]
+                    when (selectedRequirement) {
+                        "Blood" -> {
+                            updateDynamicSpinner(R.array.blood_groups, "Select Blood Group")
+                            binding?.llMedicine?.visibility = View.GONE
+                            binding?.llMoney?.visibility = View.GONE
+                            binding?.spinnerDynamic?.visibility = View.VISIBLE
+                        }
+
+                        "Organ" -> {
+                            updateDynamicSpinner(R.array.organ_types, "Select Organ Type")
+                            binding?.llMedicine?.visibility = View.GONE
+                            binding?.llMoney?.visibility = View.GONE
+                            binding?.spinnerDynamic?.visibility = View.VISIBLE
+                        }
+
+                        "Medicine" -> {
+                            binding?.llMedicine?.visibility = View.VISIBLE
+                            binding?.llMoney?.visibility = View.GONE
+                            binding?.spinnerDynamic?.visibility = View.GONE
+                        }
+
+                        "Money" -> {
+                            binding?.llMoney?.visibility = View.VISIBLE
+                            binding?.llMedicine?.visibility = View.GONE
+                            binding?.spinnerDynamic?.visibility = View.GONE
+                        }
+
+                        else -> {
+                            binding?.llMedicine?.visibility = View.GONE
+                            binding?.llMoney?.visibility = View.GONE
+                            binding?.spinnerDynamic?.visibility = View.GONE
+                        }
+                    }
+
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        binding?.spinnerDynamic?.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    bloodOrganRequirement = parent?.getItemAtPosition(position).toString()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        arrayAdapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, locationArray)
+        binding?.spinnerLocation?.adapter = arrayAdapter
+        binding?.spinnerLocation?.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    selectedLocation = locationArray[position]
+                    println("selectedLocation: $selectedLocation")
+
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    TODO("Not yet implemented")
+                }
+            }
+        binding?.urgencyRadioGroup?.setOnCheckedChangeListener { _, checkedId ->
+            selectedUrgency = when (checkedId) {
+                R.id.rbLowUrgency -> 1
+                R.id.rbMediumUrgency -> 2
+                R.id.rbHighUrgency -> 3
+                else -> 1
+            }
+
+        }
+
+        // Populate the spinner
+        setupSpinner()
         binding?.tvRecipientName?.setText(recipientsDataClass.recipientName)
         binding?.tvContactHospital?.setText(recipientsDataClass.contact)
         binding?.etMedicine?.setText(recipientsDataClass.medicineMoneyDetails)
@@ -62,7 +172,85 @@ class UpdateEmergencyFragment : Fragment() {
             2 -> binding?.rbMediumUrgency?.isChecked = true
             3 -> binding?.rbHighUrgency?.isChecked = true
         }
+        binding?.btnUpdate?.setOnClickListener {
+            if (binding?.tvRecipientName?.text?.toString()?.trim()?.isEmpty() == true) {
+                binding?.tvRecipientName?.error = resources.getString(R.string.enter_recipient_name)
+            } else if (binding?.tvContactHospital?.text?.trim()?.isEmpty() == true) {
+                binding?.tvContactHospital?.error =
+                    resources.getString(R.string.enter_hospital_contact)
+            } else if (binding?.urgencyRadioGroup?.checkedRadioButtonId == -1) {
+                Toast.makeText(
+                    requireContext(),
+                    resources.getString(R.string.select_Urgency),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                val requestedItem = binding?.spinnerRequirement?.selectedItem.toString()
+                val selectedRequirement = binding?.spinnerRequirement?.selectedItem?.toString()
+                val selectedLocation = binding?.spinnerLocation?.selectedItem?.toString()
+                val bloodOrganRequirement =
+                    if (selectedRequirement == "Blood" || selectedRequirement == "Organ") {
+                        binding?.spinnerDynamic?.selectedItem?.toString()
+                    } else null
+
+                val medicineMoneyDetails = if (selectedRequirement == "Medicine") {
+                    binding?.etMedicine?.text?.toString()?.trim()
+                } else if (selectedRequirement == "Money") {
+                    binding?.etMoney?.text?.toString()?.trim()
+                } else null
+                donationDatabase.DonationDao().updateEmergencyRequest(
+                    RecipientsDataClass(
+                        recipientId = recipientId,
+                        recipientName = binding?.tvRecipientName?.text?.toString(),
+                        requestedItem = requestedItem,
+                        bloodOrganRequirement = bloodOrganRequirement,
+                        medicineMoneyDetails = medicineMoneyDetails,
+                        location = selectedLocation,
+                        contact = binding?.tvContactHospital?.text?.toString(),
+                        urgencyLevel = selectedUrgency,
+                        )
+                )
+                findNavController().popBackStack()
+            }
+        }
+        getRecipientList()
     }
+
+    private fun updateDynamicSpinner(bloodGroups: Int, s: String) {
+        val options = resources.getStringArray(bloodGroups)
+        val adapter =
+            ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                options
+            )
+
+        binding?.tvDynamicSelection?.text = s
+        binding?.tvDynamicSelection?.visibility = View.VISIBLE
+        binding?.spinnerDynamic?.adapter = adapter
+        binding?.spinnerDynamic?.visibility = View.VISIBLE
+    }
+
+    private fun setupSpinner() {
+        val spinnerItems = listOf("Blood","Organ","Medicine", "Money") // Customize as needed
+        val adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, spinnerItems)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding?.spinnerRequirement?.adapter = adapter
+
+        // Set the previously selected value in the spinner
+        val selectedIndex =
+            spinnerItems.indexOf(recipientsDataClass.bloodOrganRequirement) // Adjust field name accordingly
+        if (selectedIndex >= 0) {
+            binding?.spinnerRequirement?.setSelection(selectedIndex)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
 
     private fun getRecipientList() {
         recipientsDataClass = donationDatabase.DonationDao().getEmergencyRequestAccToId(recipientId)

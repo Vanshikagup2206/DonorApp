@@ -19,6 +19,7 @@ import com.vanshika.donorapp.requests.RecipientsDataClass
 )
 abstract class DonationDatabase : RoomDatabase() {
     abstract fun DonationDao(): DonationDao
+    abstract fun donationDao(): DonationDao
 
     companion object{
         private var donationDatabase: DonationDatabase ?= null
