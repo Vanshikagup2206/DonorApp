@@ -3,6 +3,7 @@ package com.vanshika.donorapp.signInLogIn
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,10 +17,11 @@ import com.vanshika.donorapp.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null
+    var db: FirebaseFirestore ?=null
     var registerBinding: ActivityRegisterBinding? = null
     var sharedPreferences: SharedPreferences? = null
     var editor: SharedPreferences.Editor? = null
-    private var fireStore = FirebaseFirestore.getInstance()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +35,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
         sharedPreferences = getSharedPreferences("R.string.app_name", MODE_PRIVATE)
         editor = sharedPreferences?.edit()
 
@@ -84,10 +87,8 @@ class RegisterActivity : AppCompatActivity() {
                     "aadhaarNumber" to aadhaarNumber,
                     "qrData" to qrData
                 )
-                fireStore.collection("users").document(userId).set(userMap)
-                    .addOnSuccessListener {
-                        Toast.makeText(this, "User Registered Successfully!", Toast.LENGTH_SHORT)
-                            .show()
+                db?.collection("users")?.document(userId)?.set(userMap)
+                    ?.addOnSuccessListener {
                         // Save to shared preferences
                         editor?.putString("userId", userId)
                         editor?.putString("name", name)
@@ -96,11 +97,12 @@ class RegisterActivity : AppCompatActivity() {
                         editor?.putString("qrData", qrData)
                         editor?.apply()
                         Toast.makeText(this, "Registration complete!", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this, MainActivity::class.java))
+                        startActivity(Intent(this, LogInActivity::class.java))
                         finish()
                     }
-                    .addOnFailureListener {
-                        Toast.makeText(this, "Failed to store user data", Toast.LENGTH_SHORT).show()
+                    ?.addOnFailureListener {e->
+                        Log.e("Firestore", "Error saving user data", e)
+
                     }
             } else {
                 Toast.makeText(
