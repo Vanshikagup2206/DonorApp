@@ -37,9 +37,7 @@ class ProfileFragment : Fragment() {
     var sharedPreferences: SharedPreferences? = null
     var editor: SharedPreferences.Editor? = null
     private var navController: NavController? = null
-
     private var fireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
-
     private var param1: String? = null
     private var param2: String? = null
 
@@ -93,14 +91,14 @@ class ProfileFragment : Fragment() {
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
                 dialogBinding.etProfileMail.setText(auth?.currentUser?.email.toString())
-                dialogBinding.etProfileName.setText(sharedPreferences?.getString("username", ""))
+                dialogBinding.etProfileName.setText(sharedPreferences?.getString("name", ""))
                 show()
                 dialogBinding.imgConfirm.setOnClickListener {
                     if (dialogBinding.etProfileName.text.toString()
                             .isNotEmpty() && dialogBinding.etProfileName.text.toString()
                             .isNotEmpty()
                     ) {
-                        editor?.putString("username", dialogBinding.etProfileName.text.toString())
+                        editor?.putString("name", dialogBinding.etProfileName.text.toString())
                         editor?.putString("email", dialogBinding.etProfileMail.text.toString())
                         val user = FirebaseAuth.getInstance().currentUser
                         user?.delete()

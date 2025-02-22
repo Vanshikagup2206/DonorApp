@@ -13,7 +13,7 @@ import com.vanshika.donorapp.requests.HospitalsDataClass
 import com.vanshika.donorapp.requests.RecipientsDataClass
 
 @Database(
-    entities = [DonorsDataClass::class, RecipientsDataClass::class, HospitalsDataClass::class, DonationsDataClass::class, HealthRecordsDataClass::class, SOSRequestsDataClass::class],
+    entities = [DonorsDataClass::class, RecipientsDataClass::class, HospitalsDataClass::class, DonationsDataClass::class, HealthRecordsDataClass::class, SOSRequestsDataClass::class, UsersDataClass::class],
     version = 1,
     exportSchema = true
 )

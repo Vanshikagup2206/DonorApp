@@ -38,5 +38,9 @@ interface DonationDao {
 
     @Query("SELECT * FROM RecipientsDataClass WHERE urgencyLevel =:urgencyLevel")
     fun getHighEmergencyList(urgencyLevel : Int) : List<RecipientsDataClass>
+
+    // Token
+    @Insert
+    fun insertToken(usersDataClass: UsersDataClass)
 }
 
