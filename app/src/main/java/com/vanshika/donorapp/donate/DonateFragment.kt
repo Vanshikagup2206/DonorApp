@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentDonateBinding
@@ -24,7 +26,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [DonateFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class DonateFragment : Fragment(),DonationInterfae {
+class DonateFragment : Fragment(), DonationInterfae {
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -111,6 +113,10 @@ class DonateFragment : Fragment(),DonationInterfae {
     }
 
     override fun clickInterface(positive: Int) {
-        findNavController().navigate(R.id.donationDetailsFragment)
+        var convertToString = Gson().toJson(donation[positive])
+        val bundle = bundleOf(
+            "id" to donation[positive].donorId
+        )
+        findNavController().navigate(R.id.donationDetailsFragment, bundle)
     }
 }

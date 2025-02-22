@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentDonationDetailsBinding
 
@@ -24,12 +25,15 @@ class DonationDetailsFragment : Fragment() {
     private var param2: String? = null
     var binding: FragmentDonationDetailsBinding? = null
     var donorsDataClass = DonorsDataClass()
-
+    lateinit var donationDatabase: DonationDatabase
+    var donorId =0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+            donorId = it.getInt("id",0)
+
         }
     }
 
@@ -44,10 +48,16 @@ class DonationDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        donationDatabase = DonationDatabase.getInstance(requireContext())
+        getDonorList()
         binding?.donorName?.text = donorsDataClass.donorName
         binding?.donationType?.text = donorsDataClass.donationType
         binding?.donorGender?.text = donorsDataClass.gender
         binding?.donorAddress?.text = donorsDataClass.address
+    }
+
+    private fun getDonorList() {
+        donorsDataClass = donationDatabase.DonationDao().getDonorById(donorId)
     }
 
     companion object {
