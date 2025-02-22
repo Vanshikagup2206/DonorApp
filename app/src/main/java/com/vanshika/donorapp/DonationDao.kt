@@ -41,5 +41,12 @@ interface DonationDao {
 
     @Query("SELECT * FROM RecipientsDataClass WHERE urgencyLevel =:urgencyLevel")
     fun getHighEmergencyList(urgencyLevel : Int) : List<RecipientsDataClass>
+
+    @Dao
+    interface DonationDao {
+        @Query("SELECT latitude, longitude FROM donors WHERE id = :donorId")
+        fun getDonorLocation(donorId: Int): DonarLocation
+    }
+
 }
 

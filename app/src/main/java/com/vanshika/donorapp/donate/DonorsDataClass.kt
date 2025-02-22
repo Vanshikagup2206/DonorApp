@@ -19,4 +19,13 @@ data class DonorsDataClass(
     var bloodType: String? = "",
     var number: String? = "",
 
+    ) {
+
+    @Entity(tableName = "donors")
+    data class Donor(
+        @PrimaryKey(autoGenerate = true) val id: Int,
+        val name: String,
+        val latitude: Double,
+        val longitude: Double
     )
+}
