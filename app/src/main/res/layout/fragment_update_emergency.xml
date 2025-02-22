@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_bg"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_16"
+    tools:context=".requests.UpdateEmergencyFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="@dimen/dp_10"
+        android:text="@string/emergency_request_details"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_22"
+        android:textStyle="bold" />
+
+    <!-- Card for Recipient Details -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/neumorphic_card"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_16">
+
+        <EditText
+            android:id="@+id/tvRecipientName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_18"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Select Requirement"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/spinnerRequirement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/neumorphic_edittext"
+            android:padding="8dp" />
+
+        <!-- Dynamic Spinner for Blood Groups or Organ Types -->
+        <TextView
+            android:id="@+id/tvDynamicSelection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Select an Option"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:visibility="gone" />  <!-- Initially hidden -->
+
+        <Spinner
+            android:id="@+id/spinnerDynamic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/neumorphic_edittext"
+            android:padding="8dp"
+            android:visibility="gone" />  <!-- Initially hidden -->
+        <LinearLayout
+            android:id="@+id/llMedicine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/enter_your_medicine_type"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_16" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/etMedicine"
+                android:hint="@string/enter_your_medicine_type"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llMoney"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/enter_money"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_16" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/etMoney"
+                android:hint="@string/enter_money"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Select Location"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/spinnerLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/neumorphic_edittext"
+            android:entries="@array/Location"
+            android:padding="8dp" />
+
+
+        <EditText
+            android:id="@+id/tvContactHospital"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/contact_hospital"
+            android:inputType="number"
+            android:maxLength="10"
+            android:paddingTop="@dimen/dp_10"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Urgency Level"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/urgencyRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbLowUrgency"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button_selector"
+                android:button="@android:color/transparent"
+                android:clickable="true"
+                android:padding="10dp"
+                android:text="Low"
+                android:textColor="@color/white" />
+
+            <RadioButton
+                android:id="@+id/rbMediumUrgency"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button_selector"
+                android:button="@android:color/transparent"
+                android:clickable="true"
+                android:padding="10dp"
+                android:text="Medium"
+                android:textColor="@color/white" />
+
+            <RadioButton
+                android:id="@+id/rbHighUrgency"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button_selector"
+                android:button="@android:color/transparent"
+                android:clickable="true"
+                android:padding="10dp"
+                android:text="High"
+                android:textColor="@color/white" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/neumorphic_button"
+            android:padding="@dimen/dp_12"
+            android:text="@string/update"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</LinearLayout>

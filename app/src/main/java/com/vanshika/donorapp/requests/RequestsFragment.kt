@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentRequestsBinding
@@ -126,10 +128,16 @@ class RequestsFragment : Fragment(),RequestInterface {
     }
 
     override fun editRequest(position: Int) {
-//        val bundle = Bundle().apply {
-//            putInt("recipientId", position.recipientId)
-//        }
-//        findNavController().navigate(R.id.action_editRecipient, bundle)
+        var convertToString = Gson().toJson(emergencyRequestList[position])
+        val bundle = bundleOf(
+            "id" to emergencyRequestList[position].recipientId,
+            "name" to convertToString,
+            "requirement" to convertToString,
+            "location" to convertToString,
+            "contactNo" to convertToString,
+            "urgencyLevel" to convertToString
+        )
+        findNavController().navigate(R.id.updateEmergencyFragment, bundle)
     }
 
     override fun deleteRequest(position: Int) {

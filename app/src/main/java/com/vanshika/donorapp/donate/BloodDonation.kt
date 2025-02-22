@@ -1,5 +1,6 @@
 package com.vanshika.donorapp.donate
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentBloodDonationBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +30,10 @@ class BloodDonation : Fragment() {
     private var param2: String? = null
     var binding: FragmentBloodDonationBinding? = null
     var bloodDonation = arrayListOf<DonorsDataClass>()
+    var calendar = android.icu.util.Calendar.getInstance()
+    var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+
+
     lateinit var donorDatabase: DonationDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +56,24 @@ class BloodDonation : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding?.donationDate?.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(
+                requireContext(),
+//                R.style.MyDatePickerStyle,
+                { _, year, month, date ->
+                    calendar.set(year, month, date)
+                    binding?.donationDate?.setText(simpleDateFormat.format(calendar.time))
+                },
+                android.icu.util.Calendar.getInstance().get(android.icu.util.Calendar.YEAR),
+                android.icu.util.Calendar.getInstance().get(android.icu.util.Calendar.MONTH),
+                android.icu.util.Calendar.getInstance().get(android.icu.util.Calendar.DATE),
+            )
+            val calendar = android.icu.util.Calendar.getInstance()
+            datePickerDialog.datePicker.minDate = calendar.timeInMillis
+            calendar.add(android.icu.util.Calendar.YEAR, +1)
+            datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+            datePickerDialog.show()
+        }
         binding?.submitButton?.setOnClickListener {
             if (binding?.nameEditText?.text.toString().isNullOrEmpty()) {
                 binding?.nameEditText?.error = "Fill Your Name"
@@ -66,6 +91,8 @@ class BloodDonation : Fragment() {
 
             } else if (binding?.donationFrequencyEditText?.text.toString().isNullOrEmpty()) {
                 binding?.donationFrequencyEditText?.setError("Fill the frequency")
+            } else if (binding?.donationDate?.text.toString().isEmpty()) {
+                binding?.donationDate?.error = resources.getString(R.string.Enter_date)
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -83,7 +110,7 @@ class BloodDonation : Fragment() {
                         bloodType = binding?.bloodGroupEditText?.text.toString(),
                         donationfrequency = binding?.donationFrequencyEditText?.text?.toString(),
                         donationType = "Blood",
-//                        createddate = Calendar.getInstance().time
+                        createdDate = binding?.donationDate?.text?.toString()
 
                     )
                 )

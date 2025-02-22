@@ -17,8 +17,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
+import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentMapBinding
+import com.vanshika.donorapp.donate.DonorsDataClass
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,6 +47,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private var mGoogleMap : GoogleMap ?= null
     private var fromLatLng: LatLng?= null
     private var toLatLng: LatLng? = null
+    private var donorId: Int = 1 // Replace with actual donor ID
+
     private val waypoints = mutableListOf<LatLng>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,6 +85,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 searchLocation(fromLocation, isFrom = true)
                 searchLocation(toLocation, isFrom = false)
             }
+//                val database = DonationDatabase.getInstance(requireContext())
+//                val donor = Donor(0, "John Doe", 37.7749, -122.4194) // Example
+//
+//                Thread {
+//                    database.donationDao().insertDonor(DonorsDataClass() )  // Insert donor in background thread
+//
+//                    // Show Toast on the main UI thread
+//                    requireActivity().runOnUiThread {
+//                        Toast.makeText(requireContext(), "Donor Added", Toast.LENGTH_SHORT).show()
+//                    }
+//                }.start()
+            
         }
     }
 
@@ -176,5 +192,20 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mGoogleMap = googleMap
         Toast.makeText(requireContext(), "Map Loaded Successfully!", Toast.LENGTH_SHORT).show()
         println("Google Map is ready!")
+        //showDonorLocation()
     }
+
+//    private fun showDonorLocation() {
+//        val database = DonationDatabase.getInstance(requireContext())
+//        val donor = database.donationDao().getDonorById(donorId)
+//
+//        if (donor != null) {
+//            val location = LatLng(donor.latitude, donor.longitude)
+//            map.addMarker(MarkerOptions().position(location).title("Donor Location"))
+//            map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 14f))
+//        } else {
+//            Toast.makeText(requireContext(), "Donor location not found", Toast.LENGTH_SHORT).show()
+//        }
+//    }
+
 }

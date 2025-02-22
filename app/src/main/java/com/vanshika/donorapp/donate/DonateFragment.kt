@@ -1,13 +1,18 @@
 package com.vanshika.donorapp.donate
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentDonateBinding
 
@@ -21,12 +26,16 @@ private const val ARG_PARAM2 = "param2"
  * Use the [DonateFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class DonateFragment : Fragment() {
+class DonateFragment : Fragment(), DonationInterfae {
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     var binding: FragmentDonateBinding? = null
-    private var navController: NavController? = null
+    lateinit var donationDatabase: DonationDatabase
+    lateinit var donationAdapter: DonationAdapter
+    lateinit var linearLayoutManager: LinearLayoutManager
+    var donation = arrayListOf<DonorsDataClass>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -41,6 +50,8 @@ class DonateFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentDonateBinding.inflate(layoutInflater)
+        donationDatabase = DonationDatabase.getInstance(requireContext())
+
         return binding?.root
         // return inflater.inflate(R.layout.fragment_donate, container, false)
     }
@@ -48,6 +59,14 @@ class DonateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Toast.makeText(requireContext(), "Choose any category to donate", Toast.LENGTH_LONG).show()
+        donationAdapter = DonationAdapter(donation, this)
+        linearLayoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding?.rvMyDonation?.layoutManager =
+            linearLayoutManager
+        binding?.rvMyDonation?.adapter = donationAdapter
+        getDonationList()
+        donationAdapter.notifyDataSetChanged()
 
         binding?.blood?.setOnClickListener {
             findNavController().navigate(R.id.blood_donation)
@@ -64,6 +83,13 @@ class DonateFragment : Fragment() {
 //        binding?.btnDonateNow?.setOnClickListener {
 //            findNavController().navigate(R.id.donate_Queries)
 //        }
+    }
+
+    private fun getDonationList() {
+        donation.clear()
+        donation.addAll(donationDatabase.DonationDao().getDonatonList())
+        Log.d("MyDonation", "Donation List: $donation") // Log the donation list
+        donationAdapter.notifyDataSetChanged()
     }
 
     companion object {
@@ -84,5 +110,13 @@ class DonateFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun clickInterface(positive: Int) {
+        var convertToString = Gson().toJson(donation[positive])
+        val bundle = bundleOf(
+            "id" to donation[positive].donorId
+        )
+        findNavController().navigate(R.id.donationDetailsFragment, bundle)
     }
 }

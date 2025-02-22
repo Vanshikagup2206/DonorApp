@@ -83,6 +83,9 @@
     <string name="mydonation">My donation</string>
     <string name="all">All</string>
     <string name="default_notification_channel_id">donor_alerts</string>
+    <string name="Enter_date">Enter Date</string>
+    <string name="Name">Name</string>
+    <string name="update">Update</string>
 </resources>
 
 

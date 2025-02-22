@@ -55,10 +55,16 @@
         android:label="fragment_emergency_request"
         tools:layout="@layout/fragment_emergency_request" />
     <fragment
-        android:id="@+id/myDonation"
-        android:name="com.vanshika.donorapp.donate.MyDonation"
-        android:label="fragment_my_donation"
-        tools:layout="@layout/fragment_my_donation" />
+        android:id="@+id/donationDetailsFragment"
+        android:name="com.vanshika.donorapp.donate.DonationDetailsFragment"
+        android:label="fragment_donation_details"
+        tools:layout="@layout/fragment_donation_details" />
+
+    <fragment
+        android:id="@+id/updateEmergencyFragment"
+        android:name="com.vanshika.donorapp.requests.UpdateEmergencyFragment"
+        android:label="fragment_update_emergency"
+        tools:layout="@layout/fragment_update_emergency" />
 
 
 </navigation>

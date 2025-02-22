@@ -26,14 +26,7 @@
             android:textStyle="bold" />
 
         <!-- Requirement Type -->
-<!--        <TextView-->
-<!--            android:id="@+id/tvRequirement"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:paddingBottom="4dp"-->
-<!--            android:text="@string/Requirement"-->
-<!--            android:textColor="@color/dark_gray"-->
-<!--            android:textSize="16sp" />-->
+
         <TextView
             android:id="@+id/tvRequirement"
             android:layout_width="wrap_content"
