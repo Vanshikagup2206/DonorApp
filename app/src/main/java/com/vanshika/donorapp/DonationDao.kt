@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.vanshika.donorapp.donate.DonorsDataClass
+import com.vanshika.donorapp.profile.HealthRecordsDataClass
 import com.vanshika.donorapp.requests.RecipientsDataClass
 
 @Dao
@@ -45,6 +46,9 @@ interface DonationDao {
     // Token
     @Insert
     fun insertToken(usersDataClass: UsersDataClass)
+
+    @Insert
+    fun insertHealthRecords(healthRecordsDataClass: HealthRecordsDataClass)
 
 }
 
