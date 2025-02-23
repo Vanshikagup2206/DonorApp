@@ -63,9 +63,6 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        binding?.btnMydonation?.setOnClickListener {
-//           findNavController().navigate(R.id.myDonation)
-//        }
         auth = FirebaseAuth.getInstance()
         fireStore = FirebaseFirestore.getInstance()
         sharedPreferences = requireActivity().getSharedPreferences(
