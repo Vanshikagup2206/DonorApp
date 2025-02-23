@@ -73,8 +73,8 @@ class OrganDonation : Fragment() {
                         gender = binding?.GenderEditText?.text.toString(),
                         number = binding?.numberEditText?.text?.toString(),
                         donationType = "Organ",
-//                        createddate = Calendar.getInstance().time
-
+                        latitude = 28.6139,
+                        longitude = 77.2090
                     )
                 )
                 findNavController().navigate(R.id.donateFragment)

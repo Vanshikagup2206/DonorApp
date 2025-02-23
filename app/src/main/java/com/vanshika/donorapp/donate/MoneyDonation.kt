@@ -74,8 +74,8 @@ class MoneyDonation : Fragment() {
                         gender = binding?.editGender?.text?.toString(),
                         donationfrequency = binding?.editAmount?.text?.toString(),
                         donationType = "Money",
-//                        createddate = Calendar.getInstance().time
-
+                        latitude = 28.6139,
+                        longitude = 77.2090
                     )
                 )
                 findNavController().navigate(R.id.donateFragment)

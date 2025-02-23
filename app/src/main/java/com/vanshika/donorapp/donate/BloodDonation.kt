@@ -2,15 +2,26 @@ package com.vanshika.donorapp.donate
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.StreetViewPanoramaLocation
 import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentBloodDonationBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import java.net.HttpURLConnection
+import java.net.URL
+import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
@@ -99,25 +110,77 @@ class BloodDonation : Fragment() {
                     "Your Details is Filled Successfully!",
                     Toast.LENGTH_SHORT
                 ).show();
+                val donorAddress = binding?.addrEditText?.text?.toString()
+                searchLocation(donorAddress ?: "", isFrom = true) { latLng ->
+                    if (latLng != null) {
+                        donorDatabase.DonationDao().insertDonor(
+                            DonorsDataClass(
+                                donorName = binding?.nameEditText?.text?.toString(),
+//                        address = binding?.addrEditText?.text?.toString(),
+                                address = donorAddress,
+                                age = binding?.ageEditText?.text?.toString(),
+                                gender = binding?.genderEdittext?.text?.toString(),
+                                number = binding?.contactEditText?.text?.toString(),
+                                bloodType = binding?.bloodGroupEditText?.text.toString(),
+                                donationfrequency = binding?.donationFrequencyEditText?.text?.toString(),
+                                donationType = "Blood",
+                                createdDate = binding?.donationDate?.text?.toString(),
+                                latitude = 28.6139,
+                                longitude = 77.2090
 
-                donorDatabase.DonationDao().insertDonor(
-                    DonorsDataClass(
-                        donorName = binding?.nameEditText?.text?.toString(),
-                        address = binding?.addrEditText?.text?.toString(),
-                        age = binding?.ageEditText?.text?.toString(),
-                        gender = binding?.genderEdittext?.text?.toString(),
-                        number = binding?.contactEditText?.text?.toString(),
-                        bloodType = binding?.bloodGroupEditText?.text.toString(),
-                        donationfrequency = binding?.donationFrequencyEditText?.text?.toString(),
-                        donationType = "Blood",
-                        createdDate = binding?.donationDate?.text?.toString()
+                            )
+                        )
+                        Toast.makeText(
+                            requireContext(),
+                            "Donor Added Successfully!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    findNavController().navigate(R.id.donateFragment)
+                }
+            }
+        }
 
-                    )
-                )
-                findNavController().navigate(R.id.donateFragment)
+    }
+
+    private fun searchLocation(location: String, isFrom: Boolean, onResult: (LatLng?) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val url = URL("https://nominatim.openstreetmap.org/search?format=json&q=${URLEncoder.encode(location, "UTF-8")}")
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "GET"
+                connection.connect()
+
+                val response = connection.inputStream.bufferedReader().use { it.readText() }
+                val jsonArray = JSONArray(response)
+
+                withContext(Dispatchers.Main) {
+                    if (jsonArray.length() > 0) {
+                        val locationData = jsonArray.getJSONObject(0)
+                        val lat = locationData.getDouble("lat")
+                        val lon = locationData.getDouble("lon")
+                        val latLng = LatLng(lat, lon)
+
+                        Log.d("LocationDebug", "Address: $location -> LatLng: $latLng")
+
+                        onResult(latLng)
+                    } else {
+                        Log.e("LocationDebug", "Location not found: $location")
+                        Toast.makeText(requireContext(), "Location not found!", Toast.LENGTH_SHORT).show()
+                        onResult(null)
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("LocationError", "Error fetching location: ${e.message}")
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "Failed to fetch location!", Toast.LENGTH_SHORT).show()
+                }
+                onResult(null)
             }
         }
     }
+
+
 
     companion object {
         /**
