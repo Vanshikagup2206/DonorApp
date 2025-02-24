@@ -47,9 +47,6 @@ interface DonationDao {
     @Insert
     fun insertToken(usersDataClass: UsersDataClass)
 
-
-
-
     @Insert
     fun insertHealthRecords(healthRecordsDataClass: HealthRecordsDataClass)
 

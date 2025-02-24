@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -52,7 +53,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private var fromLatLng: LatLng? = null
     private var toLatLng: LatLng? = null
     private var donorId: Int = 1 // Replace with actual donor ID
-
     private val waypoints = mutableListOf<LatLng>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,7 +112,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         val lat = locationData.getDouble("lat").toDouble()
                         val lon = locationData.getDouble("lon").toDouble()
                         val latLng = LatLng(lat, lon)
-
+                        // 🛠 Debugging: Log the fetched lat/lon
+                        Log.d("LocationDebug", "Location: $location, Lat: $lat, Lon: $lon")
                         if (isFrom) {
                             fromLatLng = latLng
                         } else {
@@ -120,6 +121,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         }
 
                         mGoogleMap?.addMarker(MarkerOptions().position(latLng).title(location))
+
+                        // 🌟 Ensure Map Moves to Correct Location
+                        mGoogleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12f))
 
                         if (fromLatLng != null && toLatLng != null) {
                             drawRoute()
@@ -140,8 +144,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             connection.requestMethod = "GET"
             connection.connect()
             val inputStream = connection.inputStream.bufferedReader().use { it.readText() }
+            // 🛠 Debug API Response
+            Log.d("LocationAPI", "Response: $inputStream")
             JSONArray(inputStream).takeIf { it.length() > 0 }
         } catch (e: Exception) {
+            Log.e("LocationAPI", "Error fetching location", e)
             null
         }
     }
@@ -207,11 +214,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         CoroutineScope(Dispatchers.IO).launch {
             val donors = DonationDatabase.getInstance(requireContext())
                 .DonationDao()
-                .getDonatonList()  // Database se saare donors le aao
+                .getDonationList()  // Database se saare donors le aao
 
             withContext(Dispatchers.Main) {
                 for (donor in donors) {
                     val location = LatLng(donor.latitude, donor.longitude)
+                    // 🛠 Debugging: Check stored lat/lon values
+                    Log.d("DonorLocation", "Donor ID: ${donor.donorId}, Lat: ${donor.latitude}, Lon: ${donor.longitude}")
                     addMarker(location, donor.donationType.toString())
                 }
             }
@@ -227,39 +236,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             else -> R.drawable.defalut
         }
         val smallMarkerIcon = resizeMapIcon(icon, 50, 50)
-    }
-
-    private fun loadDonorLocations() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val donors = DonationDatabase.getInstance(requireContext())
-                .DonationDao()
-                .getDonatonList()  // Database se saare donors le aao
-
-            withContext(Dispatchers.Main) {
-                for (donor in donors) {
-                    val location = LatLng(donor.latitude, donor.longitude)
-                    addMarker(location, donor.donationType.toString())
-                }
-            }
-        }
-    }
-
-    private fun addMarker(location: LatLng, donationType: Any) {
-        val icon = when (donationType) {
-            "Blood" -> R.drawable.blood
-            "Medicine" -> R.drawable.medicine
-            "Money" -> R.drawable.money
-            "Organ" -> R.drawable.organ
-            else -> R.drawable.defalut
-        }
-
         mGoogleMap?.addMarker(
             MarkerOptions()
                 .position(location)
                 .title("$donationType Donor")
-//                .icon(BitmapDescriptorFactory.fromResource(icon))
                 .icon(smallMarkerIcon)
-                .icon(BitmapDescriptorFactory.fromResource(icon))
         )
     }
 

@@ -140,21 +140,59 @@ class BloodDonation : Fragment() {
                 }
             }
         }
-                donorDatabase.DonationDao().insertDonor(
-                    DonorsDataClass(
-                        donorName = binding?.nameEditText?.text?.toString(),
-                        address = binding?.addrEditText?.text?.toString(),
-                        age = binding?.ageEditText?.text?.toString(),
-                        gender = binding?.genderEdittext?.text?.toString(),
-                        number = binding?.contactEditText?.text?.toString(),
-                        bloodType = binding?.bloodGroupEditText?.text.toString(),
-                        donationfrequency = binding?.donationFrequencyEditText?.text?.toString(),
-                        donationType = "Blood",
-                        createdDate = binding?.donationDate?.text?.toString(),
-                        latitude = 28.6139,
-                        longitude = 77.2090
-                    )
-                )
+        val address = binding?.addrEditText?.text?.toString()
+
+        if (!address.isNullOrEmpty()) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val latLng = getLatLngFromAddress(address)
+
+                withContext(Dispatchers.Main) {
+                    if (latLng != null) {
+                        donorDatabase.DonationDao().insertDonor(
+                            DonorsDataClass(
+                                donorName = binding?.nameEditText?.text?.toString(),
+                                address = binding?.addrEditText?.text?.toString(),
+                                age = binding?.ageEditText?.text?.toString(),
+                                gender = binding?.genderEdittext?.text?.toString(),
+                                number = binding?.contactEditText?.text?.toString(),
+                                bloodType = binding?.bloodGroupEditText?.text.toString(),
+                                donationfrequency = binding?.donationFrequencyEditText?.text?.toString(),
+                                donationType = "Blood",
+                                createdDate = binding?.donationDate?.text?.toString(),
+                                latitude = latLng.latitude,
+                                longitude = latLng.longitude
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getLatLngFromAddress(address: String): LatLng? {
+        return try {
+            val url = "https://nominatim.openstreetmap.org/search?format=json&q=$address"
+            val connection = URL(url).openConnection() as HttpURLConnection
+            connection.requestMethod = "GET"
+            connection.connect()
+
+            val inputStream = connection.inputStream.bufferedReader().use { it.readText() }
+            val responseArray = JSONArray(inputStream)
+
+            if (responseArray.length() > 0) {
+                val locationData = responseArray.getJSONObject(0)
+                val lat = locationData.getDouble("lat")
+                val lon = locationData.getDouble("lon")
+                Log.d("Geocode", "Address: $address -> Lat: $lat, Lon: $lon")
+                LatLng(lat, lon)
+            } else {
+                Log.e("Geocode", "No location found for address: $address")
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("Geocode", "Error fetching coordinates", e)
+            null
+        }
     }
 
     private fun searchLocation(location: String, isFrom: Boolean, onResult: (LatLng?) -> Unit) {
