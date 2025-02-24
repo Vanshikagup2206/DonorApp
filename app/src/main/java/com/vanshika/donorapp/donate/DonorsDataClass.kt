@@ -18,6 +18,14 @@ data class DonorsDataClass(
     var donationfrequency: String? = "",
     var bloodType: String? = "",
     var number: String? = "",
+    val isHealthy: Boolean ? = null,
+    val traveledRecently: Boolean ? = null,
+    val tookMedication: Boolean ? = null,
+    val consumesAlcohol: Boolean ? = null,
+    val diabities : Boolean ? = null,
+    val hadRecentSurgery: Boolean?= null,
+    val tookRecentVaccine: Boolean ?= null,
+    val bloodPressur : Boolean ?= null
 
     ) {
 

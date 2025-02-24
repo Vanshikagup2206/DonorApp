@@ -11,163 +11,180 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_20"
-        android:backgroundTint="#EB6060">
-
-
-        <!-- Quote text in the CardView -->
-        <TextView
-            android:id="@+id/card_quote"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:text="“A donation of medicine can be a lifeline for those in need. Your generosity counts.”"
-            android:textAlignment="center"
+            android:layout_margin="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:backgroundTint="#EB6060">
+
+
+            <!-- Quote text in the CardView -->
+            <TextView
+                android:id="@+id/card_quote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:padding="@dimen/dp_10"
+                android:text="“A donation of medicine can be a lifeline for those in need. Your generosity counts.”"
+                android:textAlignment="center"
+                android:textColor="#333333"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/donor_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
             android:padding="@dimen/dp_10"
-            android:textColor="#333333"
+            android:text="Could your contribution of medicine help provide relief to someone in need?"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <!-- Ask for the donor's details -->
+        <TextView
+            android:id="@+id/ask_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:fontFamily="sans-serif-medium"
+            android:inputType="textPersonName"
+            android:padding="@dimen/dp_10"
+            android:text="Please enter your name:"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_border"
+            android:hint="Your Name"
+            android:inputType="textPersonName"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/ask_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:padding="@dimen/dp_10"
+            android:text="Please enter your contact number:"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_border"
+            android:hint="Your Contact Number"
+            android:inputType="phone"
+            android:padding="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:padding="@dimen/dp_10"
+            android:text="Gender"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/gender_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_12" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:padding="@dimen/dp_10"
+            android:text="Age"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_Age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_border"
+            android:hint="Your Age"
+            android:inputType="phone"
+            android:padding="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="When You want to donate"
+            android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
-    </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/donor_question"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:padding="@dimen/dp_10"
-        android:text="Could your contribution of medicine help provide relief to someone in need?"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textSize="16sp" />
 
-    <!-- Ask for the donor's details -->
-    <TextView
-        android:id="@+id/ask_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_20"
-        android:fontFamily="sans-serif-medium"
-        android:inputType="textPersonName"
-        android:padding="@dimen/dp_10"
-        android:text="Please enter your name:"
-        android:textColor="#000000"
-        android:textSize="16sp" />
+        <EditText
+            android:id="@+id/donationDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_border"
+            android:enabled="false"
+            android:hint="choose Date"
+            android:padding="12dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
-    <EditText
-        android:id="@+id/edit_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_border"
-        android:hint="Your Name"
-        android:inputType="textPersonName"
-        android:padding="10dp" />
+        <TextView
+            android:id="@+id/ask_medicine_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:padding="@dimen/dp_10"
+            android:text="What type of medicine would you like to donate?"
+            android:textColor="#000000"
+            android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/ask_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:padding="@dimen/dp_10"
-        android:text="Please enter your contact number:"
-        android:textColor="#000000"
-        android:textSize="16sp" />
+        <EditText
+            android:id="@+id/edit_medicine_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_border"
+            android:hint="Medicine Type (e.g., Painkillers, Antibiotics)"
+            android:inputType="text"
+            android:padding="10dp" />
 
-    <EditText
-        android:id="@+id/edit_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_border"
-        android:hint="Your Contact Number"
-        android:inputType="phone"
-        android:padding="10dp" />
+        <TextView
+            android:id="@+id/ask_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:padding="@dimen/dp_10"
+            android:text="Please enter the amount of medicine you'd like to donate:"
+            android:textColor="#000000"
+            android:textSize="16sp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:padding="@dimen/dp_10"
-        android:text="Gender"
-        android:textColor="#000000"
-        android:textSize="16sp" />
+        <EditText
+            android:id="@+id/edit_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_border"
+            android:hint="Amount (in units or weight)"
+            android:inputType="numberDecimal"
+            android:padding="10dp" />
 
-    <EditText
-        android:id="@+id/edit_Gender"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_border"
-        android:hint="Your Gender"
-        android:inputType="text"
-        android:padding="10dp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:padding="@dimen/dp_10"
-        android:text="Age"
-        android:inputType="number"
-        android:textColor="#000000"
-        android:textSize="16sp" />
-
-    <EditText
-        android:id="@+id/edit_Age"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_border"
-        android:hint="Your Age"
-        android:inputType="phone"
-        android:padding="10dp" />
-
-    <TextView
-        android:id="@+id/ask_medicine_type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:padding="@dimen/dp_10"
-        android:text="What type of medicine would you like to donate?"
-        android:textColor="#000000"
-        android:textSize="16sp" />
-
-    <EditText
-        android:id="@+id/edit_medicine_type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_border"
-        android:hint="Medicine Type (e.g., Painkillers, Antibiotics)"
-        android:inputType="text"
-        android:padding="10dp" />
-
-    <TextView
-        android:id="@+id/ask_amount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:padding="@dimen/dp_10"
-        android:text="Please enter the amount of medicine you'd like to donate:"
-        android:textColor="#000000"
-        android:textSize="16sp" />
-
-    <EditText
-        android:id="@+id/edit_amount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_border"
-        android:hint="Amount (in units or weight)"
-        android:inputType="numberDecimal"
-        android:padding="10dp" />
-
-    <!-- Submit Button -->
-    <Button
-        android:id="@+id/submit_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_20"
-        android:padding="@dimen/dp_10"
-        android:text="Donate Medicine" />
+        <!-- Submit Button -->
+        <Button
+            android:id="@+id/submit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_20"
+            android:padding="@dimen/dp_10"
+            android:text="Donate Medicine" />
 
     </LinearLayout>
 
