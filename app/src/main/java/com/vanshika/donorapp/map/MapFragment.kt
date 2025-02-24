@@ -2,6 +2,8 @@ package com.vanshika.donorapp.map
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +16,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
@@ -85,17 +89,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 searchLocation(fromLocation, isFrom = true)
                 searchLocation(toLocation, isFrom = false)
             }
-//                val database = DonationDatabase.getInstance(requireContext())
-//                val donor = Donor(0, "John Doe", 37.7749, -122.4194) // Example
-//
-//                Thread {
-//                    database.donationDao().insertDonor(DonorsDataClass() )  // Insert donor in background thread
-//
-//                    // Show Toast on the main UI thread
-//                    requireActivity().runOnUiThread {
-//                        Toast.makeText(requireContext(), "Donor Added", Toast.LENGTH_SHORT).show()
-//                    }
-//                }.start()
             
         }
     }
@@ -192,20 +185,44 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mGoogleMap = googleMap
         Toast.makeText(requireContext(), "Map Loaded Successfully!", Toast.LENGTH_SHORT).show()
         println("Google Map is ready!")
-        //showDonorLocation()
+        loadDonorLocations()
+    }
+    private fun resizeMapIcon(iconResId: Int, width: Int, height: Int): BitmapDescriptor {
+        val imageBitmap = BitmapFactory.decodeResource(resources, iconResId)
+        val resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false)
+        return BitmapDescriptorFactory.fromBitmap(resizedBitmap)
+    }
+    private fun loadDonorLocations() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val donors = DonationDatabase.getInstance(requireContext())
+                .DonationDao()
+                .getDonatonList()  // Database se saare donors le aao
+
+            withContext(Dispatchers.Main) {
+                for (donor in donors) {
+                    val location = LatLng(donor.latitude, donor.longitude)
+                    addMarker(location, donor.donationType.toString())
+                }
+            }
+        }
     }
 
-//    private fun showDonorLocation() {
-//        val database = DonationDatabase.getInstance(requireContext())
-//        val donor = database.donationDao().getDonorById(donorId)
-//
-//        if (donor != null) {
-//            val location = LatLng(donor.latitude, donor.longitude)
-//            map.addMarker(MarkerOptions().position(location).title("Donor Location"))
-//            map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 14f))
-//        } else {
-//            Toast.makeText(requireContext(), "Donor location not found", Toast.LENGTH_SHORT).show()
-//        }
-//    }
+    private fun addMarker(location: LatLng, donationType: Any) {
+        val icon = when (donationType) {
+            "Blood" -> R.drawable.blood_download
+            "Medicine" -> R.drawable.download
+            "Money" -> R.drawable.money_download
+            "Organ" -> R.drawable.organ_download
+            else -> R.drawable.defalut
+        }
+        val smallMarkerIcon = resizeMapIcon(icon, 50, 50)
+        mGoogleMap?.addMarker(
+            MarkerOptions()
+                .position(location)
+                .title("$donationType Donor")
+//                .icon(BitmapDescriptorFactory.fromResource(icon))
+                .icon(smallMarkerIcon)
+        )
+    }
 
 }

@@ -59,6 +59,7 @@ dependencies {
     implementation("androidx.room:room-runtime:2.5.2") // More stable for Flamingo
     implementation("androidx.room:room-ktx:2.5.2")
     implementation 'com.google.firebase:firebase-firestore-ktx:25.1.2'
+    implementation 'com.google.firebase:firebase-messaging-ktx:24.1.0'
     kapt("androidx.room:room-compiler:2.5.2")
 
     // Lottie for animations

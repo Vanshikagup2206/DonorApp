@@ -78,9 +78,9 @@ class MedicineDonation : Fragment() {
                         donationfrequency = binding?.editAmount?.text?.toString(),
                         gender = binding?.editGender?.text?.toString(),
                         number = binding?.editNumber?.text?.toString(),
-//                        createddate = Calendar.getInstance().time
-
-                        )
+                        latitude = 28.6139,
+                        longitude = 77.2090
+                    )
                 )
                 findNavController().navigate(R.id.donateFragment)
 

@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.vanshika.donorapp.donate.DonorsDataClass
 import com.vanshika.donorapp.notification.UsersDataClass
+import com.vanshika.donorapp.profile.HealthRecordsDataClass
 import com.vanshika.donorapp.requests.RecipientsDataClass
 
 @Dao
@@ -43,9 +44,11 @@ interface DonationDao {
     @Query("SELECT * FROM RecipientsDataClass WHERE urgencyLevel =:urgencyLevel")
     fun getHighEmergencyList(urgencyLevel : Int) : List<RecipientsDataClass>
 
-    // Token
     @Insert
     fun insertToken(usersDataClass: UsersDataClass)
+
+    @Insert
+    fun insertHealthRecords(healthRecordsDataClass: HealthRecordsDataClass)
 
 }
 

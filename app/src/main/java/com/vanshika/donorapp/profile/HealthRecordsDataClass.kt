@@ -8,7 +8,10 @@ data class HealthRecordsDataClass(
     @PrimaryKey(autoGenerate = true)
     var healthRecordId : Int = 0,
     var donorId : Int ?= 0,
-    var donorWeight : Float ?= 0F,
-    var donorBp : Int ?= 0,
-    var medicalHistory : String ?= ""
+    var donorWeight : String ?= "",
+    var donorBp : String ?= "",
+    var donorPulse : String ?= "",
+    var donorBloodGroup : String ?= "",
+    var donorDonationStreak : String?= "",
+    var donorHemoglobin : String= ""
 )
