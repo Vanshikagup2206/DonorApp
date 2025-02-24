@@ -265,6 +265,29 @@ Diastolic (Lower): 60–90 mmHg"
             app:layout_constraintBottom_toBottomOf="parent"
             android:gravity="center">
 
+<!--        </LinearLayout>-->
+
+        <!-- Donation History -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:paddingLeft="5dp"
+            android:text="@string/donation_history"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_18"
+            android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <!-- Edit Profile & Logout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:orientation="horizontal"
+            android:gravity="center">
+
             <Button
                 android:id="@+id/btnEditProfile"
                 android:layout_width="wrap_content"
@@ -295,6 +318,7 @@ Diastolic (Lower): 60–90 mmHg"
                 android:padding="@dimen/dp_10"
                 android:text="@string/Add_details"
                 android:textColor="@color/white" />
+
         </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

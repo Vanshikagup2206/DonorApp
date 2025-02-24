@@ -98,6 +98,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 searchLocation(toLocation, isFrom = false)
             }
 
+
         }
     }
 
@@ -220,7 +221,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 for (donor in donors) {
                     val location = LatLng(donor.latitude, donor.longitude)
                     // 🛠 Debugging: Check stored lat/lon values
-                    Log.d("DonorLocation", "Donor ID: ${donor.donorId}, Lat: ${donor.latitude}, Lon: ${donor.longitude}")
+                    Log.d(
+                        "DonorLocation",
+                        "Donor ID: ${donor.donorId}, Lat: ${donor.latitude}, Lon: ${donor.longitude}"
+                    )
                     addMarker(location, donor.donationType.toString())
                 }
             }
@@ -236,6 +240,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             else -> R.drawable.defalut
         }
         val smallMarkerIcon = resizeMapIcon(icon, 50, 50)
+
         mGoogleMap?.addMarker(
             MarkerOptions()
                 .position(location)
@@ -243,5 +248,5 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 .icon(smallMarkerIcon)
         )
     }
-
 }
+

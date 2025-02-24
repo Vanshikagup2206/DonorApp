@@ -141,7 +141,6 @@ class BloodDonation : Fragment() {
             }
         }
         val address = binding?.addrEditText?.text?.toString()
-
         if (!address.isNullOrEmpty()) {
             CoroutineScope(Dispatchers.IO).launch {
                 val latLng = getLatLngFromAddress(address)
