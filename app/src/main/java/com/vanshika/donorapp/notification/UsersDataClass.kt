@@ -1,4 +1,4 @@
-package com.vanshika.donorapp
+package com.vanshika.donorapp.notification
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

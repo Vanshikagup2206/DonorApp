@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
@@ -87,7 +86,7 @@ class DonateFragment : Fragment(), DonationInterfae {
 
     private fun getDonationList() {
         donation.clear()
-        donation.addAll(donationDatabase.DonationDao().getDonatonList())
+        donation.addAll(donationDatabase.DonationDao().getDonationList())
         Log.d("MyDonation", "Donation List: $donation") // Log the donation list
         donationAdapter.notifyDataSetChanged()
     }

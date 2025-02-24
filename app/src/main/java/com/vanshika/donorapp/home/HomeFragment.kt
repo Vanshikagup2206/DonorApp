@@ -8,14 +8,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentHomeBinding
+import com.vanshika.donorapp.notification.FCMApiServiceInterface
+import com.vanshika.donorapp.notification.NotificationRequestDataClass
 import com.vanshika.donorapp.requests.RecipientsDataClass
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
 // TODO: Rename parameter arguments, choose names that match
@@ -62,7 +67,7 @@ class HomeFragment : Fragment() {
         sharedPreferences=requireActivity().getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
         editor = sharedPreferences?.edit()
 
-        binding?.tvUsername?.setText("Hi! ${sharedPreferences?.getString("name", "")}")
+        binding?.tvUsername?.setText(sharedPreferences?.getString("name", ""))
 
         donationDatabase = DonationDatabase.getInstance(requireContext())
         highEmergencyRequestAdapter = HighEmergencyRequestAdapter(emergencyList)
@@ -70,38 +75,93 @@ class HomeFragment : Fragment() {
 
         binding?.rvRequests?.adapter = highEmergencyRequestAdapter
         binding?.rvRequests?.layoutManager = linearLayoutManager
-        getHighEmergencyList()
+
+        binding?.btnHigh?.setOnClickListener {
+            getHighEmergencyList()
+        }
+        binding?.btnMedium?.setOnClickListener {
+            getMediumEmergencyList()
+        }
+
+        binding?.btnLow?.setOnClickListener {
+            getLowEmergencyList()
+        }
 
         binding?.btnSos?.setOnClickListener {
             sendSOSNotification()
         }
     }
 
+//    private fun sendSOSNotification() {
+//        val url = "http://192.168.43.185:3000/sendNotification" // Replace with your actual server URL
+//
+//        val client = OkHttpClient()
+//        val requestBody = "{}".toRequestBody("application/json".toMediaTypeOrNull())
+//
+//        val request = Request.Builder()
+//            .url(url)
+//            .post(requestBody)
+//            .build()
+//
+//        client.newCall(request).enqueue(object : Callback {
+//            override fun onFailure(call: Call, e: IOException) {
+//                Log.e("SOS", "Failed to send SOS notification: ${e.message}")
+//            }
+//
+//            override fun onResponse(call: Call, response: Response) {
+//                Log.d("SOS", "Notification Sent: ${response.body?.string()}")
+//            }
+//        })
+//    }
+
     private fun sendSOSNotification() {
-        val url = "http://192.168.43.185:3000/sendNotification" // Replace with your actual server URL
+        val tokens = listOf("token1", "token2", "token3") // Add real FCM tokens
 
-        val client = OkHttpClient()
-        val requestBody = "{}".toRequestBody("application/json".toMediaTypeOrNull())
+        val request = NotificationRequestDataClass(tokens, "🚨 SOS Alert!", "Urgent help needed!")
 
-        val request = Request.Builder()
-            .url(url)
-            .post(requestBody)
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://192.168.43.185:3000/") // ⚠️ Replace with your actual server IP
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.e("SOS", "Failed to send SOS notification: ${e.message}")
+        val apiService: FCMApiServiceInterface = retrofit.create(FCMApiServiceInterface::class.java)
+
+        apiService.sendNotification(request).enqueue(object : retrofit2.Callback<ResponseBody> {
+            override fun onResponse(
+                call: retrofit2.Call<ResponseBody>,
+                response: retrofit2.Response<ResponseBody>
+            ) {
+                if (response.isSuccessful) {
+                    Log.d("FCM", "✅ Notification Sent Successfully")
+                    Toast.makeText(requireContext(), "SOS Sent!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.e("FCM", "❌ Failed to Send Notification: ${response.errorBody()?.string()}")
+                }
             }
 
-            override fun onResponse(call: Call, response: Response) {
-                Log.d("SOS", "Notification Sent: ${response.body?.string()}")
+            override fun onFailure(call: retrofit2.Call<ResponseBody>, t: Throwable) {
+                Log.e("FCM", "❌ Error: ${t.message}")
             }
         })
     }
 
+
+
     private fun getHighEmergencyList() {
         emergencyList.clear()
         emergencyList.addAll(donationDatabase.DonationDao().getHighEmergencyList(3))
+        highEmergencyRequestAdapter.notifyDataSetChanged()
+    }
+
+    private fun getMediumEmergencyList() {
+        emergencyList.clear()
+        emergencyList.addAll(donationDatabase.DonationDao().getHighEmergencyList(2))
+        highEmergencyRequestAdapter.notifyDataSetChanged()
+    }
+
+    private fun getLowEmergencyList() {
+        emergencyList.clear()
+        emergencyList.addAll(donationDatabase.DonationDao().getHighEmergencyList(1))
         highEmergencyRequestAdapter.notifyDataSetChanged()
     }
 

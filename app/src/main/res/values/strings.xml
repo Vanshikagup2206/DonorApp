@@ -86,6 +86,10 @@
     <string name="Enter_date">Enter Date</string>
     <string name="Name">Name</string>
     <string name="update">Update</string>
+    <string name="hi">HI! </string>
+    <string name="high">High</string>
+    <string name="medium">Medium</string>
+    <string name="low">Low</string>
 </resources>
 
 
