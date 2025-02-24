@@ -140,7 +140,21 @@ class BloodDonation : Fragment() {
                 }
             }
         }
-
+                donorDatabase.DonationDao().insertDonor(
+                    DonorsDataClass(
+                        donorName = binding?.nameEditText?.text?.toString(),
+                        address = binding?.addrEditText?.text?.toString(),
+                        age = binding?.ageEditText?.text?.toString(),
+                        gender = binding?.genderEdittext?.text?.toString(),
+                        number = binding?.contactEditText?.text?.toString(),
+                        bloodType = binding?.bloodGroupEditText?.text.toString(),
+                        donationfrequency = binding?.donationFrequencyEditText?.text?.toString(),
+                        donationType = "Blood",
+                        createdDate = binding?.donationDate?.text?.toString(),
+                        latitude = 28.6139,
+                        longitude = 77.2090
+                    )
+                )
     }
 
     private fun searchLocation(location: String, isFrom: Boolean, onResult: (LatLng?) -> Unit) {

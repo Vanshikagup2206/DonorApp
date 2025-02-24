@@ -47,9 +47,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var binding : FragmentMapBinding ?= null
-    private var mGoogleMap : GoogleMap ?= null
-    private var fromLatLng: LatLng?= null
+    private var binding: FragmentMapBinding? = null
+    private var mGoogleMap: GoogleMap? = null
+    private var fromLatLng: LatLng? = null
     private var toLatLng: LatLng? = null
     private var donorId: Int = 1 // Replace with actual donor ID
 
@@ -75,8 +75,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                1
+            )
         }
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -89,7 +97,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 searchLocation(fromLocation, isFrom = true)
                 searchLocation(toLocation, isFrom = false)
             }
-            
+
         }
     }
 
@@ -99,7 +107,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             val response = fetchLocationData(url)
             withContext(Dispatchers.Main) {
                 if (response != null) {
-                    if (response.length() >0) {
+                    if (response.length() > 0) {
                         val locationData = response.getJSONObject(0)
                         val lat = locationData.getDouble("lat").toDouble()
                         val lon = locationData.getDouble("lon").toDouble()
@@ -117,7 +125,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                             drawRoute()
                         }
                     } else {
-                        Toast.makeText(requireContext(), "Location not found!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Location not found!", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             }
@@ -187,11 +196,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         println("Google Map is ready!")
         loadDonorLocations()
     }
+
     private fun resizeMapIcon(iconResId: Int, width: Int, height: Int): BitmapDescriptor {
         val imageBitmap = BitmapFactory.decodeResource(resources, iconResId)
         val resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false)
         return BitmapDescriptorFactory.fromBitmap(resizedBitmap)
     }
+
     private fun loadDonorLocations() {
         CoroutineScope(Dispatchers.IO).launch {
             val donors = DonationDatabase.getInstance(requireContext())
@@ -216,12 +227,39 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             else -> R.drawable.defalut
         }
         val smallMarkerIcon = resizeMapIcon(icon, 50, 50)
+    }
+
+    private fun loadDonorLocations() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val donors = DonationDatabase.getInstance(requireContext())
+                .DonationDao()
+                .getDonatonList()  // Database se saare donors le aao
+
+            withContext(Dispatchers.Main) {
+                for (donor in donors) {
+                    val location = LatLng(donor.latitude, donor.longitude)
+                    addMarker(location, donor.donationType.toString())
+                }
+            }
+        }
+    }
+
+    private fun addMarker(location: LatLng, donationType: Any) {
+        val icon = when (donationType) {
+            "Blood" -> R.drawable.blood
+            "Medicine" -> R.drawable.medicine
+            "Money" -> R.drawable.money
+            "Organ" -> R.drawable.organ
+            else -> R.drawable.defalut
+        }
+
         mGoogleMap?.addMarker(
             MarkerOptions()
                 .position(location)
                 .title("$donationType Donor")
 //                .icon(BitmapDescriptorFactory.fromResource(icon))
                 .icon(smallMarkerIcon)
+                .icon(BitmapDescriptorFactory.fromResource(icon))
         )
     }
 
