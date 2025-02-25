@@ -265,14 +265,22 @@ class BloodDonation : Fragment() {
                                         donorName = binding?.nameEditText?.text?.toString(),
                                         address = binding?.addrEditText?.text?.toString(),
                                         age = binding?.ageEditText?.text?.toString(),
-//                                        gender = binding?.genderEdittext?.text?.toString(),
+                                        gender = selectedGender,
                                         number = binding?.contactEditText?.text?.toString(),
-//                                        bloodType = binding?.bloodGroupEditText?.text.toString(),
                                         donationfrequency = binding?.donationFrequencyEditText?.text?.toString(),
                                         donationType = "Blood",
                                         createdDate = binding?.donationDate?.text?.toString(),
                                         lattitude = latLng.latitude,
-                                        longitude = latLng.longitude
+                                        longitude = latLng.longitude,
+                                        isHealthy = isHealthy,
+                                        bloodType = selectedBloodGroup,
+                                        traveledRecently = traveledRecently,
+                                        tookMedication = tookMedication,
+                                        consumesAlcohol = consumesAlcohol,
+                                        hadRecentSurgery = hadRecentSurgery,
+                                        tookRecentVaccine = tookRecentVaccine,
+                                        diabities = isDiabetic,
+                                        bloodPressur = hasBloodPressureIssue
                                     )
                                 )
                             }
@@ -282,107 +290,107 @@ class BloodDonation : Fragment() {
             }
         }
     }
-            private fun getLatLngFromAddress(address: String): LatLng? {
-                return try {
-                    val url = "https://nominatim.openstreetmap.org/search?format=json&q=$address"
-                    val connection = URL(url).openConnection() as HttpURLConnection
-                    connection.requestMethod = "GET"
-                    connection.connect()
 
-                    val inputStream = connection.inputStream.bufferedReader().use { it.readText() }
-                    val responseArray = JSONArray(inputStream)
+    private fun getLatLngFromAddress(address: String): LatLng? {
+        return try {
+            val url = "https://nominatim.openstreetmap.org/search?format=json&q=$address"
+            val connection = URL(url).openConnection() as HttpURLConnection
+            connection.requestMethod = "GET"
+            connection.connect()
 
-                    if (responseArray.length() > 0) {
-                        val locationData = responseArray.getJSONObject(0)
+            val inputStream = connection.inputStream.bufferedReader().use { it.readText() }
+            val responseArray = JSONArray(inputStream)
+
+            if (responseArray.length() > 0) {
+                val locationData = responseArray.getJSONObject(0)
+                val lat = locationData.getDouble("lat")
+                val lon = locationData.getDouble("lon")
+                Log.d("Geocode", "Address: $address -> Lat: $lat, Lon: $lon")
+                LatLng(lat, lon)
+            } else {
+                Log.e("Geocode", "No location found for address: $address")
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("Geocode", "Error fetching coordinates", e)
+            null
+        }
+    }
+
+    private fun searchLocation(
+        location: String,
+        isFrom: Boolean,
+        onResult: (LatLng?) -> Unit
+    ) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val url = URL(
+                    "https://nominatim.openstreetmap.org/search?format=json&q=${
+                        URLEncoder.encode(
+                            location,
+                            "UTF-8"
+                        )
+                    }"
+                )
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "GET"
+                connection.connect()
+
+                val response = connection.inputStream.bufferedReader().use { it.readText() }
+                val jsonArray = JSONArray(response)
+
+                withContext(Dispatchers.Main) {
+                    if (jsonArray.length() > 0) {
+                        val locationData = jsonArray.getJSONObject(0)
                         val lat = locationData.getDouble("lat")
                         val lon = locationData.getDouble("lon")
-                        Log.d("Geocode", "Address: $address -> Lat: $lat, Lon: $lon")
-                        LatLng(lat, lon)
+                        val latLng = LatLng(lat, lon)
+
+                        Log.d("LocationDebug", "Address: $location -> LatLng: $latLng")
+
+                        onResult(latLng)
                     } else {
-                        Log.e("Geocode", "No location found for address: $address")
-                        null
-                    }
-                } catch (e: Exception) {
-                    Log.e("Geocode", "Error fetching coordinates", e)
-                    null
-                }
-            }
-
-            private fun searchLocation(
-                location: String,
-                isFrom: Boolean,
-                onResult: (LatLng?) -> Unit
-            ) {
-                CoroutineScope(Dispatchers.IO).launch {
-                    try {
-                        val url = URL(
-                            "https://nominatim.openstreetmap.org/search?format=json&q=${
-                                URLEncoder.encode(
-                                    location,
-                                    "UTF-8"
-                                )
-                            }"
-                        )
-                        val connection = url.openConnection() as HttpURLConnection
-                        connection.requestMethod = "GET"
-                        connection.connect()
-
-                        val response = connection.inputStream.bufferedReader().use { it.readText() }
-                        val jsonArray = JSONArray(response)
-
-                        withContext(Dispatchers.Main) {
-                            if (jsonArray.length() > 0) {
-                                val locationData = jsonArray.getJSONObject(0)
-                                val lat = locationData.getDouble("lat")
-                                val lon = locationData.getDouble("lon")
-                                val latLng = LatLng(lat, lon)
-
-                                Log.d("LocationDebug", "Address: $location -> LatLng: $latLng")
-
-                                onResult(latLng)
-                            } else {
-                                Log.e("LocationDebug", "Location not found: $location")
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Location not found!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                onResult(null)
-                            }
-                        }
-                    } catch (e: Exception) {
-                        Log.e("LocationError", "Error fetching location: ${e.message}")
-                        withContext(Dispatchers.Main) {
-                            Toast.makeText(
-                                requireContext(),
-                                "Failed to fetch location!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                        Log.e("LocationDebug", "Location not found: $location")
+                        Toast.makeText(
+                            requireContext(),
+                            "Location not found!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         onResult(null)
                     }
                 }
-            }
-
-
-
-            companion object {
-            /**
-             * Use this factory method to create a new instance of
-             * this fragment using the provided parameters.
-             *
-             * @param param1 Parameter 1.
-             * @param param2 Parameter 2.
-             * @return A new instance of fragment BloodDonation.
-             */
-            // TODO: Rename and change types and number of parameters
-            @JvmStatic
-            fun newInstance(param1: String, param2: String) =
-                BloodDonation().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
+            } catch (e: Exception) {
+                Log.e("LocationError", "Error fetching location: ${e.message}")
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to fetch location!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+                onResult(null)
+            }
         }
-        }
+    }
+
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment BloodDonation.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            BloodDonation().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
+    }
+}
