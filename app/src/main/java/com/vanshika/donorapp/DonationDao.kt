@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.vanshika.donorapp.donate.DonorsDataClass
+import com.vanshika.donorapp.notification.UsersDataClass
 import com.vanshika.donorapp.profile.HealthRecordsDataClass
 import com.vanshika.donorapp.requests.RecipientsDataClass
 
@@ -19,7 +20,7 @@ interface DonationDao {
     fun getDonorById(id: Int): DonorsDataClass
 
     @Query("SELECT * FROM DonorsDataClass")
-    fun getDonatonList(): List<DonorsDataClass>
+    fun getDonationList(): List<DonorsDataClass>
 
     @Insert
     fun insertEmergencyRequest(recipientsDataClass: RecipientsDataClass)
@@ -45,6 +46,9 @@ interface DonationDao {
 
     @Insert
     fun insertToken(usersDataClass: UsersDataClass)
+
+    @Query("SELECT * FROM users")
+    fun getAllUsers(): List<UsersDataClass>
 
     @Insert
     fun insertHealthRecords(healthRecordsDataClass: HealthRecordsDataClass)

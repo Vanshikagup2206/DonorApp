@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="@dimen/dp_12"
+    android:layout_margin="@dimen/dp_24"
     tools:context=".donate.BloodDonation">
 
     <LinearLayout
@@ -109,21 +111,16 @@
             android:textSize="16sp" />
 
 
-        <EditText
-            android:id="@+id/genderEdittext"
+        <Spinner
+            android:id="@+id/genderSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_border"
-            android:hint="Enter your gender"
-            android:padding="12dp"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:padding="@dimen/dp_12" />
 
         <!-- Contact Number EditText -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dp_10"
             android:text="Contact Number"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
@@ -150,16 +147,21 @@
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
-
-        <EditText
-            android:id="@+id/bloodGroupEditText"
+        <Spinner
+            android:id="@+id/bloodGroupSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_border"
-            android:hint="Enter your blood group"
-            android:padding="12dp"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:background="@drawable/neumorphic_button"
+            android:padding="12dp" />
+        <!--        <EditText-->
+        <!--            android:id="@+id/bloodGroupEditText"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:background="@drawable/rounded_border"-->
+        <!--            android:hint="Enter your blood group"-->
+        <!--            android:padding="12dp"-->
+        <!--            android:textColor="@android:color/black"-->
+        <!--            android:textSize="16sp" />-->
 
         <!-- Donation Frequency EditText -->
         <TextView
@@ -180,6 +182,7 @@
             android:padding="12dp"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -196,8 +199,235 @@
             android:background="@drawable/rounded_border"
             android:hint="choose Date"
             android:padding="12dp"
+            android:clickable="false"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Are you feeling fit and healthy today?"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/healthRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/healthYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes" />
+
+            <RadioButton
+                android:id="@+id/healthNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Have you traveled internationally in the last 6 months?"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/travelRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/travelYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes" />
+
+            <RadioButton
+                android:id="@+id/travelNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Have you taken any medications in the last 7 days?"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/medicationRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/medYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes" />
+
+            <RadioButton
+                android:id="@+id/medNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Do you smoke or consume alcohol regularly?"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/alcoholRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/alcoholYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes" />
+
+            <RadioButton
+                android:id="@+id/alcoholNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Do you have blood pressure issues?"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/bloodPressureRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/bloodPressureYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes" />
+
+            <RadioButton
+                android:id="@+id/bloodPressureNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No" />
+        </RadioGroup>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Are you diabetic?"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/diabetesRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/diabetesYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes" />
+
+            <RadioButton
+                android:id="@+id/diabetesNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No" />
+        </RadioGroup>
+
+        <!-- Surgery Question -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Have you had surgery in the last 6 months?"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/surgeryRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/surgeryYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes" />
+
+            <RadioButton
+                android:id="@+id/surgeryNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Have you received any vaccine in the last 1 month?"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/vaccineRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/vaccineYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes" />
+
+            <RadioButton
+                android:id="@+id/vaccineNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No" />
+        </RadioGroup>
         <!-- Submit Button -->
         <Button
             android:id="@+id/submitButton"

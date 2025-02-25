@@ -25,6 +25,14 @@
             android:src="@drawable/baseline_person_24" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_12"
+            android:text="@string/hi"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_18" />
+
+        <TextView
             android:id="@+id/tvUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,6 +60,33 @@
         android:textColor="@color/black"
         android:textSize="@dimen/sp_18"
         android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_4"
+            android:id="@+id/btnHigh"
+            android:text="@string/high" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_4"
+            android:id="@+id/btnMedium"
+            android:text="@string/medium"
+            android:backgroundTint="@color/yellow"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_4"
+            android:id="@+id/btnLow"
+            android:text="@string/low"
+            android:backgroundTint="@color/green"/>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRequests"
