@@ -133,7 +133,7 @@ class MoneyDonation : Fragment() {
                         createdDate = binding?.donationDate?.text?.toString(),
                         paymentMethod = selectedPayment,
                         donationMethod = selectedDonationType,
-                        latitude = 28.6139,
+                        lattitude = 28.6139,
                         longitude = 77.2090
                     )
                 )

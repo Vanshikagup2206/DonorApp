@@ -219,11 +219,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
             withContext(Dispatchers.Main) {
                 for (donor in donors) {
-                    val location = LatLng(donor.latitude, donor.longitude)
+                    val location = LatLng(donor.lattitude, donor.longitude)
                     // 🛠 Debugging: Check stored lat/lon values
                     Log.d(
                         "DonorLocation",
-                        "Donor ID: ${donor.donorId}, Lat: ${donor.latitude}, Lon: ${donor.longitude}"
+                        "Donor ID: ${donor.donorId}, Lat: ${donor.lattitude}, Lon: ${donor.longitude}"
                     )
                     addMarker(location, donor.donationType.toString())
                 }

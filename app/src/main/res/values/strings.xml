@@ -86,26 +86,26 @@
     <string name="Enter_date">Enter Date</string>
     <string name="Name">Name</string>
     <string name="update">Update</string>
-    <string-array name="blood_types">
-        <item>A+</item>
-        <item>A-</item>
-        <item>B+</item>
-        <item>B-</item>
-        <item>AB+</item>
-        <item>AB-</item>
-        <item>O+</item>
-        <item>O-</item>
-    </string-array>
+<!--    <string-array name="blood_types">-->
+<!--        <item>A+</item>-->
+<!--        <item>A-</item>-->
+<!--        <item>B+</item>-->
+<!--        <item>B-</item>-->
+<!--        <item>AB+</item>-->
+<!--        <item>AB-</item>-->
+<!--        <item>O+</item>-->
+<!--        <item>O-</item>-->
+<!--    </string-array>-->
     <string-array name="gender_types">
         <item>Male</item>
         <item>Female</item>
         <item>Other</item>
     </string-array>
-    <string-array name="organ_types">
-        <item>kidney</item>
-        <item>Heart</item>
-        <item>Eyes</item>
-    </string-array>
+<!--    <string-array name="organ_types">-->
+<!--        <item>kidney</item>-->
+<!--        <item>Heart</item>-->
+<!--        <item>Eyes</item>-->
+<!--    </string-array>-->
     <string-array name="payment_methods">
         <item>Select Payment Method</item>
         <item>UPI</item>

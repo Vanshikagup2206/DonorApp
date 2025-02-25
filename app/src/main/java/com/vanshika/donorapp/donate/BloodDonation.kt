@@ -82,7 +82,7 @@ class BloodDonation : Fragment() {
         // for blood
         val adapter = ArrayAdapter.createFromResource(
             requireContext(),
-            R.array.blood_types,
+            R.array.blood_groups,
             android.R.layout.simple_spinner_item
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
