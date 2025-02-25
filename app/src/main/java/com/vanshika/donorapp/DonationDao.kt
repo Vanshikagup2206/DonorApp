@@ -47,12 +47,11 @@ interface DonationDao {
     @Insert
     fun insertToken(usersDataClass: UsersDataClass)
 
+    @Query("SELECT * FROM users")
+    fun getAllUsers(): List<UsersDataClass>
+
     @Insert
     fun insertHealthRecords(healthRecordsDataClass: HealthRecordsDataClass)
-
-
-
-
 
 }
 

@@ -17,6 +17,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     var binding: ActivityMainBinding? = null
@@ -58,30 +60,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun saveTokenToRoom(token: String?) {
-        if (token == null) return
-        val user =
-            UsersDataClass(name = "John Doe", fcmToken = listOf("token1", "token2", "token3"))  // Replace with actual user data
-
         CoroutineScope(Dispatchers.IO).launch {
+            val user = UsersDataClass(name = "John Doe", fcmToken = token) // ✅ Store token as String
             donationDatabase.DonationDao().insertToken(user)
-            Log.d("RoomDB", "✅ Token saved to Room Database")// Save token in Room database
+            Log.d("RoomDB", "✅ Token saved to Room Database")
         }
     }
     fun sendTokenToServer(token: String) {
-        val request = NotificationRequestDataClass(tokens = listOf("token1", "token2", "token3"))
-        val call = RetrofitInstance.api.sendToken(request)
+        val request = NotificationRequestDataClass(tokens = listOf(token))
 
-        call.enqueue(object : retrofit2.Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: retrofit2.Response<Void>) {
+        RetrofitInstance.api.sendToken(request).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.isSuccessful) {
-                    Log.d("FCM Token", "Token successfully sent to server")
+                    Log.d("FCM Token", "✅ Token successfully sent to server")
                 } else {
-                    Log.e("FCM Token", "Failed to send token: ${response.code()}")
+                    Log.e("FCM Token", "❌ Failed to send token: ${response.code()}")
                 }
             }
 
             override fun onFailure(call: Call<Void>, t: Throwable) {
-                Log.e("FCM Token", "Error sending token: ${t.message}")
+                Log.e("FCM Token", "❌ Error sending token: ${t.message}")
             }
         })
     }
