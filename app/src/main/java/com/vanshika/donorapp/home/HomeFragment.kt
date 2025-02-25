@@ -117,7 +117,9 @@ class HomeFragment : Fragment() {
     private fun sendSOSNotification() {
         val tokens = listOf("token1", "token2", "token3") // Add real FCM tokens
 
-        val request = NotificationRequestDataClass(tokens, "🚨 SOS Alert!", "Urgent help needed!")
+        val request = NotificationRequestDataClass(tokens = tokens, title = "🚨 SOS Alert!",
+            body = "Urgent help needed!"
+        )
 
         val retrofit = Retrofit.Builder()
             .baseUrl("http://192.168.43.185:3000/") // ⚠️ Replace with your actual server IP

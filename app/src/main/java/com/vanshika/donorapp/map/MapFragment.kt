@@ -196,7 +196,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         CoroutineScope(Dispatchers.IO).launch {
             val donors = DonationDatabase.getInstance(requireContext())
                 .DonationDao()
-                .getDonatonList()  // Database se saare donors le aao
+                .getDonationList()  // Database se saare donors le aao
 
             withContext(Dispatchers.Main) {
                 for (donor in donors) {
