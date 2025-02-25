@@ -211,6 +211,8 @@
             android:id="@+id/healthRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
             android:orientation="horizontal">
 
             <RadioButton
@@ -237,6 +239,8 @@
             android:id="@+id/travelRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
             android:orientation="horizontal">
 
             <RadioButton
@@ -263,6 +267,8 @@
             android:id="@+id/medicationRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
             android:orientation="horizontal">
 
             <RadioButton
@@ -289,6 +295,8 @@
             android:id="@+id/alcoholRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
             android:orientation="horizontal">
 
             <RadioButton
@@ -315,6 +323,8 @@
             android:id="@+id/bloodPressureRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
             android:orientation="horizontal">
 
             <RadioButton
@@ -342,6 +352,8 @@
             android:id="@+id/diabetesRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
             android:orientation="horizontal">
 
             <RadioButton
@@ -369,6 +381,8 @@
             android:id="@+id/surgeryRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
             android:orientation="horizontal">
 
             <RadioButton
@@ -395,6 +409,8 @@
             android:id="@+id/vaccineRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
             android:orientation="horizontal">
 
             <RadioButton

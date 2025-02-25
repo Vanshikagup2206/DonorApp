@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.vanshika.donorapp.DonationDatabase
@@ -30,7 +31,7 @@ class MoneyDonation : Fragment() {
     var binding: FragmentMoneyDonationBinding? = null
     lateinit var donardatabase: DonationDatabase
     var donation = arrayListOf<DonorsDataClass>()
-
+    val paymentSpinner = binding?.paymentMethodSpinner
     var calendar = android.icu.util.Calendar.getInstance()
     var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
@@ -54,6 +55,15 @@ class MoneyDonation : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val paymentAdapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.payment_methods,
+            android.R.layout.simple_spinner_item
+        )
+        paymentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        paymentSpinner?.adapter = paymentAdapter
+        val selectedPayment = paymentSpinner?.selectedItem.toString()
         binding?.donationDate?.setOnClickListener {
             val datePickerDialog = DatePickerDialog(
                 requireContext(),
@@ -87,7 +97,26 @@ class MoneyDonation : Fragment() {
                 binding?.donationDate?.error = "Please select a donation date"
                 Toast.makeText(requireContext(), "Donation date is required!", Toast.LENGTH_SHORT)
                     .show()
+            } else if (selectedPayment == "Select Payment Method") {
+                Toast.makeText(
+                    requireContext(),
+                    "Please select a payment method!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            val selectedRadioButtonId = binding?.anonymousGroup?.checkedRadioButtonId
+            if (selectedRadioButtonId == -1) {
+                Toast.makeText(
+                    requireContext(),
+                    "Please select a donation type (Anonymous or Public)!",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
+                val selectedDonationType = when (selectedRadioButtonId) {
+                    R.id.anonymousYes -> "Anonymous"
+                    R.id.anonymousNo -> "Public"
+                    else -> ""
+                }
                 Toast.makeText(
                     requireContext(),
                     "Your Details is Filled Successfuly!",
@@ -101,10 +130,11 @@ class MoneyDonation : Fragment() {
                         gender = binding?.editGender?.text?.toString(),
                         donationfrequency = binding?.editAmount?.text?.toString(),
                         donationType = "Money",
-                        createdDate = binding?.donationDate?.text?.toString()
-//                        createddate = Calendar.getInstance().time
+                        createdDate = binding?.donationDate?.text?.toString(),
+                        paymentMethod = selectedPayment,
+                        donationMethod = selectedDonationType
 
-                    )
+                        )
                 )
                 findNavController().navigate(R.id.donateFragment)
             }
