@@ -31,7 +31,6 @@ class MoneyDonation : Fragment() {
     var binding: FragmentMoneyDonationBinding? = null
     lateinit var donardatabase: DonationDatabase
     var donation = arrayListOf<DonorsDataClass>()
-    val paymentSpinner = binding?.paymentMethodSpinner
     var calendar = android.icu.util.Calendar.getInstance()
     var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
@@ -55,7 +54,7 @@ class MoneyDonation : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val paymentSpinner = binding?.paymentMethodSpinner
         val paymentAdapter = ArrayAdapter.createFromResource(
             requireContext(),
             R.array.payment_methods,

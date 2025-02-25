@@ -30,9 +30,7 @@ class OrganDonation : Fragment() {
     private var param2: String? = null
     var binding: FragmentOrganDonationBinding? = null
     lateinit var donarDatabase: DonationDatabase
-    var donation = arrayListOf<DonorsDataClass>()
-    val genderSpinner = binding?.genderSpinner
-    val organSpinner = binding?.spinOrgan
+//    var donation = arrayListOf<DonorsDataClass>()
     var calendar = android.icu.util.Calendar.getInstance()
     var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
@@ -58,6 +56,8 @@ class OrganDonation : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // date
+        val genderSpinner = binding?.genderSpinner
+        val organSpinner = binding?.spinOrgan
         binding?.donationDate?.setOnClickListener {
             val datePickerDialog = DatePickerDialog(
                 requireContext(),

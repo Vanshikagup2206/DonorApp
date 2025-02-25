@@ -42,8 +42,7 @@ class BloodDonation : Fragment() {
     private var param2: String? = null
     var binding: FragmentBloodDonationBinding? = null
     var bloodDonation = arrayListOf<DonorsDataClass>()
-    val bloodGroupSpinner = binding?.bloodGroupSpinner
-    val genderSpinner = binding?.genderSpinner
+
     var calendar = android.icu.util.Calendar.getInstance()
     var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
@@ -71,6 +70,8 @@ class BloodDonation : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 // for gender
+        val bloodGroupSpinner = binding?.bloodGroupSpinner
+        val genderSpinner = binding?.genderSpinner
         val genderAdapter = ArrayAdapter.createFromResource(
             requireContext(),
             R.array.gender_types,
