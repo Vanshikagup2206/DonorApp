@@ -128,10 +128,7 @@ class ProfileFragment : Fragment() {
                 dialogBinding?.imgDiscard?.setOnClickListener {
                     dismiss()
                 }
-
             }
-
-
         }
 
         binding?.btnAddHealthDetails?.setOnClickListener {

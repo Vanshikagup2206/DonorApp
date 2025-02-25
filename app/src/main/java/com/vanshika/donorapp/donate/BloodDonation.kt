@@ -205,52 +205,6 @@ class BloodDonation : Fragment() {
                     "Your Details is Filled Successfully!",
                     Toast.LENGTH_SHORT
                 ).show();
-//                val donorAddress = binding?.addrEditText?.text?.toString()
-//                searchLocation(donorAddress ?: "", isFrom = true) { latLng ->
-//                    if (latLng != null) {
-//                        donorDatabase.DonationDao().insertDonor(
-//                            DonorsDataClass(
-//                                donorName = binding?.nameEditText?.text?.toString(),
-////                        address = binding?.addrEditText?.text?.toString(),
-//                                address = donorAddress,
-//                                age = binding?.ageEditText?.text?.toString(),
-//                                gender = binding?.genderEdittext?.text?.toString(),
-//                                number = binding?.contactEditText?.text?.toString(),
-//                                bloodType = binding?.bloodGroupEditText?.text.toString(),
-//                                donationfrequency = binding?.donationFrequencyEditText?.text?.toString(),
-//                                donationType = "Blood",
-//                                createdDate = binding?.donationDate?.text?.toString(),
-//                                latitude = 28.6139,
-//                                longitude = 77.2090
-//
-//                donorDatabase.DonationDao().insertDonor(
-//                    DonorsDataClass(
-//                        donorName = binding?.nameEditText?.text?.toString(),
-//                        address = binding?.addrEditText?.text?.toString(),
-//                        age = binding?.ageEditText?.text?.toString(),
-//                        gender = selectedGender,
-//                        number = binding?.contactEditText?.text?.toString(),
-//                        bloodType = selectedBloodGroup,
-//                        donationfrequency = binding?.donationFrequencyEditText?.text?.toString(),
-//                        donationType = "Blood",
-//                        createdDate = binding?.donationDate?.text?.toString(),
-//                        isHealthy = isHealthy,
-//                        traveledRecently = traveledRecently,
-//                        tookMedication = tookMedication,
-//                        consumesAlcohol = consumesAlcohol,
-//                        hadRecentSurgery = hadRecentSurgery,
-//                        tookRecentVaccine = tookRecentVaccine,
-//                        diabities = isDiabetic,
-//                        bloodPressur = hasBloodPressureIssue
-//
-//                            )
-//                        )
-//                        Toast.makeText(
-//                            requireContext(),
-//                            "Donor Added Successfully!",
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//
 
 
                 val address = binding?.addrEditText?.text?.toString()
@@ -267,6 +221,8 @@ class BloodDonation : Fragment() {
                                         age = binding?.ageEditText?.text?.toString(),
                                         gender = selectedGender,
                                         number = binding?.contactEditText?.text?.toString(),
+//                                                gender = binding?.genderEdittext?.text?.toString(),
+
                                         donationfrequency = binding?.donationFrequencyEditText?.text?.toString(),
                                         donationType = "Blood",
                                         createdDate = binding?.donationDate?.text?.toString(),
@@ -284,10 +240,12 @@ class BloodDonation : Fragment() {
                                     )
                                 )
                             }
+                            findNavController().navigate(R.id.donateFragment)
                         }
                     }
                 }
             }
+
         }
     }
 
