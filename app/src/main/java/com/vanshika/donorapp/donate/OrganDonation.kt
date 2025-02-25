@@ -204,7 +204,6 @@ class OrganDonation : Fragment() {
                         tookRecentVaccine = tookRecentVaccine,
                         diabities = isDiabetic,
                         bloodPressur = hasBloodPressureIssue,
-
                         lattitude = 28.6139,
                         longitude = 77.2090
                     )
