@@ -57,10 +57,6 @@ class RegisterActivity : AppCompatActivity() {
                 } else{
                     Toast.makeText(this, "Invalid Aadhaar Number!", Toast.LENGTH_SHORT).show()
                 }
-//                registerUser(email, password)
-//                editor?.putString("username",name)
-//                editor?.putString("email",email)
-//                editor?.apply()
             } else {
                 Toast.makeText(this, "Fill all Fields", Toast.LENGTH_LONG).show()
             }
@@ -154,23 +150,4 @@ class RegisterActivity : AppCompatActivity() {
         }
         return check == 0
     }
-
-//    private fun registerUser(email:String,password:String){
-//        auth?.createUserWithEmailAndPassword(email,password)?.addOnCompleteListener(this){task ->
-//            if(task.isSuccessful){
-//                Toast.makeText(this,"User Register with ${auth?.currentUser?.email}",
-//                    Toast.LENGTH_LONG).show()
-//                startActivity(Intent(this,LogInActivity::class.java))
-//                finish()
-//            }else{
-//                Toast.makeText(
-//                    this,
-//                    "SignUp Failed :${task.exception?.message}",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//
-//            }
-//        }
-//
-//    }
 }

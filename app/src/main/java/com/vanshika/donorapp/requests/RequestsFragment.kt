@@ -146,6 +146,7 @@ class RequestsFragment : Fragment(),RequestInterface {
             .setMessage("Are you sure you want to delete this request?")
             .setPositiveButton("Delete") { _, _ ->
                 donationDatabase.DonationDao().deleteEmergencyRequest(emergencyRequestList[position])
+                getEmergencyRequestList()
             }
             .setNegativeButton("Cancel", null)
             .show()

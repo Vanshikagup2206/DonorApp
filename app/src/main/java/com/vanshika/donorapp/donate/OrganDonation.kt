@@ -203,8 +203,10 @@ class OrganDonation : Fragment() {
                         hadRecentSurgery = hadRecentSurgery,
                         tookRecentVaccine = tookRecentVaccine,
                         diabities = isDiabetic,
-                        bloodPressur = hasBloodPressureIssue
+                        bloodPressur = hasBloodPressureIssue,
 
+                        lattitude = 28.6139,
+                        longitude = 77.2090
                     )
                 )
                 findNavController().navigate(R.id.donateFragment)

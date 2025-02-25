@@ -21,6 +21,7 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.DeleteDailogBinding
 import com.vanshika.donorapp.databinding.FragmentProfileBinding
@@ -37,9 +38,10 @@ class ProfileFragment : Fragment() {
     var sharedPreferences: SharedPreferences? = null
     var editor: SharedPreferences.Editor? = null
     private var navController: NavController? = null
-
+    var healthRecordsDataClass: HealthRecordsDataClass? = null
+    var healthRecords= arrayListOf<HealthRecordsDataClass>()
+    var donationDatabase:DonationDatabase?=null
     private var fireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
-
     private var param1: String? = null
     private var param2: String? = null
 
@@ -61,9 +63,6 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        binding?.btnMydonation?.setOnClickListener {
-//           findNavController().navigate(R.id.myDonation)
-//        }
         auth = FirebaseAuth.getInstance()
         fireStore = FirebaseFirestore.getInstance()
         sharedPreferences = requireActivity().getSharedPreferences(
@@ -93,14 +92,14 @@ class ProfileFragment : Fragment() {
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
                 dialogBinding.etProfileMail.setText(auth?.currentUser?.email.toString())
-                dialogBinding.etProfileName.setText(sharedPreferences?.getString("username", ""))
+                dialogBinding.etProfileName.setText(sharedPreferences?.getString("name", ""))
                 show()
                 dialogBinding.imgConfirm.setOnClickListener {
                     if (dialogBinding.etProfileName.text.toString()
                             .isNotEmpty() && dialogBinding.etProfileName.text.toString()
                             .isNotEmpty()
                     ) {
-                        editor?.putString("username", dialogBinding.etProfileName.text.toString())
+                        editor?.putString("name", dialogBinding.etProfileName.text.toString())
                         editor?.putString("email", dialogBinding.etProfileMail.text.toString())
                         val user = FirebaseAuth.getInstance().currentUser
                         user?.delete()
@@ -133,6 +132,50 @@ class ProfileFragment : Fragment() {
             }
 
 
+        }
+
+        binding?.btnAddHealthDetails?.setOnClickListener {
+            val bloodGroup = binding?.etBloodGroup?.text.toString()
+            val donationStreak = binding?.etDonationStreak?.text.toString()
+            val age = binding?.etAge?.text.toString()
+            val weight = binding?.etWeight?.text.toString()
+            val hemoglobin= binding?.etHemoglobin?.text.toString()
+            val bloodPressure = binding?.etBloodPressure?.text.toString()
+            val pulserate = binding?.etPulserate?.text.toString()
+
+            if (bloodGroup.isNotEmpty() || donationStreak.isNotEmpty() || age.isNotEmpty() || weight.isNotEmpty()
+                || hemoglobin.isNotEmpty() || bloodPressure.isNotEmpty() || pulserate.isNotEmpty())
+            {
+
+                donationDatabase?.DonationDao()?.
+                insertHealthRecords(HealthRecordsDataClass(donorId = auth?.currentUser?.uid?.toInt(), donorBloodGroup = bloodGroup,
+                    donorDonationStreak = donationStreak, donorHemoglobin = hemoglobin, donorBp = bloodPressure, donorPulse = pulserate,
+                    donorWeight = weight))
+
+                val userMap = hashMapOf(
+                    "bloodGroup" to bloodGroup,
+                    "donationStreak" to donationStreak,
+                    "age" to age,
+                    "weight" to weight,
+                    "hemoglobin" to hemoglobin,
+                    "bloodPressure" to bloodPressure,
+                    "pulserate" to pulserate
+                )
+
+                fireStore.collection("users").document(auth?.currentUser?.uid.toString())
+                    .set(userMap)
+                    .addOnSuccessListener {
+                        Toast.makeText(
+                            requireContext(),
+                            "Health details added successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("Firestore", "Error saving user data", e)
+
+                    }
+            }
         }
     }
 

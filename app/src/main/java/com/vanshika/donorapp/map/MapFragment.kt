@@ -2,7 +2,10 @@ package com.vanshika.donorapp.map
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +17,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
@@ -43,12 +48,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var binding : FragmentMapBinding ?= null
-    private var mGoogleMap : GoogleMap ?= null
-    private var fromLatLng: LatLng?= null
+    private var binding: FragmentMapBinding? = null
+    private var mGoogleMap: GoogleMap? = null
+    private var fromLatLng: LatLng? = null
     private var toLatLng: LatLng? = null
     private var donorId: Int = 1 // Replace with actual donor ID
-
     private val waypoints = mutableListOf<LatLng>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,8 +75,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                1
+            )
         }
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -85,18 +97,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 searchLocation(fromLocation, isFrom = true)
                 searchLocation(toLocation, isFrom = false)
             }
-//                val database = DonationDatabase.getInstance(requireContext())
-//                val donor = Donor(0, "John Doe", 37.7749, -122.4194) // Example
-//
-//                Thread {
-//                    database.donationDao().insertDonor(DonorsDataClass() )  // Insert donor in background thread
-//
-//                    // Show Toast on the main UI thread
-//                    requireActivity().runOnUiThread {
-//                        Toast.makeText(requireContext(), "Donor Added", Toast.LENGTH_SHORT).show()
-//                    }
-//                }.start()
-            
+
+
         }
     }
 
@@ -106,12 +108,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             val response = fetchLocationData(url)
             withContext(Dispatchers.Main) {
                 if (response != null) {
-                    if (response.length() >0) {
+                    if (response.length() > 0) {
                         val locationData = response.getJSONObject(0)
                         val lat = locationData.getDouble("lat").toDouble()
                         val lon = locationData.getDouble("lon").toDouble()
                         val latLng = LatLng(lat, lon)
-
+                        // 🛠 Debugging: Log the fetched lat/lon
+                        Log.d("LocationDebug", "Location: $location, Lat: $lat, Lon: $lon")
                         if (isFrom) {
                             fromLatLng = latLng
                         } else {
@@ -120,11 +123,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
                         mGoogleMap?.addMarker(MarkerOptions().position(latLng).title(location))
 
+                        // 🌟 Ensure Map Moves to Correct Location
+                        mGoogleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12f))
+
                         if (fromLatLng != null && toLatLng != null) {
                             drawRoute()
                         }
                     } else {
-                        Toast.makeText(requireContext(), "Location not found!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Location not found!", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             }
@@ -138,8 +145,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             connection.requestMethod = "GET"
             connection.connect()
             val inputStream = connection.inputStream.bufferedReader().use { it.readText() }
+            // 🛠 Debug API Response
+            Log.d("LocationAPI", "Response: $inputStream")
             JSONArray(inputStream).takeIf { it.length() > 0 }
         } catch (e: Exception) {
+            Log.e("LocationAPI", "Error fetching location", e)
             null
         }
     }
@@ -192,20 +202,51 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mGoogleMap = googleMap
         Toast.makeText(requireContext(), "Map Loaded Successfully!", Toast.LENGTH_SHORT).show()
         println("Google Map is ready!")
-        //showDonorLocation()
+        loadDonorLocations()
     }
 
-//    private fun showDonorLocation() {
-//        val database = DonationDatabase.getInstance(requireContext())
-//        val donor = database.donationDao().getDonorById(donorId)
-//
-//        if (donor != null) {
-//            val location = LatLng(donor.latitude, donor.longitude)
-//            map.addMarker(MarkerOptions().position(location).title("Donor Location"))
-//            map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 14f))
-//        } else {
-//            Toast.makeText(requireContext(), "Donor location not found", Toast.LENGTH_SHORT).show()
-//        }
-//    }
+    private fun resizeMapIcon(iconResId: Int, width: Int, height: Int): BitmapDescriptor {
+        val imageBitmap = BitmapFactory.decodeResource(resources, iconResId)
+        val resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false)
+        return BitmapDescriptorFactory.fromBitmap(resizedBitmap)
+    }
 
+    private fun loadDonorLocations() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val donors = DonationDatabase.getInstance(requireContext())
+                .DonationDao()
+                .getDonationList()  // Database se saare donors le aao
+
+            withContext(Dispatchers.Main) {
+                for (donor in donors) {
+                    val location = LatLng(donor.latitude, donor.longitude)
+                    // 🛠 Debugging: Check stored lat/lon values
+                    Log.d(
+                        "DonorLocation",
+                        "Donor ID: ${donor.donorId}, Lat: ${donor.latitude}, Lon: ${donor.longitude}"
+                    )
+                    addMarker(location, donor.donationType.toString())
+                }
+            }
+        }
+    }
+
+    private fun addMarker(location: LatLng, donationType: Any) {
+        val icon = when (donationType) {
+            "Blood" -> R.drawable.blood_download
+            "Medicine" -> R.drawable.download
+            "Money" -> R.drawable.money_download
+            "Organ" -> R.drawable.organ_download
+            else -> R.drawable.defalut
+        }
+        val smallMarkerIcon = resizeMapIcon(icon, 50, 50)
+
+        mGoogleMap?.addMarker(
+            MarkerOptions()
+                .position(location)
+                .title("$donationType Donor")
+                .icon(smallMarkerIcon)
+        )
+    }
 }
+

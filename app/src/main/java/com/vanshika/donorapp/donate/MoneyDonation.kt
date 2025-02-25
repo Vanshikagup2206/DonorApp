@@ -132,9 +132,10 @@ class MoneyDonation : Fragment() {
                         donationType = "Money",
                         createdDate = binding?.donationDate?.text?.toString(),
                         paymentMethod = selectedPayment,
-                        donationMethod = selectedDonationType
-
-                        )
+                        donationMethod = selectedDonationType,
+                        latitude = 28.6139,
+                        longitude = 77.2090
+                    )
                 )
                 findNavController().navigate(R.id.donateFragment)
             }

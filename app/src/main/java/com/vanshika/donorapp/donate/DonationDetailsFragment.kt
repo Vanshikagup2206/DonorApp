@@ -24,7 +24,8 @@ class DonationDetailsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var binding: FragmentDonationDetailsBinding? = null
-    var donorsDataClass = DonorsDataClass()
+    var donorsDataClass = DonorsDataClass( latitude = 28.6139,
+        longitude = 77.2090 )
     lateinit var donationDatabase: DonationDatabase
     var donorId =0
     override fun onCreate(savedInstanceState: Bundle?) {

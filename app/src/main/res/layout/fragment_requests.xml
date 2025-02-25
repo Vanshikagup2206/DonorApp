@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,10 +8,6 @@
     android:orientation="vertical"
     android:padding="@dimen/dp_16"
     tools:context=".requests.RequestsFragment">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -216,34 +212,6 @@
 <!--            android:layout_marginTop="@dimen/dp_10"/>-->
 <!--    </LinearLayout>-->
 
-    <!-- Search & Filters -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/dp_10">
-
-        <EditText
-            android:id="@+id/etSearchDonor"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:hint="@string/search_donor_by_blood_type"
-            android:background="@drawable/neumorphic_edittext"
-            android:padding="@dimen/dp_10"/>
-
-        <Button
-            android:id="@+id/btnFilterDonors"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter"
-            android:backgroundTint="@color/quantum_grey50"
-            android:textColor="@color/black"
-            android:padding="@dimen/dp_10"
-            android:layout_marginStart="@dimen/dp_8"/>
-    </LinearLayout>
-
     <!-- Recipient List -->
     <TextView
         android:layout_width="match_parent"
@@ -269,7 +237,7 @@
         android:background="@drawable/neumorphic_red_button"
         android:textColor="@color/white"
         android:padding="@dimen/dp_12"
-        android:layout_marginTop="@dimen/dp_20"/>
-</LinearLayout>
+        android:layout_marginTop="@dimen/dp_20"
+        />
 
-</ScrollView>
+</LinearLayout>

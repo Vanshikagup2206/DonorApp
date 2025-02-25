@@ -27,15 +27,8 @@ data class DonorsDataClass(
     val tookRecentVaccine: Boolean? = null,
     val bloodPressur: Boolean? = null,
     val paymentMethod: String? = "",
-    val donationMethod : String ?= " ",//anonymous or public
+    val donationMethod: String? = " ",//anonymous or public
+    val lattitude: Double,
+    val longitude: Double
 
-) {
-
-    @Entity(tableName = "donors")
-    data class Donor(
-        @PrimaryKey(autoGenerate = true) val id: Int,
-        val name: String,
-        val latitude: Double,
-        val longitude: Double
-    )
-}
+)

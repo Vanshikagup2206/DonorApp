@@ -114,7 +114,9 @@ class MedicineDonation : Fragment() {
                         donationfrequency = binding?.editAmount?.text?.toString(),
                         gender = selectedGender,
                         number = binding?.editNumber?.text?.toString(),
-                        createdDate = binding?.donationDate?.text?.toString()
+                        createdDate = binding?.donationDate?.text?.toString(),
+                        lattitude = 28.6139,
+                        longitude = 77.2090
                     )
                 )
                 findNavController().navigate(R.id.donateFragment)
