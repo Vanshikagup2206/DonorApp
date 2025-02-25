@@ -11,14 +11,24 @@ data class DonorsDataClass(
     var donorId: Int = 0,
     var donorName: String? = "",
     var gender: String? = "",
-    var address : String ?= "",
+    var address: String? = "",
     var age: String? = "",
-    var createdDate: String ?="",
+    var createdDate: String? = "",
     var donationType: String? = "",
     var donationfrequency: String? = "",
     var bloodType: String? = "",
     var number: String? = "",
-    val latitude: Double,
+    val isHealthy: Boolean? = null,
+    val traveledRecently: Boolean? = null,
+    val tookMedication: Boolean? = null,
+    val consumesAlcohol: Boolean? = null,
+    val diabities: Boolean? = null,
+    val hadRecentSurgery: Boolean? = null,
+    val tookRecentVaccine: Boolean? = null,
+    val bloodPressur: Boolean? = null,
+    val paymentMethod: String? = "",
+    val donationMethod: String? = " ",//anonymous or public
+    val lattitude: Double,
     val longitude: Double
 
-    )
+)
