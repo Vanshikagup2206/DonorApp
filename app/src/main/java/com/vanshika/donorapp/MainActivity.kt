@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
     private fun saveTokenToRoom(token: String?) {
         if (token == null) return
         val user =
-            UsersDataClass(name = "John Doe", fcmToken = token)  // Replace with actual user data
+            UsersDataClass(name = "John Doe", fcmToken = listOf("token1", "token2", "token3"))  // Replace with actual user data
 
         CoroutineScope(Dispatchers.IO).launch {
             donationDatabase.DonationDao().insertToken(user)
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
     fun sendTokenToServer(token: String) {
-        val request = NotificationRequestDataClass(listOf(token))
+        val request = NotificationRequestDataClass(tokens = listOf("token1", "token2", "token3"))
         val call = RetrofitInstance.api.sendToken(request)
 
         call.enqueue(object : retrofit2.Callback<Void> {

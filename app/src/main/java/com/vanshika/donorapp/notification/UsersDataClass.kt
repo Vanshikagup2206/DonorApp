@@ -7,5 +7,5 @@ import androidx.room.PrimaryKey
 data class UsersDataClass(
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
     var name: String ?= "",
-    var fcmToken: String ?= ""
+    var fcmToken: List<String>
 )

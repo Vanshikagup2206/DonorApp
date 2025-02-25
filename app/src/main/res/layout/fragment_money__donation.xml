@@ -13,141 +13,204 @@
         android:orientation="vertical">
 
 
-
-    <!-- CardView with a quote -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_20"
-        android:layout_marginEnd="@dimen/dp_20"
-        android:backgroundTint="#E26161"
-        android:elevation="@dimen/dp_20"
-        android:padding="16dp"
-        app:cardCornerRadius="@dimen/dp_20">
-
-
-        <!-- Quote text in the CardView -->
-        <TextView
-            android:id="@+id/card_quote"
+        <!-- CardView with a quote -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:backgroundTint="#E26161"
+            android:elevation="@dimen/dp_20"
+            android:padding="16dp"
+            app:cardCornerRadius="@dimen/dp_20">
+
+
+            <!-- Quote text in the CardView -->
+            <TextView
+                android:id="@+id/card_quote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:padding="@dimen/dp_10"
+                android:text="“Money is a tool that, when used right, can change the lives of many.”"
+                android:textAlignment="center"
+                android:textColor="#333333"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/ask_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:fontFamily="sans-serif-medium"
             android:padding="@dimen/dp_10"
-            android:text="“Money is a tool that, when used right, can change the lives of many.”"
-            android:textAlignment="center"
-            android:textColor="#333333"
+            android:text="Please enter your name:"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_border"
+            android:hint="Your Name"
+            android:inputType="textPersonName"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/ask_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:padding="@dimen/dp_10"
+            android:text="Please enter your contact number:"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_border"
+            android:hint="Your Contact Number"
+            android:inputType="phone"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/ask_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:padding="@dimen/dp_10"
+            android:text="Please enter your age:"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_border"
+            android:hint="Your Age"
+            android:inputType="number"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/ask_gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:padding="@dimen/dp_10"
+            android:text="Please select your gender:"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_border"
+            android:hint="Your Gender"
+            android:inputType="textPersonName"
+            android:padding="10dp" />
+
+        <!-- Question for the donor -->
+        <TextView
+            android:id="@+id/ask_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:fontFamily="sans-serif-medium"
+            android:padding="@dimen/dp_10"
+            android:text="Please enter the amount you'd like to donate:"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_border"
+            android:hint="Amount (in USD)"
+            android:inputType="numberDecimal"
+            android:padding="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="When You want to donate"
+            android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
-    </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/ask_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:padding="@dimen/dp_10"
-        android:text="Please enter your name:"
-        android:textColor="#000000"
-        android:layout_marginTop="@dimen/dp_10"
-        android:textSize="16sp" />
 
-    <EditText
-        android:id="@+id/edit_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_border"
-        android:hint="Your Name"
-        android:inputType="textPersonName"
-        android:padding="10dp" />
+        <EditText
+            android:id="@+id/donationDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_border"
+            android:enabled="false"
+            android:hint="choose Date"
+            android:padding="12dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/ask_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:padding="@dimen/dp_10"
-        android:text="Please enter your contact number:"
-        android:textColor="#000000"
-        android:textSize="16sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="Choose Payment Method!"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/edit_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_border"
-        android:hint="Your Contact Number"
-        android:inputType="phone"
-        android:padding="10dp" />
+        <Spinner
+            android:id="@+id/paymentMethodSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/ask_age"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:padding="@dimen/dp_10"
-        android:text="Please enter your age:"
-        android:textColor="#000000"
-        android:textSize="16sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Donate Anonymously?"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/edit_age"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_border"
-        android:hint="Your Age"
-        android:inputType="number"
-        android:padding="10dp" />
+        <RadioGroup
+            android:id="@+id/anonymousGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/ask_gender"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:padding="@dimen/dp_10"
-        android:text="Please select your gender:"
-        android:textColor="#000000"
-        android:textSize="16sp" />
+            <RadioButton
+                android:id="@+id/anonymousYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes" />
 
-    <EditText
-        android:id="@+id/edit_gender"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_border"
-        android:hint="Your Gender"
-        android:inputType="textPersonName"
-        android:padding="10dp" />
+            <RadioButton
+                android:id="@+id/anonymousNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No" />
+        </RadioGroup>
 
-    <!-- Question for the donor -->
-    <TextView
-        android:id="@+id/ask_amount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_20"
-        android:fontFamily="sans-serif-medium"
-        android:padding="@dimen/dp_10"
-        android:text="Please enter the amount you'd like to donate:"
-        android:textColor="#000000"
-        android:textSize="16sp" />
+        <!-- Submit Button -->
+        <Button
+            android:id="@+id/submit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dp_20"
+            android:padding="@dimen/dp_10"
+            android:text="Donate Money" />
 
-    <EditText
-        android:id="@+id/edit_amount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_border"
-        android:hint="Amount (in USD)"
-        android:inputType="numberDecimal"
-        android:padding="10dp" />
-
-    <!-- Submit Button -->
-    <Button
-        android:id="@+id/submit_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/dp_10"
-        android:layout_margin="@dimen/dp_20"
-        android:text="Donate Money" />
 
     </LinearLayout>
 

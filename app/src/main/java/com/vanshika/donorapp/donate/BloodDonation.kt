@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.model.LatLng
@@ -41,6 +42,8 @@ class BloodDonation : Fragment() {
     private var param2: String? = null
     var binding: FragmentBloodDonationBinding? = null
     var bloodDonation = arrayListOf<DonorsDataClass>()
+    val bloodGroupSpinner = binding?.bloodGroupSpinner
+    val genderSpinner = binding?.genderSpinner
     var calendar = android.icu.util.Calendar.getInstance()
     var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
@@ -67,6 +70,24 @@ class BloodDonation : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+// for gender
+        val genderAdapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.gender_types,
+            android.R.layout.simple_spinner_item
+        )
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        genderSpinner?.adapter = genderAdapter
+        val selectedGender = genderSpinner?.selectedItem.toString()
+        // for blood
+        val adapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.blood_types,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        bloodGroupSpinner?.adapter = adapter
+        val selectedBloodGroup = bloodGroupSpinner?.selectedItem.toString()
         binding?.donationDate?.setOnClickListener {
             val datePickerDialog = DatePickerDialog(
                 requireContext(),
@@ -86,6 +107,18 @@ class BloodDonation : Fragment() {
             datePickerDialog.show()
         }
         binding?.submitButton?.setOnClickListener {
+            val isHealthy = binding?.healthYes?.isChecked ?: false
+            val traveledRecently = binding?.travelYes?.isChecked ?: false
+            val tookMedication = binding?.medYes?.isChecked ?: false
+            val consumesAlcohol = binding?.alcoholYes?.isChecked ?: false
+            val hasBloodPressureIssue =
+                binding?.bloodPressureYes?.isChecked ?: false // true if "Yes" is selected
+            val isDiabetic =
+                binding?.diabetesYes?.isChecked ?: false // true if "Yes" is selected
+            val hadRecentSurgery =
+                binding?.surgeryYes?.isChecked ?: false // true if "Yes" is selected
+            val tookRecentVaccine =
+                binding?.vaccineYes?.isChecked ?: false // true if "Yes" is selected
             if (binding?.nameEditText?.text.toString().isNullOrEmpty()) {
                 binding?.nameEditText?.error = "Fill Your Name"
             } else if (binding?.ageEditText?.text.toString().isNullOrEmpty()) {
@@ -93,23 +126,87 @@ class BloodDonation : Fragment() {
             } else if (binding?.addrEditText?.text?.toString().isNullOrEmpty()) {
                 binding?.addrEditText?.error = "Fill Your Age"
 
-            } else if (binding?.genderEdittext?.text.toString().isNullOrEmpty()) {
-                binding?.genderEdittext?.error = "Your Gender?"
             } else if (binding?.contactEditText?.text.toString().isNullOrEmpty()) {
                 binding?.contactEditText?.error = "Enter Your Mobile Number"
             } else if (binding?.contactEditText?.length() != 10) {
                 binding?.contactEditText?.error = "Enter Your 10 digit Number"
 
+            } else if (binding?.donationDate?.text.isNullOrEmpty()) {
+                binding?.donationDate?.error = "Please select a donation date"
+                Toast.makeText(requireContext(), "Donation date is required!", Toast.LENGTH_SHORT)
+                    .show()
             } else if (binding?.donationFrequencyEditText?.text.toString().isNullOrEmpty()) {
                 binding?.donationFrequencyEditText?.setError("Fill the frequency")
+            } else if (selectedBloodGroup == "Select Blood Group") {
+                Toast.makeText(
+                    requireContext(),
+                    "Please select your blood group",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (selectedGender == "Select Your Gender") {
+                Toast.makeText(
+                    requireContext(),
+                    "Please select your Gender",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else if (binding?.donationDate?.text.toString().isEmpty()) {
                 binding?.donationDate?.error = resources.getString(R.string.Enter_date)
+            } else if (!isHealthy) {
+                Toast.makeText(
+                    requireContext(),
+                    "You must be healthy to donate blood!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (traveledRecently) {
+                Toast.makeText(
+                    requireContext(),
+                    "Please wait 6 months after international travel!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (tookMedication) {
+                Toast.makeText(
+                    requireContext(),
+                    "Wait 7 days after taking medication!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (consumesAlcohol) {
+                Toast.makeText(
+                    requireContext(),
+                    "Avoid alcohol 24 hours before donating!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (hasBloodPressureIssue) {
+                Toast.makeText(
+                    requireContext(),
+                    "You can't donate blood if you have blood pressure",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (isDiabetic) {
+                Toast.makeText(
+                    requireContext(),
+                    "You can't donate blood if you have diabetes",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (hadRecentSurgery) {
+                Toast.makeText(
+                    requireContext(),
+                    "You can't donate blood if you had Surgery",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (tookRecentVaccine) {
+                Toast.makeText(
+                    requireContext(),
+                    "You can't donate blood if you had vaccination",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 Toast.makeText(
                     requireContext(),
                     "Your Details is Filled Successfully!",
                     Toast.LENGTH_SHORT
                 ).show();
+
+
                 val address = binding?.addrEditText?.text?.toString()
                 if (!address.isNullOrEmpty()) {
                     CoroutineScope(Dispatchers.IO).launch {
@@ -122,13 +219,13 @@ class BloodDonation : Fragment() {
                                         donorName = binding?.nameEditText?.text?.toString(),
                                         address = binding?.addrEditText?.text?.toString(),
                                         age = binding?.ageEditText?.text?.toString(),
-                                        gender = binding?.genderEdittext?.text?.toString(),
+//                                                gender = binding?.genderEdittext?.text?.toString(),
                                         number = binding?.contactEditText?.text?.toString(),
-                                        bloodType = binding?.bloodGroupEditText?.text.toString(),
+//                                                bloodType = binding?.bloodGroupEditText?.text.toString(),
                                         donationfrequency = binding?.donationFrequencyEditText?.text?.toString(),
                                         donationType = "Blood",
                                         createdDate = binding?.donationDate?.text?.toString(),
-                                        latitude = latLng.latitude,
+                                        lattitude = latLng.latitude,
                                         longitude = latLng.longitude
                                     )
                                 )
@@ -141,107 +238,107 @@ class BloodDonation : Fragment() {
 
         }
     }
-            private fun getLatLngFromAddress(address: String): LatLng? {
-                return try {
-                    val url = "https://nominatim.openstreetmap.org/search?format=json&q=$address"
-                    val connection = URL(url).openConnection() as HttpURLConnection
-                    connection.requestMethod = "GET"
-                    connection.connect()
 
-                    val inputStream = connection.inputStream.bufferedReader().use { it.readText() }
-                    val responseArray = JSONArray(inputStream)
+    private fun getLatLngFromAddress(address: String): LatLng? {
+        return try {
+            val url = "https://nominatim.openstreetmap.org/search?format=json&q=$address"
+            val connection = URL(url).openConnection() as HttpURLConnection
+            connection.requestMethod = "GET"
+            connection.connect()
 
-                    if (responseArray.length() > 0) {
-                        val locationData = responseArray.getJSONObject(0)
+            val inputStream = connection.inputStream.bufferedReader().use { it.readText() }
+            val responseArray = JSONArray(inputStream)
+
+            if (responseArray.length() > 0) {
+                val locationData = responseArray.getJSONObject(0)
+                val lat = locationData.getDouble("lat")
+                val lon = locationData.getDouble("lon")
+                Log.d("Geocode", "Address: $address -> Lat: $lat, Lon: $lon")
+                LatLng(lat, lon)
+            } else {
+                Log.e("Geocode", "No location found for address: $address")
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("Geocode", "Error fetching coordinates", e)
+            null
+        }
+    }
+
+    private fun searchLocation(
+        location: String,
+        isFrom: Boolean,
+        onResult: (LatLng?) -> Unit
+    ) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val url = URL(
+                    "https://nominatim.openstreetmap.org/search?format=json&q=${
+                        URLEncoder.encode(
+                            location,
+                            "UTF-8"
+                        )
+                    }"
+                )
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "GET"
+                connection.connect()
+
+                val response = connection.inputStream.bufferedReader().use { it.readText() }
+                val jsonArray = JSONArray(response)
+
+                withContext(Dispatchers.Main) {
+                    if (jsonArray.length() > 0) {
+                        val locationData = jsonArray.getJSONObject(0)
                         val lat = locationData.getDouble("lat")
                         val lon = locationData.getDouble("lon")
-                        Log.d("Geocode", "Address: $address -> Lat: $lat, Lon: $lon")
-                        LatLng(lat, lon)
+                        val latLng = LatLng(lat, lon)
+
+                        Log.d("LocationDebug", "Address: $location -> LatLng: $latLng")
+
+                        onResult(latLng)
                     } else {
-                        Log.e("Geocode", "No location found for address: $address")
-                        null
-                    }
-                } catch (e: Exception) {
-                    Log.e("Geocode", "Error fetching coordinates", e)
-                    null
-                }
-            }
-
-            private fun searchLocation(
-                location: String,
-                isFrom: Boolean,
-                onResult: (LatLng?) -> Unit
-            ) {
-                CoroutineScope(Dispatchers.IO).launch {
-                    try {
-                        val url = URL(
-                            "https://nominatim.openstreetmap.org/search?format=json&q=${
-                                URLEncoder.encode(
-                                    location,
-                                    "UTF-8"
-                                )
-                            }"
-                        )
-                        val connection = url.openConnection() as HttpURLConnection
-                        connection.requestMethod = "GET"
-                        connection.connect()
-
-                        val response = connection.inputStream.bufferedReader().use { it.readText() }
-                        val jsonArray = JSONArray(response)
-
-                        withContext(Dispatchers.Main) {
-                            if (jsonArray.length() > 0) {
-                                val locationData = jsonArray.getJSONObject(0)
-                                val lat = locationData.getDouble("lat")
-                                val lon = locationData.getDouble("lon")
-                                val latLng = LatLng(lat, lon)
-
-                                Log.d("LocationDebug", "Address: $location -> LatLng: $latLng")
-
-                                onResult(latLng)
-                            } else {
-                                Log.e("LocationDebug", "Location not found: $location")
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Location not found!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                onResult(null)
-                            }
-                        }
-                    } catch (e: Exception) {
-                        Log.e("LocationError", "Error fetching location: ${e.message}")
-                        withContext(Dispatchers.Main) {
-                            Toast.makeText(
-                                requireContext(),
-                                "Failed to fetch location!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                        Log.e("LocationDebug", "Location not found: $location")
+                        Toast.makeText(
+                            requireContext(),
+                            "Location not found!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         onResult(null)
                     }
                 }
-            }
-
-
-
-            companion object {
-            /**
-             * Use this factory method to create a new instance of
-             * this fragment using the provided parameters.
-             *
-             * @param param1 Parameter 1.
-             * @param param2 Parameter 2.
-             * @return A new instance of fragment BloodDonation.
-             */
-            // TODO: Rename and change types and number of parameters
-            @JvmStatic
-            fun newInstance(param1: String, param2: String) =
-                BloodDonation().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
+            } catch (e: Exception) {
+                Log.e("LocationError", "Error fetching location: ${e.message}")
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to fetch location!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+                onResult(null)
+            }
         }
-        }
+    }
+
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment BloodDonation.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            BloodDonation().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
+    }
+}

@@ -1,15 +1,18 @@
 package com.vanshika.donorapp.donate
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentMoneyDonationBinding
+import java.text.SimpleDateFormat
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,6 +31,9 @@ class MoneyDonation : Fragment() {
     var binding: FragmentMoneyDonationBinding? = null
     lateinit var donardatabase: DonationDatabase
     var donation = arrayListOf<DonorsDataClass>()
+    val paymentSpinner = binding?.paymentMethodSpinner
+    var calendar = android.icu.util.Calendar.getInstance()
+    var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +55,33 @@ class MoneyDonation : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val paymentAdapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.payment_methods,
+            android.R.layout.simple_spinner_item
+        )
+        paymentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        paymentSpinner?.adapter = paymentAdapter
+        val selectedPayment = paymentSpinner?.selectedItem.toString()
+        binding?.donationDate?.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(
+                requireContext(),
+//                R.style.MyDatePickerStyle,
+                { _, year, month, date ->
+                    calendar.set(year, month, date)
+                    binding?.donationDate?.setText(simpleDateFormat.format(calendar.time))
+                },
+                android.icu.util.Calendar.getInstance().get(android.icu.util.Calendar.YEAR),
+                android.icu.util.Calendar.getInstance().get(android.icu.util.Calendar.MONTH),
+                android.icu.util.Calendar.getInstance().get(android.icu.util.Calendar.DATE),
+            )
+            val calendar = android.icu.util.Calendar.getInstance()
+            datePickerDialog.datePicker.minDate = calendar.timeInMillis
+            calendar.add(android.icu.util.Calendar.YEAR, +1)
+            datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+            datePickerDialog.show()
+        }
         binding?.submitButton?.setOnClickListener {
             if (binding?.editName?.text?.toString().isNullOrEmpty()) {
                 binding?.askName?.setError("Your Name")
@@ -60,7 +93,30 @@ class MoneyDonation : Fragment() {
                 binding?.editAmount?.setError("enter Amount to donate")
             } else if (binding?.editGender?.text?.toString().isNullOrEmpty()) {
                 binding?.editGender?.setError("Enter your gender")
+            } else if (binding?.donationDate?.text.isNullOrEmpty()) {
+                binding?.donationDate?.error = "Please select a donation date"
+                Toast.makeText(requireContext(), "Donation date is required!", Toast.LENGTH_SHORT)
+                    .show()
+            } else if (selectedPayment == "Select Payment Method") {
+                Toast.makeText(
+                    requireContext(),
+                    "Please select a payment method!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            val selectedRadioButtonId = binding?.anonymousGroup?.checkedRadioButtonId
+            if (selectedRadioButtonId == -1) {
+                Toast.makeText(
+                    requireContext(),
+                    "Please select a donation type (Anonymous or Public)!",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
+                val selectedDonationType = when (selectedRadioButtonId) {
+                    R.id.anonymousYes -> "Anonymous"
+                    R.id.anonymousNo -> "Public"
+                    else -> ""
+                }
                 Toast.makeText(
                     requireContext(),
                     "Your Details is Filled Successfuly!",
@@ -74,6 +130,9 @@ class MoneyDonation : Fragment() {
                         gender = binding?.editGender?.text?.toString(),
                         donationfrequency = binding?.editAmount?.text?.toString(),
                         donationType = "Money",
+                        createdDate = binding?.donationDate?.text?.toString(),
+                        paymentMethod = selectedPayment,
+                        donationMethod = selectedDonationType,
                         latitude = 28.6139,
                         longitude = 77.2090
                     )

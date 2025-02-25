@@ -1,10 +1,12 @@
 package com.vanshika.donorapp.donate
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.vanshika.donorapp.DonationDatabase
@@ -29,8 +31,10 @@ class MedicineDonation : Fragment() {
     var binding: FragmentMedicineDonationBinding? = null
     lateinit var donardatabase: DonationDatabase
     var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
-
+    var calendar = android.icu.util.Calendar.getInstance()
     var donationlist = arrayListOf<DonorsDataClass>()
+    val genderSpinner = binding?.genderSpinner
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +55,32 @@ class MedicineDonation : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val genderAdapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.gender_types,
+            android.R.layout.simple_spinner_item
+        )
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        genderSpinner?.adapter = genderAdapter
+        val selectedGender = genderSpinner?.selectedItem.toString()
+        binding?.donationDate?.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(
+                requireContext(),
+//                R.style.MyDatePickerStyle,
+                { _, year, month, date ->
+                    calendar.set(year, month, date)
+                    binding?.donationDate?.setText(simpleDateFormat.format(calendar.time))
+                },
+                android.icu.util.Calendar.getInstance().get(android.icu.util.Calendar.YEAR),
+                android.icu.util.Calendar.getInstance().get(android.icu.util.Calendar.MONTH),
+                android.icu.util.Calendar.getInstance().get(android.icu.util.Calendar.DATE),
+            )
+            val calendar = android.icu.util.Calendar.getInstance()
+            datePickerDialog.datePicker.minDate = calendar.timeInMillis
+            calendar.add(android.icu.util.Calendar.YEAR, +1)
+            datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+            datePickerDialog.show()
+        }
         binding?.submitButton?.setOnClickListener {
             if (binding?.editName?.text?.toString().isNullOrEmpty()) {
                 binding?.editName?.setError("Enter your Name")
@@ -58,10 +88,16 @@ class MedicineDonation : Fragment() {
                 binding?.editAmount?.setError("Enter amount")
             } else if (binding?.editMedicineType?.text?.toString().isNullOrEmpty()) {
                 binding?.askMedicineType?.setError("Enter type")
+            } else if (binding?.donationDate?.text?.toString().isNullOrEmpty()) {
+                binding?.donationDate?.setError("Choose Date")
             } else if (binding?.editNumber?.length() != 10) {
                 binding?.editNumber?.setError("Enter your Name")
-            } else if (binding?.editGender?.text?.toString().isNullOrEmpty()) {
-                binding?.editGender?.setError("Enter your Name")
+            } else if (selectedGender == "Select Your Gender") {
+                Toast.makeText(
+                    requireContext(),
+                    "Please select your Gender",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else if (binding?.editAge?.text?.toString().isNullOrEmpty()) {
                 binding?.editAge?.setError("Enter your Name")
             } else {
@@ -76,9 +112,10 @@ class MedicineDonation : Fragment() {
                         donorName = binding?.editName?.text?.toString(),
                         age = binding?.editAge?.text?.toString(),
                         donationfrequency = binding?.editAmount?.text?.toString(),
-                        gender = binding?.editGender?.text?.toString(),
+                        gender = selectedGender,
                         number = binding?.editNumber?.text?.toString(),
-                        latitude = 28.6139,
+                        createdDate = binding?.donationDate?.text?.toString(),
+                        lattitude = 28.6139,
                         longitude = 77.2090
                     )
                 )
