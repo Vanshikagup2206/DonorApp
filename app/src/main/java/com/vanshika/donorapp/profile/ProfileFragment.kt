@@ -73,8 +73,8 @@ class ProfileFragment : Fragment() {
 
         val currentUser = auth?.currentUser
         if (currentUser != null) {
-            loadUserData(currentUser)
             generateQRCode(currentUser.email ?: "Unknown")
+            loadHealthDetails()
         }
 
         binding?.btnLogout?.setOnClickListener {
@@ -194,10 +194,30 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun loadUserData(user: FirebaseUser) {
-        binding?.tvProfileName?.text = sharedPreferences?.getString("name", "No Name")
-//        binding?.tvProfileBloodGroup?.text = sharedPreferences?.getString("bloodGroup", "N/A")
-    }
+    private fun loadHealthDetails() {
+        val userId = auth?.currentUser?.uid ?: return  // Get current user ID
+
+        fireStore.collection("users").document(userId).get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        binding?.etBloodGroup?.setText(document.getString("bloodGroup") ?: "")
+                        binding?.etDonationStreak?.setText(document.getString("donationStreak") ?: "")
+                        binding?.etAge?.setText(document.getString("age") ?: "")
+                        binding?.etWeight?.setText(document.getString("weight") ?: "")
+                        binding?.etHemoglobin?.setText(document.getString("hemoglobin") ?: "")
+                        binding?.etBloodPressure?.setText(document.getString("bloodPressure") ?: "")
+                        binding?.etPulserate?.setText(document.getString("pulserate") ?: "")
+
+                        Log.d("Firestore", "Health details loaded successfully")
+                    } else {
+                        Log.d("Firestore", "No health details found for this user")
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.e("Firestore", "Error loading health details", e)
+                }
+        }
+
 
     companion object {
 
