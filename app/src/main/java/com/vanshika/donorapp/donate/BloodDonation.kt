@@ -197,7 +197,20 @@ class BloodDonation : Fragment() {
                     "You can't donate blood if you had vaccination",
                     Toast.LENGTH_SHORT
                 ).show()
+            }
+            val selectedRadioButtonId = binding?.anonymousGroup?.checkedRadioButtonId
+            if (selectedRadioButtonId == -1) {
+                Toast.makeText(
+                    requireContext(),
+                    "Please select a donation type (Anonymous or Public)!",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
+                val selectedDonationType = when (selectedRadioButtonId) {
+                    R.id.anonymousYes -> "Anonymous"
+                    R.id.anonymousNo -> "Public"
+                    else -> ""
+                }
                 Toast.makeText(
                     requireContext(),
                     "Your Details is Filled Successfully!",
@@ -232,7 +245,8 @@ class BloodDonation : Fragment() {
                                         hadRecentSurgery = hadRecentSurgery,
                                         tookRecentVaccine = tookRecentVaccine,
                                         diabities = isDiabetic,
-                                        bloodPressur = hasBloodPressureIssue
+                                        bloodPressur = hasBloodPressureIssue,
+                                        donationMethod = selectedDonationType
                                     )
                                 )
                             }

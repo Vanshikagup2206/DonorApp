@@ -101,6 +101,8 @@ class MedicineDonation : Fragment() {
                 binding?.donationDate?.setError("Choose Date")
             } else if (binding?.editNumber?.length() != 10) {
                 binding?.editNumber?.setError("Enter your Name")
+            } else if (binding?.etAddress?.length() != 10) {
+                binding?.etAddress?.setError("Enter your Address")
             } else if (selectedGender == "Select Your Gender") {
                 Toast.makeText(
                     requireContext(),
@@ -109,7 +111,20 @@ class MedicineDonation : Fragment() {
                 ).show()
             } else if (binding?.editAge?.text?.toString().isNullOrEmpty()) {
                 binding?.editAge?.setError("Enter your Name")
+            }
+            val selectedRadioButtonId = binding?.anonymousGroup?.checkedRadioButtonId
+            if (selectedRadioButtonId == -1) {
+                Toast.makeText(
+                    requireContext(),
+                    "Please select a donation type (Anonymous or Public)!",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
+                val selectedDonationType = when (selectedRadioButtonId) {
+                    R.id.anonymousYes -> "Anonymous"
+                    R.id.anonymousNo -> "Public"
+                    else -> ""
+                }
                 Toast.makeText(
                     requireContext(),
                     "Your Details is Filled Successfuly!",
@@ -133,7 +148,8 @@ class MedicineDonation : Fragment() {
                                         number = binding?.editNumber?.text?.toString(),
                                         createdDate = binding?.donationDate?.text?.toString(),
                                         lattitude = latLng.latitude,
-                                        longitude = latLng.longitude
+                                        longitude = latLng.longitude,
+                                        donationMethod = selectedDonationType
                                     )
                                 )
                             }

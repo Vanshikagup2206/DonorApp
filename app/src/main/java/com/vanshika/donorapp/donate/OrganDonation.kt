@@ -39,7 +39,8 @@ class OrganDonation : Fragment() {
     private var param2: String? = null
     var binding: FragmentOrganDonationBinding? = null
     lateinit var donarDatabase: DonationDatabase
-//    var donation = arrayListOf<DonorsDataClass>()
+
+    //    var donation = arrayListOf<DonorsDataClass>()
     var calendar = android.icu.util.Calendar.getInstance()
     var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
@@ -189,7 +190,20 @@ class OrganDonation : Fragment() {
                     "You can't donate blood if you had vaccination",
                     Toast.LENGTH_SHORT
                 ).show()
+            }
+            val selectedRadioButtonId = binding?.anonymousGroup?.checkedRadioButtonId
+            if (selectedRadioButtonId == -1) {
+                Toast.makeText(
+                    requireContext(),
+                    "Please select a donation type (Anonymous or Public)!",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
+                val selectedDonationType = when (selectedRadioButtonId) {
+                    R.id.anonymousYes -> "Anonymous"
+                    R.id.anonymousNo -> "Public"
+                    else -> ""
+                }
                 Toast.makeText(
                     requireContext(),
                     "Your Details is Filled Successfuly!",
@@ -221,7 +235,8 @@ class OrganDonation : Fragment() {
                                         diabities = isDiabetic,
                                         bloodPressur = hasBloodPressureIssue,
                                         lattitude = latLng.latitude,
-                                        longitude = latLng.longitude
+                                        longitude = latLng.longitude,
+                                        donationMethod = selectedDonationType
                                     )
                                 )
                             }

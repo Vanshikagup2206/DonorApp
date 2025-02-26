@@ -164,7 +164,7 @@ class MoneyDonation : Fragment() {
                                         paymentMethod = selectedPayment,
                                         donationMethod = selectedDonationType,
                                         lattitude = latLng.latitude,
-                                        longitude = latLng.longitude
+                                        longitude = latLng.longitude,
                                     )
                                 )
                             }

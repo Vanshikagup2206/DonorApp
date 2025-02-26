@@ -107,7 +107,7 @@
             android:text="@string/addresss"
             android:textColor="@android:color/black"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
 
         <EditText
@@ -225,7 +225,7 @@
             android:text="Have you traveled internationally in the last 6 months?"
             android:textColor="@android:color/black"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/travelRadioGroup"
@@ -411,6 +411,34 @@
 
             <RadioButton
                 android:id="@+id/vaccineNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Donate Anonymously?"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/anonymousGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/anonymousYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes" />
+
+            <RadioButton
+                android:id="@+id/anonymousNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="No" />
