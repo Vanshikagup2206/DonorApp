@@ -93,6 +93,7 @@
     <string name="blood_pressure">Blood Pressure</string>
     <string name="pulse_rate">Pulse Rate</string>
     <string name="add_details">Add Health Details</string>
+    <string name="addresss">Address</string>
 
 </resources>
 
