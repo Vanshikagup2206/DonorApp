@@ -34,5 +34,31 @@
         <item name="city_Hospital_Delhi"> City Hospital,Delhi</item>
         <item name="capital_Hospital_Jalandhar">Capital Hospital,Jalandhar</item>
     </string-array>
+    <string-array name="blood_types">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>O+</item>
+        <item>O-</item>
+    </string-array>
+    <string-array name="gender_types">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="payment_methods">
+        <item>Select Payment Method</item>
+        <item>UPI</item>
+        <item>Bank Transfer</item>
+        <item>Cash</item>
+        <item>Cheque</item>
+        <item>Credit Card</item>
+        <item>Debit Card</item>
+    </string-array>
+
 
 </resources>

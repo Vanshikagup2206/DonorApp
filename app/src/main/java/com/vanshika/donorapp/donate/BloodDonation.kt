@@ -42,11 +42,8 @@ class BloodDonation : Fragment() {
     private var param2: String? = null
     var binding: FragmentBloodDonationBinding? = null
     var bloodDonation = arrayListOf<DonorsDataClass>()
-
     var calendar = android.icu.util.Calendar.getInstance()
     var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
-
-
     lateinit var donorDatabase: DonationDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -222,8 +219,6 @@ class BloodDonation : Fragment() {
                                         age = binding?.ageEditText?.text?.toString(),
                                         gender = selectedGender,
                                         number = binding?.contactEditText?.text?.toString(),
-//                                                gender = binding?.genderEdittext?.text?.toString(),
-
                                         donationfrequency = binding?.donationFrequencyEditText?.text?.toString(),
                                         donationType = "Blood",
                                         createdDate = binding?.donationDate?.text?.toString(),

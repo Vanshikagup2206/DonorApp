@@ -25,7 +25,6 @@ class DonationDetailsFragment : Fragment() {
     private var param2: String? = null
     var binding: FragmentDonationDetailsBinding? = null
 
-   
 
     var donorsDataClass = DonorsDataClass(
         lattitude = 28.6139,
