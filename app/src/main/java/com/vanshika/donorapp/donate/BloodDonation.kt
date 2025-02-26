@@ -42,11 +42,8 @@ class BloodDonation : Fragment() {
     private var param2: String? = null
     var binding: FragmentBloodDonationBinding? = null
     var bloodDonation = arrayListOf<DonorsDataClass>()
-
     var calendar = android.icu.util.Calendar.getInstance()
     var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
-
-
     lateinit var donorDatabase: DonationDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -151,7 +148,7 @@ class BloodDonation : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else if (binding?.donationDate?.text.toString().isEmpty()) {
-                binding?.donationDate?.error = resources.getString(R.string.Enter_date)
+                binding?.donationDate?.error = "Enter the Enter Date"
             } else if (!isHealthy) {
                 Toast.makeText(
                     requireContext(),
@@ -200,7 +197,20 @@ class BloodDonation : Fragment() {
                     "You can't donate blood if you had vaccination",
                     Toast.LENGTH_SHORT
                 ).show()
+            }
+            val selectedRadioButtonId = binding?.anonymousGroup?.checkedRadioButtonId
+            if (selectedRadioButtonId == -1) {
+                Toast.makeText(
+                    requireContext(),
+                    "Please select a donation type (Anonymous or Public)!",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
+                val selectedDonationType = when (selectedRadioButtonId) {
+                    R.id.anonymousYes -> "Anonymous"
+                    R.id.anonymousNo -> "Public"
+                    else -> ""
+                }
                 Toast.makeText(
                     requireContext(),
                     "Your Details is Filled Successfully!",
@@ -222,8 +232,6 @@ class BloodDonation : Fragment() {
                                         age = binding?.ageEditText?.text?.toString(),
                                         gender = selectedGender,
                                         number = binding?.contactEditText?.text?.toString(),
-//                                                gender = binding?.genderEdittext?.text?.toString(),
-
                                         donationfrequency = binding?.donationFrequencyEditText?.text?.toString(),
                                         donationType = "Blood",
                                         createdDate = binding?.donationDate?.text?.toString(),
@@ -237,7 +245,8 @@ class BloodDonation : Fragment() {
                                         hadRecentSurgery = hadRecentSurgery,
                                         tookRecentVaccine = tookRecentVaccine,
                                         diabities = isDiabetic,
-                                        bloodPressur = hasBloodPressureIssue
+                                        bloodPressur = hasBloodPressureIssue,
+                                        donationMethod = selectedDonationType
                                     )
                                 )
                             }

@@ -5,7 +5,6 @@
         <item>Organ</item>
         <item>Medicine</item>
         <item>Money</item>
-
     </string-array>
 
     <!-- Blood Groups -->
@@ -30,9 +29,31 @@
         <item>Intestine</item>
     </string-array>
 
-    <string-array name="Location">
-        <item name="city_Hospital_Delhi"> City Hospital,Delhi</item>
-        <item name="capital_Hospital_Jalandhar">Capital Hospital,Jalandhar</item>
+    <!-- Hospital Locations -->
+    <string-array name="hospital_locations">
+        <item>City Hospital, Delhi</item>
+        <item>Capital Hospital, Jalandhar</item>
     </string-array>
+
+    <!-- Gender Types -->
+    <string-array name="gender_types">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+
+    <!-- Payment Methods -->
+    <string-array name="payment_methods">
+        <item>Select Payment Method</item>
+        <item>UPI</item>
+        <item>Bank Transfer</item>
+        <item>Cash</item>
+        <item>Cheque</item>
+        <item>Credit Card</item>
+        <item>Debit Card</item>
+    </string-array>
+
+
+
 
 </resources>

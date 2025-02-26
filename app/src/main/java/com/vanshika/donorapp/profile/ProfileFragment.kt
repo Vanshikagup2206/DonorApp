@@ -13,16 +13,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.vanshika.donorapp.DonationDatabase
-import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.DeleteDailogBinding
 import com.vanshika.donorapp.databinding.FragmentProfileBinding
 import com.vanshika.donorapp.signInLogIn.LogInActivity
@@ -73,7 +70,7 @@ class ProfileFragment : Fragment() {
 
         val currentUser = auth?.currentUser
         if (currentUser != null) {
-            generateQRCode(currentUser.email ?: "Unknown")
+            generateQRCode(currentUser.email ?: "Unknown",loadHealthDetails())
             loadHealthDetails()
         }
 
@@ -176,10 +173,10 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun generateQRCode(data: String) {
+    private fun generateQRCode(data: CharSequence, loadHealthDetails: Unit) {
         try {
             val barcodeEncoder = BarcodeEncoder()
-            val bitMatrix: BitMatrix = barcodeEncoder.encode(data, BarcodeFormat.QR_CODE, 400, 400)
+            val bitMatrix: BitMatrix = barcodeEncoder.encode(data.toString(), BarcodeFormat.QR_CODE, 400, 400)
             val bitmap: Bitmap = barcodeEncoder.createBitmap(bitMatrix)
             binding?.ivQrCode?.setImageBitmap(bitmap)
         } catch (e: WriterException) {

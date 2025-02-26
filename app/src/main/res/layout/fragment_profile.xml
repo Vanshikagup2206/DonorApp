@@ -89,7 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:padding="@dimen/dp_10"
-                        android:text="@string/blood_group"
+                        android:text="@string/bloodGroup"
                         android:textColor="@color/dark_gray"
                         android:textSize="@dimen/sp_16" />
 
@@ -281,7 +281,7 @@ Diastolic (Lower): 60–90 mmHg"
             android:layout_marginEnd="@dimen/dp_10"
             android:background="@drawable/neumorphic_button"
             android:padding="@dimen/dp_10"
-            android:text="@string/Delete_acc"
+            android:text="Delete Account"
             android:textColor="@color/white" />
 
         <Button

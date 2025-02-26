@@ -35,7 +35,7 @@
             android:id="@+id/tvRequirement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Requirement"
+            android:text="Requirement"
             android:textSize="16sp"
             android:textColor="@color/dark_gray"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +59,7 @@
             android:id="@+id/tvHospitalLocation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/Hospital_loaction"
+            android:text="Hospital Location"
             android:textSize="16sp"
             android:textColor="@color/dark_gray"
             android:layout_marginTop="4dp"
@@ -82,7 +82,7 @@
                 android:id="@+id/tvContactNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Contact_Number"
+                android:text="Contact Number"
                 android:textSize="16sp"
                 android:textColor="@color/black"/>
 

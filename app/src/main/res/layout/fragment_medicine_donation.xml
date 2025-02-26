@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/dp_24"
     android:orientation="vertical"
     tools:context=".donate.MedicineDonation">
 
@@ -33,16 +34,6 @@
                 android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/donor_question"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:padding="@dimen/dp_10"
-            android:text="Could your contribution of medicine help provide relief to someone in need?"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="16sp" />
 
         <!-- Ask for the donor's details -->
         <TextView
@@ -83,7 +74,29 @@
             android:background="@drawable/edit_text_border"
             android:hint="Your Contact Number"
             android:inputType="phone"
+            android:maxLength="10"
             android:padding="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="@string/addresss"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+        <EditText
+            android:id="@+id/etAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_border"
+            android:hint="Enter your address"
+            android:inputType="textPostalAddress"
+            android:padding="12dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -133,7 +146,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_border"
-            android:enabled="false"
+            android:enabled="true"
             android:hint="choose Date"
             android:padding="12dp"
             android:textColor="@android:color/black"
@@ -176,6 +189,34 @@
             android:hint="Amount (in units or weight)"
             android:inputType="numberDecimal"
             android:padding="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Donate Anonymously?"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/anonymousGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/anonymousYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes" />
+
+            <RadioButton
+                android:id="@+id/anonymousNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No" />
+        </RadioGroup>
 
         <!-- Submit Button -->
         <Button

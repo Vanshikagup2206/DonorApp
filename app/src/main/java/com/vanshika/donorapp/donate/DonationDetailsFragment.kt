@@ -63,6 +63,9 @@ class DonationDetailsFragment : Fragment() {
         binding?.diabitiesHistory?.text = booleanToYesNo(donorsDataClass.diabities)
         binding?.surgeryHistory?.text = booleanToYesNo(donorsDataClass.hadRecentSurgery)
         binding?.vaccineHistory?.text = booleanToYesNo(donorsDataClass.tookRecentVaccine)
+        binding?.dontionMethod?.text = donorsDataClass.donationMethod
+        binding?.paymentMethod?.text = donorsDataClass.paymentMethod
+
 
     }
 
@@ -71,7 +74,7 @@ class DonationDetailsFragment : Fragment() {
     }
 
     private fun booleanToYesNo(value: Boolean?): String {
-        return if (value == true) "Yes" else "No"
+        return if (value == true) "Yes" else "Not Required "
     }
 
     companion object {

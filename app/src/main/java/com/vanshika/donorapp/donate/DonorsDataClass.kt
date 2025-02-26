@@ -29,6 +29,6 @@ data class DonorsDataClass(
     val paymentMethod: String? = "",
     val donationMethod: String? = " ",//anonymous or public
     val lattitude: Double,
-    val longitude: Double
+    val longitude: Double,
 
 )

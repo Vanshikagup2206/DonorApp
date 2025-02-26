@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/dp_24"
     android:orientation="vertical"
+    android:padding="@dimen/dp_12"
     tools:context=".donate.OrganDonation">
 
     <LinearLayout
@@ -43,8 +45,9 @@
             android:layout_marginTop="@dimen/dp_5"
             android:padding="10dp"
             android:text="Full Name"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/nameEditText"
@@ -62,8 +65,9 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Age"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/ageEditText"
@@ -80,8 +84,9 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_10"
             android:text="Number?"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/number_Edit_Text"
@@ -90,6 +95,7 @@
             android:background="@drawable/rounded_border"
             android:hint="Enter your Number"
             android:inputType="number"
+            android:maxLength="10"
             android:padding="12dp"
             android:textColor="#000000"
             android:textSize="16sp" />
@@ -98,9 +104,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_10"
-            android:text="@string/addresss"
+            android:text="Address"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
 
         <EditText
@@ -119,8 +126,9 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_10"
             android:text="Which organ you want to donate??"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/spinOrgan"
@@ -133,8 +141,9 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_10"
             android:text="Gender?"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/genderSpinner"
@@ -148,8 +157,9 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_10"
             android:text="Do you wish to donate organs?"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/consentEditText"
@@ -167,7 +177,8 @@
             android:padding="@dimen/dp_10"
             android:text="when You want to donate"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
 
         <EditText
@@ -185,8 +196,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Are you feeling fit and healthy today?"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/healthRadioGroup"
@@ -211,8 +223,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Have you traveled internationally in the last 6 months?"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/travelRadioGroup"
@@ -237,8 +250,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Have you taken any medications in the last 7 days?"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/medicationRadioGroup"
@@ -263,8 +277,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Do you smoke or consume alcohol regularly?"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/alcoholRadioGroup"
@@ -291,7 +306,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Do you have blood pressure issues?"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/bloodPressureRadioGroup"
@@ -318,7 +335,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Are you diabetic?"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/diabetesRadioGroup"
@@ -345,7 +364,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Have you had surgery in the last 6 months?"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/surgeryRadioGroup"
@@ -372,7 +393,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Have you received any vaccine in the last 1 month?"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/vaccineRadioGroup"
@@ -388,6 +411,34 @@
 
             <RadioButton
                 android:id="@+id/vaccineNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Donate Anonymously?"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/anonymousGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/anonymousYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes" />
+
+            <RadioButton
+                android:id="@+id/anonymousNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="No" />
