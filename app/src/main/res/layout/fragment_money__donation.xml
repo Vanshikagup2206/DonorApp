@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/dp_24"
     android:orientation="vertical"
     android:padding="@dimen/dp_12"
     tools:context=".donate.MoneyDonation">
@@ -176,12 +177,12 @@
             android:background="@drawable/rounded_border"
             android:clickable="true"
             android:focusable="false"
-            android:inputType="none"
             android:hint="choose Date"
+            android:inputType="none"
             android:padding="12dp"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
-<!--        android:enabled="true"-->
+        <!--        android:enabled="true"-->
 
         <TextView
             android:layout_width="match_parent"
@@ -225,6 +226,11 @@
                 android:text="No" />
         </RadioGroup>
 
+        <CheckBox
+            android:id="@+id/resetCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check to reset form" />
         <!-- Submit Button -->
         <Button
             android:id="@+id/submit_button"

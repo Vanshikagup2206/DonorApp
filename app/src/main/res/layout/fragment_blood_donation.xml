@@ -12,13 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
+        <CheckBox
+            android:id="@+id/resetCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reset Form"
+            android:layout_gravity="end" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_20"
-            android:backgroundTint="@color/gray"
+            android:backgroundTint="@color/dark_red"
             android:padding="@dimen/dp_30"
             app:cardCornerRadius="@dimen/dp_20">
 

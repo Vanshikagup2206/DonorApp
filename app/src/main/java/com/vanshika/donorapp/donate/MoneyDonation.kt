@@ -63,8 +63,13 @@ class MoneyDonation : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding?.resetCheckbox?.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                resetForm()
+                binding?.resetCheckbox?.isChecked = false // Auto uncheck kar dena reset ke baad
+            }
+        }
         val genderSpinner = binding?.spinGender
-
         val paymentSpinner = binding?.paymentMethodSpinner
         val paymentAdapter = ArrayAdapter.createFromResource(
             requireContext(),
@@ -135,45 +140,75 @@ class MoneyDonation : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                val selectedDonationType = when (selectedRadioButtonId) {
-                    R.id.anonymousYes -> "Anonymous"
-                    R.id.anonymousNo -> "Public"
-                    else -> ""
-                }
-                Toast.makeText(
-                    requireContext(),
-                    "Your Details is Filled Successfuly!",
-                    Toast.LENGTH_SHORT
-                ).show();
-                val address = binding?.editAddr?.text?.toString()
-                if (!address.isNullOrEmpty()) {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        val latLng = getLatLngFromAddress(address)
+                val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                builder.setTitle("Check Your Details")
+                builder.setMessage("Are you sure your details are correct? This can't be edited later.")
+                builder.setPositiveButton("Yes") { _, _ ->
+                    val selectedDonationType = when (selectedRadioButtonId) {
+                        R.id.anonymousYes -> "Anonymous"
+                        R.id.anonymousNo -> "Public"
+                        else -> ""
+                    }
+                    Toast.makeText(
+                        requireContext(),
+                        "Your Details is Filled Successfuly!",
+                        Toast.LENGTH_SHORT
+                    ).show();
+                    val address = binding?.editAddr?.text?.toString()
+                    if (!address.isNullOrEmpty()) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val latLng = getLatLngFromAddress(address)
 
-                        withContext(Dispatchers.Main) {
-                            if (latLng != null) {
-                                donardatabase.DonationDao().insertDonor(
-                                    DonorsDataClass(
-                                        donorName = binding?.editName?.text?.toString(),
-                                        age = binding?.editAge?.text?.toString(),
-                                        number = binding?.editNumber?.text?.toString(),
-                                        gender = selectedGender,
-                                        donationfrequency = binding?.editAmount?.text?.toString(),
-                                        donationType = "Money",
-                                        createdDate = binding?.donationDate?.text?.toString(),
-                                        paymentMethod = selectedPayment,
-                                        donationMethod = selectedDonationType,
-                                        lattitude = latLng.latitude,
-                                        longitude = latLng.longitude,
+                            withContext(Dispatchers.Main) {
+                                if (latLng != null) {
+                                    donardatabase.DonationDao().insertDonor(
+                                        DonorsDataClass(
+                                            donorName = binding?.editName?.text?.toString(),
+                                            age = binding?.editAge?.text?.toString(),
+                                            number = binding?.editNumber?.text?.toString(),
+                                            gender = selectedGender,
+                                            donationfrequency = binding?.editAmount?.text?.toString(),
+                                            donationType = "Money",
+                                            createdDate = binding?.donationDate?.text?.toString(),
+                                            paymentMethod = selectedPayment,
+                                            donationMethod = selectedDonationType,
+                                            lattitude = latLng.latitude,
+                                            longitude = latLng.longitude,
+                                            address = binding?.editAddr?.text?.toString(),
+                                        )
                                     )
-                                )
+                                }
+                                findNavController().navigate(R.id.donateFragment)
                             }
-                            findNavController().navigate(R.id.donateFragment)
                         }
                     }
                 }
+                builder.setNegativeButton("No") { dialog, _ ->
+                    dialog.dismiss()
+                    Toast.makeText(
+                        requireContext(),
+                        "Please review your details.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                builder.create().show()
             }
         }
+    }
+
+    private fun resetForm() {
+        binding?.editName?.setText("")
+        binding?.editAge?.setText("")
+        binding?.editNumber?.setText("")
+        binding?.editAmount?.setText("")
+        binding?.donationDate?.setText("")
+        binding?.editAddr?.setText("")
+        binding?.donationDate?.setText("")
+//        // Spinner reset
+        binding?.spinGender?.setSelection(0)
+        binding?.paymentMethodSpinner?.setSelection(0)
+        binding?.anonymousGroup?.clearCheck()
+        Toast.makeText(requireContext(), "Form reset successfully!", Toast.LENGTH_SHORT).show()
     }
 
     private fun getLatLngFromAddress(address: String): LatLng? {

@@ -104,6 +104,12 @@ class BloodDonation : Fragment() {
             datePickerDialog.datePicker.maxDate = calendar.timeInMillis
             datePickerDialog.show()
         }
+        binding?.resetCheckBox?.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                resetForm()
+                binding?.resetCheckBox?.isChecked = false // Auto uncheck kar dena reset ke baad
+            }
+        }
         binding?.submitButton?.setOnClickListener {
             val isHealthy = binding?.healthYes?.isChecked ?: false
             val traveledRecently = binding?.travelYes?.isChecked ?: false
@@ -264,7 +270,6 @@ class BloodDonation : Fragment() {
                         "Please review your details.",
                         Toast.LENGTH_SHORT
                     ).show()
-                    findNavController().navigate(R.id.blood_donation)
                 }
                 builder.create().show()
 
@@ -296,6 +301,29 @@ class BloodDonation : Fragment() {
             Log.e("Geocode", "Error fetching coordinates", e)
             null
         }
+    }
+
+    private fun resetForm() {
+        binding?.nameEditText?.setText("")
+        binding?.ageEditText?.setText("")
+        binding?.contactEditText?.setText("")
+        binding?.donationFrequencyEditText?.setText("")
+        binding?.addrEditText?.setText("")
+        binding?.donationDate?.setText("")
+        // Spinner reset
+        binding?.bloodGroupSpinner?.setSelection(0)
+        binding?.genderSpinner?.setSelection(0)
+        // Radio button reset
+        binding?.anonymousGroup?.clearCheck()
+        binding?.healthRadioGroup?.clearCheck()
+        binding?.alcoholRadioGroup?.clearCheck()
+        binding?.surgeryRadioGroup?.clearCheck()
+        binding?.vaccineRadioGroup?.clearCheck()
+        binding?.travelRadioGroup?.clearCheck()
+        binding?.diabetesRadioGroup?.clearCheck()
+        binding?.bloodPressureRadioGroup?.clearCheck()
+        binding?.anonymousGroup?.clearCheck()
+        Toast.makeText(requireContext(), "Form reset successfully!", Toast.LENGTH_SHORT).show()
     }
 
     private fun searchLocation(
