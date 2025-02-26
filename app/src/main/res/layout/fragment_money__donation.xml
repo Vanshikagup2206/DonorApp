@@ -81,6 +81,7 @@
             android:background="@drawable/edit_text_border"
             android:hint="Your Contact Number"
             android:inputType="phone"
+            android:maxLength="10"
             android:padding="10dp" />
 
         <TextView
@@ -173,11 +174,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_border"
-            android:enabled="true"
+            android:clickable="true"
+            android:focusable="false"
+            android:inputType="none"
             android:hint="choose Date"
             android:padding="12dp"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
+<!--        android:enabled="true"-->
 
         <TextView
             android:layout_width="match_parent"

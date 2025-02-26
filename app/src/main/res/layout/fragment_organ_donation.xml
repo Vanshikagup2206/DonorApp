@@ -188,6 +188,9 @@
             android:background="@drawable/rounded_border"
             android:hint="choose Date"
             android:padding="12dp"
+            android:clickable="true"
+            android:focusable="false"
+            android:inputType="none"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
