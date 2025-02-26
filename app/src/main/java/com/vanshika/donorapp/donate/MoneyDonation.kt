@@ -55,6 +55,7 @@ class MoneyDonation : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val genderSpinner = binding?.spinGender
+
         val paymentSpinner = binding?.paymentMethodSpinner
         val paymentAdapter = ArrayAdapter.createFromResource(
             requireContext(),

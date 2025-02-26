@@ -4,11 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/dp_24"
+    android:layout_margin="@dimen/dp_12"
     android:elevation="@dimen/dp_24"
     android:padding="@dimen/dp_24"
     app:cardCornerRadius="@dimen/dp_24"
     tools:context=".donate.DonationDetailsFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -63,6 +67,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -81,9 +86,12 @@
                 android:textStyle="bold" />
             <TextView
                 android:id="@+id/donationType"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:textSize="16sp" />
         </LinearLayout>
     <LinearLayout
@@ -105,6 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
+            android:textStyle="bold"
             android:layout_marginBottom="8dp"
             android:textSize="16sp" />
     </LinearLayout>
@@ -132,6 +141,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:textSize="16sp" />
         </LinearLayout>
         <LinearLayout
@@ -156,6 +166,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:textSize="16sp" />
         </LinearLayout>
         <LinearLayout
@@ -179,6 +190,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
+                android:textStyle="bold"
+
                 android:gravity="center"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -204,6 +217,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -229,6 +243,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -254,6 +269,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -277,6 +293,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textStyle="bold"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
                 android:textSize="16sp" />
@@ -302,6 +319,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -313,9 +331,11 @@
             android:gravity="center"
             android:textStyle="bold"
             android:textColor="@color/red"
+            android:layout_marginTop="@dimen/dp_24"
             android:background="@drawable/neumorphic_button"
             android:textSize="@dimen/dp_24"/>
     </LinearLayout>
 
+    </ScrollView>
 
 </androidx.cardview.widget.CardView>

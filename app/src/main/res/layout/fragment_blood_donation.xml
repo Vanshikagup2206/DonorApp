@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/dp_12"
     android:layout_margin="@dimen/dp_24"
+
+    android:padding="@dimen/dp_12"
+    android:orientation="vertical"
     tools:context=".donate.BloodDonation">
 
     <LinearLayout
@@ -33,7 +34,8 @@
                 android:padding="@dimen/dp_10"
                 android:text="A single donation can save up to three lives."
                 android:textAlignment="center"
-                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
 
@@ -45,7 +47,8 @@
             android:padding="@dimen/dp_10"
             android:text="Name"
             android:textColor="@android:color/black"
-            android:textSize="18sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
 
         <EditText
@@ -67,7 +70,8 @@
             android:padding="@dimen/dp_10"
             android:text="Age"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
 
         <EditText
@@ -87,7 +91,8 @@
             android:padding="@dimen/dp_10"
             android:text="@string/addresss"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
 
         <EditText
@@ -108,7 +113,8 @@
             android:padding="@dimen/dp_10"
             android:text="Gender"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
 
         <Spinner
@@ -123,7 +129,8 @@
             android:layout_height="wrap_content"
             android:text="Contact Number"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
 
         <EditText
@@ -145,7 +152,8 @@
             android:padding="@dimen/dp_10"
             android:text="Blood Group"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/bloodGroupSpinner"
@@ -170,7 +178,8 @@
             android:padding="@dimen/dp_10"
             android:text="How often can you donate blood?"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
 
         <EditText
@@ -189,7 +198,8 @@
             android:padding="@dimen/dp_10"
             android:text="when You want to donate"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
 
         <EditText
@@ -199,23 +209,23 @@
             android:background="@drawable/rounded_border"
             android:hint="choose Date"
             android:padding="12dp"
-            android:clickable="false"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Are you feeling fit and healthy today?"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/healthRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
             android:orientation="horizontal">
 
             <RadioButton
@@ -236,7 +246,8 @@
             android:layout_height="wrap_content"
             android:text="Have you traveled internationally in the last 6 months?"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/travelRadioGroup"
@@ -264,7 +275,8 @@
             android:layout_height="wrap_content"
             android:text="Have you taken any medications in the last 7 days?"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/medicationRadioGroup"
@@ -292,7 +304,8 @@
             android:layout_height="wrap_content"
             android:text="Do you smoke or consume alcohol regularly?"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/alcoholRadioGroup"
@@ -320,7 +333,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Do you have blood pressure issues?"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/bloodPressureRadioGroup"
@@ -349,7 +364,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Are you diabetic?"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/diabetesRadioGroup"
@@ -378,7 +395,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Have you had surgery in the last 6 months?"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/surgeryRadioGroup"
@@ -406,7 +425,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Have you received any vaccine in the last 1 month?"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/vaccineRadioGroup"

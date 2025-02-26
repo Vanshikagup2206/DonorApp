@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_margin="@dimen/dp_24"
+    android:padding="@dimen/dp_12"
     tools:context=".donate.MoneyDonation">
 
     <LinearLayout
@@ -35,9 +37,9 @@
                 android:padding="@dimen/dp_10"
                 android:text="“Money is a tool that, when used right, can change the lives of many.”"
                 android:textAlignment="center"
-                android:textColor="#333333"
+                android:textColor="@android:color/black"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
         </androidx.cardview.widget.CardView>
 
         <TextView
@@ -48,8 +50,9 @@
             android:fontFamily="sans-serif-medium"
             android:padding="@dimen/dp_10"
             android:text="Please enter your name:"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edit_name"
@@ -67,8 +70,9 @@
             android:fontFamily="sans-serif-medium"
             android:padding="@dimen/dp_10"
             android:text="Please enter your contact number:"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edit_number"
@@ -86,8 +90,9 @@
             android:fontFamily="sans-serif-medium"
             android:padding="@dimen/dp_10"
             android:text="Please enter your age:"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edit_age"
@@ -103,8 +108,9 @@
             android:fontFamily="sans-serif-medium"
             android:padding="@dimen/dp_10"
             android:text="Address?:"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edit_addr"
@@ -122,8 +128,9 @@
             android:fontFamily="sans-serif-medium"
             android:padding="@dimen/dp_10"
             android:text="Please select your gender:"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Spinner
             android:layout_width="match_parent"
@@ -139,8 +146,9 @@
             android:fontFamily="sans-serif-medium"
             android:padding="@dimen/dp_10"
             android:text="Please enter the amount you'd like to donate:"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edit_amount"
@@ -166,7 +174,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_border"
-            android:enabled="false"
             android:hint="choose Date"
             android:padding="12dp"
             android:textColor="@android:color/black"

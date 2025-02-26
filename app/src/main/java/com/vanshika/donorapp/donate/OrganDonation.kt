@@ -86,7 +86,7 @@ class OrganDonation : Fragment() {
         val selectedGender = genderSpinner?.selectedItem.toString()
         val organAdapter = ArrayAdapter.createFromResource(
             requireContext(),
-            R.array.gender_types,
+            R.array.organ_types,
             android.R.layout.simple_spinner_item
         )
         organAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
