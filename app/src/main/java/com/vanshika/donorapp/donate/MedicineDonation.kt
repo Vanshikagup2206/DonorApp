@@ -33,7 +33,6 @@ class MedicineDonation : Fragment() {
     var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
     var calendar = android.icu.util.Calendar.getInstance()
     var donationlist = arrayListOf<DonorsDataClass>()
-    val genderSpinner = binding?.genderSpinner
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +54,7 @@ class MedicineDonation : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val genderSpinner = binding?.genderSpinner
         val genderAdapter = ArrayAdapter.createFromResource(
             requireContext(),
             R.array.gender_types,

@@ -31,7 +31,6 @@ class MoneyDonation : Fragment() {
     var binding: FragmentMoneyDonationBinding? = null
     lateinit var donardatabase: DonationDatabase
     var donation = arrayListOf<DonorsDataClass>()
-    val paymentSpinner = binding?.paymentMethodSpinner
     var calendar = android.icu.util.Calendar.getInstance()
     var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
@@ -55,7 +54,8 @@ class MoneyDonation : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val genderSpinner = binding?.spinGender
+        val paymentSpinner = binding?.paymentMethodSpinner
         val paymentAdapter = ArrayAdapter.createFromResource(
             requireContext(),
             R.array.payment_methods,
@@ -64,6 +64,15 @@ class MoneyDonation : Fragment() {
         paymentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         paymentSpinner?.adapter = paymentAdapter
         val selectedPayment = paymentSpinner?.selectedItem.toString()
+        val genderAdapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.gender_types,
+            android.R.layout.simple_spinner_item
+        )
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        genderSpinner?.adapter = genderAdapter
+        val selectedGender = genderSpinner?.selectedItem.toString()
+
         binding?.donationDate?.setOnClickListener {
             val datePickerDialog = DatePickerDialog(
                 requireContext(),
@@ -91,8 +100,12 @@ class MoneyDonation : Fragment() {
                 binding?.editNumber?.setError("Enter Number")
             } else if (binding?.editAmount?.text?.toString().isNullOrEmpty()) {
                 binding?.editAmount?.setError("enter Amount to donate")
-            } else if (binding?.editGender?.text?.toString().isNullOrEmpty()) {
-                binding?.editGender?.setError("Enter your gender")
+            } else if (selectedGender == "Select Gender") {
+                Toast.makeText(
+                    requireContext(),
+                    "Please select gender",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else if (binding?.donationDate?.text.isNullOrEmpty()) {
                 binding?.donationDate?.error = "Please select a donation date"
                 Toast.makeText(requireContext(), "Donation date is required!", Toast.LENGTH_SHORT)
@@ -127,7 +140,7 @@ class MoneyDonation : Fragment() {
                         donorName = binding?.editName?.text?.toString(),
                         age = binding?.editAge?.text?.toString(),
                         number = binding?.editNumber?.text?.toString(),
-                        gender = binding?.editGender?.text?.toString(),
+                        gender = selectedGender,
                         donationfrequency = binding?.editAmount?.text?.toString(),
                         donationType = "Money",
                         createdDate = binding?.donationDate?.text?.toString(),

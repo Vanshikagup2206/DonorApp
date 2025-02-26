@@ -24,16 +24,18 @@ class DonationDetailsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var binding: FragmentDonationDetailsBinding? = null
-    var donorsDataClass = DonorsDataClass( lattitude = 28.6139,
-        longitude = 77.2090 )
+    var donorsDataClass = DonorsDataClass(
+        lattitude = 28.6139,
+        longitude = 77.2090
+    )
     lateinit var donationDatabase: DonationDatabase
-    var donorId =0
+    var donorId = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-            donorId = it.getInt("id",0)
+            donorId = it.getInt("id", 0)
 
         }
     }
@@ -55,10 +57,23 @@ class DonationDetailsFragment : Fragment() {
         binding?.donationType?.text = donorsDataClass.donationType
         binding?.donorGender?.text = donorsDataClass.gender
         binding?.donorAddress?.text = donorsDataClass.address
+        binding?.donorHealth?.text = booleanToYesNo(donorsDataClass.isHealthy)
+        binding?.travelHistory?.text = booleanToYesNo(donorsDataClass.traveledRecently)
+        binding?.medicineHistory?.text = booleanToYesNo(donorsDataClass.tookMedication)
+        binding?.alcholHistory?.text = booleanToYesNo(donorsDataClass.consumesAlcohol)
+        binding?.bloodpressureHistory?.text = booleanToYesNo(donorsDataClass.bloodPressur)
+        binding?.diabitiesHistory?.text = booleanToYesNo(donorsDataClass.diabities)
+        binding?.surgeryHistory?.text = booleanToYesNo(donorsDataClass.hadRecentSurgery)
+        binding?.vaccineHistory?.text = booleanToYesNo(donorsDataClass.tookRecentVaccine)
+
     }
 
     private fun getDonorList() {
         donorsDataClass = donationDatabase.DonationDao().getDonorById(donorId)
+    }
+
+    private fun booleanToYesNo(value: Boolean?): String {
+        return if (value == true) "Yes" else "No"
     }
 
     companion object {

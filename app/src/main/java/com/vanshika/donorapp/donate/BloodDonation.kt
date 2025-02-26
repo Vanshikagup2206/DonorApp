@@ -42,8 +42,7 @@ class BloodDonation : Fragment() {
     private var param2: String? = null
     var binding: FragmentBloodDonationBinding? = null
     var bloodDonation = arrayListOf<DonorsDataClass>()
-    val bloodGroupSpinner = binding?.bloodGroupSpinner
-    val genderSpinner = binding?.genderSpinner
+
     var calendar = android.icu.util.Calendar.getInstance()
     var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
@@ -71,6 +70,8 @@ class BloodDonation : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 // for gender
+        val bloodGroupSpinner = binding?.bloodGroupSpinner
+        val genderSpinner = binding?.genderSpinner
         val genderAdapter = ArrayAdapter.createFromResource(
             requireContext(),
             R.array.gender_types,
@@ -82,7 +83,7 @@ class BloodDonation : Fragment() {
         // for blood
         val adapter = ArrayAdapter.createFromResource(
             requireContext(),
-            R.array.blood_types,
+            R.array.blood_groups,
             android.R.layout.simple_spinner_item
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
