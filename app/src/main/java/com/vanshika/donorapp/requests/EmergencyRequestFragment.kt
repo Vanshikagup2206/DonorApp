@@ -180,8 +180,7 @@ class EmergencyRequestFragment : Fragment() {
                         resources.getString(R.string.enter_hospital_contact)
                 } else if (binding?.urgencyRadioGroup?.checkedRadioButtonId == -1) {
                     Toast.makeText(
-                        requireContext(),
-                        resources.getString(R.string.select_Urgency),
+                        requireContext(), "Please select an urgency level",
                         Toast.LENGTH_SHORT
                     ).show()
                 }

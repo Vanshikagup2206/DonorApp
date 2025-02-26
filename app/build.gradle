@@ -14,7 +14,7 @@ android {
         minSdk 26
         targetSdk 34
         versionCode 1
-        versionName "1.0"
+        versionName "2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -60,6 +60,7 @@ dependencies {
     implementation("androidx.room:room-ktx:2.5.2")
     implementation 'com.google.firebase:firebase-firestore-ktx:25.1.2'
     implementation 'com.google.firebase:firebase-messaging-ktx:24.1.0'
+    implementation 'org.chromium.net:cronet-embedded:119.6045.31'
     kapt("androidx.room:room-compiler:2.5.2")
 
     // Lottie for animations

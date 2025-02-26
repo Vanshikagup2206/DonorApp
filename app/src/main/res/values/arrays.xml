@@ -5,7 +5,6 @@
         <item>Organ</item>
         <item>Medicine</item>
         <item>Money</item>
-
     </string-array>
 
     <!-- Blood Groups -->
@@ -30,26 +29,20 @@
         <item>Intestine</item>
     </string-array>
 
-    <string-array name="Location">
-        <item name="city_Hospital_Delhi"> City Hospital,Delhi</item>
-        <item name="capital_Hospital_Jalandhar">Capital Hospital,Jalandhar</item>
+    <!-- Hospital Locations -->
+    <string-array name="hospital_locations">
+        <item>City Hospital, Delhi</item>
+        <item>Capital Hospital, Jalandhar</item>
     </string-array>
-    <string-array name="blood_types">
-        <item>A+</item>
-        <item>A-</item>
-        <item>B+</item>
-        <item>B-</item>
-        <item>AB+</item>
-        <item>AB-</item>
-        <item>O+</item>
-        <item>O-</item>
-    </string-array>
+
+    <!-- Gender Types -->
     <string-array name="gender_types">
         <item>Male</item>
         <item>Female</item>
         <item>Other</item>
     </string-array>
 
+    <!-- Payment Methods -->
     <string-array name="payment_methods">
         <item>Select Payment Method</item>
         <item>UPI</item>
@@ -59,15 +52,8 @@
         <item>Credit Card</item>
         <item>Debit Card</item>
     </string-array>
-    <string name="hi">HI! </string>
-    <string name="high">High</string>
-    <string name="medium">Medium</string>
-    <string name="low">Low</string>
-    <string name="weight">Weight</string>
-    <string name="age">Age</string>
-    <string name="haemoglobin">Hemoglobin</string>
-    <string name="bloodPressure">Blood Pressure</string>
-    <string name="pulserate">Pulse Rate</string>
-    <string name="Add_details">Add Health Details</string>
+
+
+
 
 </resources>

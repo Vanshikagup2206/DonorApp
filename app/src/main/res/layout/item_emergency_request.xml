@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="4dp"
-            android:text="@string/Hospital_loaction"
+            android:text="Hospital Location"
             android:textColor="@color/dark_gray"
             android:textSize="16sp" />
 
@@ -67,7 +67,7 @@
                 android:id="@+id/tvContactNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Contact_Number"
+                android:text="Contact Number"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 

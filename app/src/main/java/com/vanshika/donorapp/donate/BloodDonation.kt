@@ -151,7 +151,7 @@ class BloodDonation : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else if (binding?.donationDate?.text.toString().isEmpty()) {
-                binding?.donationDate?.error = resources.getString(R.string.Enter_date)
+                binding?.donationDate?.error = "Enter the Enter Date"
             } else if (!isHealthy) {
                 Toast.makeText(
                     requireContext(),

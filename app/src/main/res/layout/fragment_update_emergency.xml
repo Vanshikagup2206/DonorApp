@@ -126,7 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/neumorphic_edittext"
-            android:entries="@array/Location"
+            android:entries="@array/hospital_locations"
             android:padding="8dp" />
 
 
