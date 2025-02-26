@@ -112,7 +112,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_border"
             android:hint="Your address"
-            android:inputType="number"
             android:padding="10dp" />
 
         <TextView
@@ -166,7 +165,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_border"
-            android:enabled="false"
+            android:enabled="true"
             android:hint="choose Date"
             android:padding="12dp"
             android:textColor="@android:color/black"

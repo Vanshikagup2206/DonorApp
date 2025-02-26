@@ -59,15 +59,6 @@
         <item>Credit Card</item>
         <item>Debit Card</item>
     </string-array>
-    <string name="hi">HI! </string>
-    <string name="high">High</string>
-    <string name="medium">Medium</string>
-    <string name="low">Low</string>
-    <string name="weight">Weight</string>
-    <string name="age">Age</string>
-    <string name="haemoglobin">Hemoglobin</string>
-    <string name="bloodPressure">Blood Pressure</string>
-    <string name="pulserate">Pulse Rate</string>
-    <string name="Add_details">Add Health Details</string>
+
 
 </resources>

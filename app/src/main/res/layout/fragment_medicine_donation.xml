@@ -84,7 +84,25 @@
             android:hint="Your Contact Number"
             android:inputType="phone"
             android:padding="10dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="@string/addresss"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
+
+        <EditText
+            android:id="@+id/etAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_border"
+            android:hint="Enter your address"
+            android:inputType="textPostalAddress"
+            android:padding="12dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -133,7 +151,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_border"
-            android:enabled="false"
+            android:enabled="true"
             android:hint="choose Date"
             android:padding="12dp"
             android:textColor="@android:color/black"
