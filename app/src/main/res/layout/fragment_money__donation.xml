@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="@dimen/dp_24"
     android:padding="@dimen/dp_12"
     tools:context=".donate.MoneyDonation">
 
@@ -39,7 +38,7 @@
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
 
         <TextView
@@ -102,6 +101,7 @@
             android:hint="Your Age"
             android:inputType="number"
             android:padding="10dp" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -132,9 +132,9 @@
             android:textStyle="bold" />
 
         <Spinner
+            android:id="@+id/spinGender"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinGender"/>
+            android:layout_height="wrap_content" />
 
         <!-- Question for the donor -->
         <TextView
@@ -230,9 +230,5 @@
             android:layout_margin="@dimen/dp_20"
             android:padding="@dimen/dp_10"
             android:text="Donate Money" />
-
-
     </LinearLayout>
-
-
 </ScrollView>

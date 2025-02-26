@@ -9,142 +9,157 @@
     android:padding="@dimen/dp_16"
     tools:context=".donate.DonateFragment">
 
-    <GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="2">
+        android:orientation="vertical"
+        android:gravity="center">
 
-        <!-- Blood Donation -->
-        <LinearLayout
-            android:layout_width="160dp"
-            android:layout_height="120dp"
-            android:layout_margin="@dimen/dp_8"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_20"
-            android:background="@drawable/boundary"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/dp_10">
+        <!-- Donation Options Grid -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_16"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            android:background="@color/white"
+            android:padding="@dimen/dp_16">
 
-            <ImageView
-                android:id="@+id/blood"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/ripplr"
-                android:src="@drawable/baseline_bloodtype_24"
-                app:tint="@color/red" />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <GridLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/blood"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_16" />
-        </LinearLayout>
+                android:columnCount="2"
+                android:rowCount="2"
+                android:columnOrderPreserved="false"
+                android:alignmentMode="alignMargins"
+                android:padding="8dp">
 
-        <!-- Organ Donation -->
-        <LinearLayout
-            android:layout_width="160dp"
-            android:layout_height="120dp"
-            android:layout_marginTop="@dimen/dp_20"
-            android:background="@drawable/boundary"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/dp_10">
+                <!-- Blood Donation -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:gravity="center"
+                    android:background="@drawable/ripplr"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp_12">
 
-            <ImageView
-                android:id="@+id/organ"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/ripplr"
-                android:src="@drawable/baseline_local_hospital_24"
-                app:tint="@color/green" />
+                    <ImageView
+                        android:id="@+id/blood"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/baseline_bloodtype_24"
+                        app:tint="@color/red" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/organs"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_16" />
-        </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/blood"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_16"
+                        android:fontFamily="sans-serif-medium" />
+                </LinearLayout>
 
-        <!-- Money Donation -->
-        <LinearLayout
-            android:layout_width="160dp"
-            android:layout_height="120dp"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_20"
-            android:background="@drawable/boundary"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/dp_10">
+                <!-- Organ Donation -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/ripplr"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp_12">
 
-            <ImageView
-                android:id="@+id/money"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/ripplr"
-                android:src="@drawable/baseline_attach_money_24"
-                app:tint="@color/yellow" />
+                    <ImageView
+                        android:id="@+id/organ"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/baseline_local_hospital_24"
+                        app:tint="@color/green" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/money"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_16" />
-        </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/organs"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_16"
+                        android:fontFamily="sans-serif-medium" />
+                </LinearLayout>
 
-        <!-- Medicine Donation -->
-        <LinearLayout
-            android:layout_width="160dp"
-            android:layout_height="120dp"
-            android:background="@drawable/boundary"
-            android:gravity="center"
-            android:layout_marginEnd="@dimen/dp_20"
-            android:orientation="vertical"
-            android:padding="@dimen/dp_10">
+                <!-- Money Donation -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/ripplr"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp_12">
 
-            <ImageView
-                android:id="@+id/medicine"
-                android:layout_width="50dp"
-                android:layout_height="47dp"
-                android:background="@drawable/ripplr"
-                android:src="@drawable/baseline_medical_services_24"
-                app:tint="@color/blue" />
+                    <ImageView
+                        android:id="@+id/money"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/baseline_attach_money_24"
+                        app:tint="@color/yellow" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/medicine"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_16" />
-        </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/money"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_16"
+                        android:fontFamily="sans-serif-medium" />
+                </LinearLayout>
 
-    </GridLayout>
+                <!-- Medicine Donation -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/ripplr"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp_12">
 
+                    <ImageView
+                        android:id="@+id/medicine"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/baseline_medical_services_24"
+                        app:tint="@color/blue" />
 
-    <!-- Call to Action Button -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20"
-        android:backgroundTint="#CA4141"
-        app:cardCornerRadius="@dimen/dp_20">
-    </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/medicine"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_16"
+                        android:fontFamily="sans-serif-medium" />
+                </LinearLayout>
+            </GridLayout>
+        </androidx.cardview.widget.CardView>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/donate_now"
-        android:textColor="@color/white"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMyDonation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_50"
-        android:layout_marginBottom="@dimen/dp_24"
-        />
+        <!-- My Donations RecyclerView -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="My Donations"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif-medium"
+            android:paddingStart="8dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMyDonation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_marginBottom="@dimen/dp_24" />
+    </LinearLayout>
 </LinearLayout>

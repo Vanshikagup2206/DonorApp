@@ -79,9 +79,6 @@ class DonateFragment : Fragment(), DonationInterfae {
         binding?.medicine?.setOnClickListener {
             findNavController().navigate(R.id.medicine_donation)
         }
-//        binding?.btnDonateNow?.setOnClickListener {
-//            findNavController().navigate(R.id.donate_Queries)
-//        }
     }
 
     private fun getDonationList() {

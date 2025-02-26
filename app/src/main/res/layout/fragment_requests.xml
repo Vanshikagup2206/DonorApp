@@ -28,55 +28,55 @@
         <androidx.constraintlayout.widget.Guideline
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintGuide_percent=".18"
+            app:layout_constraintGuide_percent=".15"
             android:id="@+id/gl_v_18"
             android:orientation="vertical"/>
         <androidx.constraintlayout.widget.Guideline
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintGuide_percent=".2"
+            app:layout_constraintGuide_percent=".17"
             android:id="@+id/gl_v_2"
             android:orientation="vertical"/>
         <androidx.constraintlayout.widget.Guideline
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintGuide_percent=".38"
+            app:layout_constraintGuide_percent=".35"
             android:id="@+id/gl_v_38"
             android:orientation="vertical"/>
         <androidx.constraintlayout.widget.Guideline
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintGuide_percent=".4"
+            app:layout_constraintGuide_percent=".37"
             android:id="@+id/gl_v_4"
             android:orientation="vertical"/>
         <androidx.constraintlayout.widget.Guideline
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintGuide_percent=".58"
+            app:layout_constraintGuide_percent=".55"
             android:id="@+id/gl_v_58"
             android:orientation="vertical"/>
         <androidx.constraintlayout.widget.Guideline
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintGuide_percent=".6"
+            app:layout_constraintGuide_percent=".57"
             android:id="@+id/gl_v_6"
             android:orientation="vertical"/>
         <androidx.constraintlayout.widget.Guideline
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintGuide_percent=".78"
+            app:layout_constraintGuide_percent=".75"
             android:id="@+id/gl_v_78"
             android:orientation="vertical"/>
         <androidx.constraintlayout.widget.Guideline
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintGuide_percent=".8"
+            app:layout_constraintGuide_percent=".77"
             android:id="@+id/gl_v_8"
             android:orientation="vertical"/>
         <androidx.constraintlayout.widget.Guideline
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintGuide_percent=".99"
+            app:layout_constraintGuide_percent=".98"
             android:id="@+id/gl_v_98"
             android:orientation="vertical"/>
 
@@ -150,69 +150,6 @@
             android:textColor="@color/black" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Requests List -->
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/rvRequests"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="@dimen/dp_10" />-->
-
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="@string/find_a_donor"-->
-<!--        android:textSize="@dimen/sp_22"-->
-<!--        android:textStyle="bold"-->
-<!--        android:textColor="@color/black"-->
-<!--        android:layout_gravity="center"/>-->
-
-<!--    &lt;!&ndash; Recipient Registration Form &ndash;&gt;-->
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@drawable/neumorphic_card"-->
-<!--        android:orientation="vertical"-->
-<!--        android:padding="@dimen/dp_16"-->
-<!--        android:layout_marginTop="@dimen/dp_10">-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/et_recipient_name"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="@string/full_name"-->
-<!--            android:background="@drawable/neumorphic_edittext"-->
-<!--            android:padding="@dimen/dp_10"/>-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/etRecipientBloodGroup"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="@string/blood_group_e_g_o"-->
-<!--            android:background="@drawable/neumorphic_edittext"-->
-<!--            android:padding="@dimen/dp_10"-->
-<!--            android:layout_marginTop="@dimen/dp_8"/>-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/etRecipientLocation"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="@string/location"-->
-<!--            android:background="@drawable/neumorphic_edittext"-->
-<!--            android:padding="@dimen/dp_10"-->
-<!--            android:layout_marginTop="@dimen/dp_8"/>-->
-
-<!--        <Button-->
-<!--            android:id="@+id/btnRegisterRecipient"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/register_as_recipient"-->
-<!--            android:background="@drawable/neumorphic_button"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:padding="@dimen/dp_10"-->
-<!--            android:layout_marginTop="@dimen/dp_10"/>-->
-<!--    </LinearLayout>-->
-
-    <!-- Recipient List -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
