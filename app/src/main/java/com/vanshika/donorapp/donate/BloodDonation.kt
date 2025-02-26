@@ -290,7 +290,7 @@ class BloodDonation : Fragment() {
             } else {
                 Log.e("Geocode", "No location found for address: $address")
                 null
-            }
+            }g
         } catch (e: Exception) {
             Log.e("Geocode", "Error fetching coordinates", e)
             null
