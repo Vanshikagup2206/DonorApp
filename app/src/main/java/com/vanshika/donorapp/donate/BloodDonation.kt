@@ -206,56 +206,68 @@ class BloodDonation : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                val selectedDonationType = when (selectedRadioButtonId) {
-                    R.id.anonymousYes -> "Anonymous"
-                    R.id.anonymousNo -> "Public"
-                    else -> ""
-                }
-                Toast.makeText(
-                    requireContext(),
-                    "Your Details is Filled Successfully!",
-                    Toast.LENGTH_SHORT
-                ).show();
+                val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                builder.setTitle("Check Your Details")
+                builder.setMessage("Are you sure your details are correct? This can't be edited later.")
+                builder.setPositiveButton("Yes") { _, _ ->
+                    val selectedDonationType = when (selectedRadioButtonId) {
+                        R.id.anonymousYes -> "Anonymous"
+                        R.id.anonymousNo -> "Public"
+                        else -> ""
+                    }
+                    Toast.makeText(
+                        requireContext(),
+                        "Your Details is Filled Successfully!",
+                        Toast.LENGTH_SHORT
+                    ).show();
 
-
-                val address = binding?.addrEditText?.text?.toString()
-                if (!address.isNullOrEmpty()) {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        val latLng = getLatLngFromAddress(address)
-
-                        withContext(Dispatchers.Main) {
-                            if (latLng != null) {
-                                donorDatabase.DonationDao().insertDonor(
-                                    DonorsDataClass(
-                                        donorName = binding?.nameEditText?.text?.toString(),
-                                        address = binding?.addrEditText?.text?.toString(),
-                                        age = binding?.ageEditText?.text?.toString(),
-                                        gender = selectedGender,
-                                        number = binding?.contactEditText?.text?.toString(),
-                                        donationfrequency = binding?.donationFrequencyEditText?.text?.toString(),
-                                        donationType = "Blood",
-                                        createdDate = binding?.donationDate?.text?.toString(),
-                                        lattitude = latLng.latitude,
-                                        longitude = latLng.longitude,
-                                        isHealthy = isHealthy,
-                                        bloodType = selectedBloodGroup,
-                                        traveledRecently = traveledRecently,
-                                        tookMedication = tookMedication,
-                                        consumesAlcohol = consumesAlcohol,
-                                        hadRecentSurgery = hadRecentSurgery,
-                                        tookRecentVaccine = tookRecentVaccine,
-                                        diabities = isDiabetic,
-                                        bloodPressur = hasBloodPressureIssue,
-                                        donationMethod = selectedDonationType
+                    val address = binding?.addrEditText?.text?.toString()
+                    if (!address.isNullOrEmpty()) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val latLng = getLatLngFromAddress(address)
+                            withContext(Dispatchers.Main) {
+                                if (latLng != null) {
+                                    donorDatabase.DonationDao().insertDonor(
+                                        DonorsDataClass(
+                                            donorName = binding?.nameEditText?.text?.toString(),
+                                            address = binding?.addrEditText?.text?.toString(),
+                                            age = binding?.ageEditText?.text?.toString(),
+                                            gender = selectedGender,
+                                            number = binding?.contactEditText?.text?.toString(),
+                                            donationfrequency = binding?.donationFrequencyEditText?.text?.toString(),
+                                            donationType = "Blood",
+                                            createdDate = binding?.donationDate?.text?.toString(),
+                                            lattitude = latLng.latitude,
+                                            longitude = latLng.longitude,
+                                            isHealthy = isHealthy,
+                                            bloodType = selectedBloodGroup,
+                                            traveledRecently = traveledRecently,
+                                            tookMedication = tookMedication,
+                                            consumesAlcohol = consumesAlcohol,
+                                            hadRecentSurgery = hadRecentSurgery,
+                                            tookRecentVaccine = tookRecentVaccine,
+                                            diabities = isDiabetic,
+                                            bloodPressur = hasBloodPressureIssue,
+                                            donationMethod = selectedDonationType
+                                        )
                                     )
-                                )
+                                }
+                                findNavController().navigate(R.id.donateFragment)
                             }
-                            findNavController().navigate(R.id.donateFragment)
                         }
                     }
                 }
-            }
+                builder.setNegativeButton("No") { dialog, _ ->
+                    dialog.dismiss()
+                    Toast.makeText(
+                        requireContext(),
+                        "Please review your details.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                builder.create().show()
 
+            }
         }
     }
 
