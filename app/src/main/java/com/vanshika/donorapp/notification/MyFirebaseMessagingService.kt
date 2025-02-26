@@ -48,7 +48,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
 
         val notification = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.blood)  // 🛑 Ensure icon exists in `res/drawable`
+            .setSmallIcon(R.drawable.appicon)  // 🛑 Ensure icon exists in `res/drawable`
             .setContentTitle(title)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_HIGH)

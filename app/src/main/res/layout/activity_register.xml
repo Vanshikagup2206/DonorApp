@@ -31,7 +31,7 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/baseline_local_hospital_24"
+                android:src="@drawable/appicon"
                 android:layout_gravity="center"
                 android:scaleType="centerInside" />
 

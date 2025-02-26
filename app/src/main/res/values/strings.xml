@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DonorApp</string>
+    <string name="app_name">HelpHive</string>
     <string name="google_map_api_key">AIzaSyDAmv2cnlP-wQz8MRmKAgW-5U-U0NwfCns</string>
     <string name="home">Home</string>
     <string name="donate">Donate</string>
