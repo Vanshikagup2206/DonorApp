@@ -2,6 +2,7 @@ package com.vanshika.donorapp.donate
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +10,17 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.maps.model.LatLng
 import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentOrganDonationBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import java.net.HttpURLConnection
+import java.net.URL
 import java.text.SimpleDateFormat
 
 // TODO: Rename parameter arguments, choose names that match
@@ -30,7 +39,8 @@ class OrganDonation : Fragment() {
     private var param2: String? = null
     var binding: FragmentOrganDonationBinding? = null
     lateinit var donarDatabase: DonationDatabase
-//    var donation = arrayListOf<DonorsDataClass>()
+
+    //    var donation = arrayListOf<DonorsDataClass>()
     var calendar = android.icu.util.Calendar.getInstance()
     var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
@@ -86,7 +96,7 @@ class OrganDonation : Fragment() {
         val selectedGender = genderSpinner?.selectedItem.toString()
         val organAdapter = ArrayAdapter.createFromResource(
             requireContext(),
-            R.array.gender_types,
+            R.array.organ_types,
             android.R.layout.simple_spinner_item
         )
         organAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -180,37 +190,87 @@ class OrganDonation : Fragment() {
                     "You can't donate blood if you had vaccination",
                     Toast.LENGTH_SHORT
                 ).show()
+            }
+            val selectedRadioButtonId = binding?.anonymousGroup?.checkedRadioButtonId
+            if (selectedRadioButtonId == -1) {
+                Toast.makeText(
+                    requireContext(),
+                    "Please select a donation type (Anonymous or Public)!",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
+                val selectedDonationType = when (selectedRadioButtonId) {
+                    R.id.anonymousYes -> "Anonymous"
+                    R.id.anonymousNo -> "Public"
+                    else -> ""
+                }
                 Toast.makeText(
                     requireContext(),
                     "Your Details is Filled Successfuly!",
                     Toast.LENGTH_SHORT
                 ).show();
-                donarDatabase.DonationDao().insertDonor(
-                    DonorsDataClass(
-                        donorName = binding?.nameEditText?.text?.toString(),
-                        age = binding?.ageEditText?.text?.toString(),
-                        gender = selectedGender,
-                        number = binding?.numberEditText?.text?.toString(),
-                        donationType = "Organ",
-                        address = binding?.addrEditText?.text?.toString(),
-                        donationfrequency = selectedOrgan,
-                        createdDate = binding?.donationDate?.text?.toString(),
-                        isHealthy = isHealthy,
-                        traveledRecently = traveledRecently,
-                        tookMedication = tookMedication,
-                        consumesAlcohol = consumesAlcohol,
-                        hadRecentSurgery = hadRecentSurgery,
-                        tookRecentVaccine = tookRecentVaccine,
-                        diabities = isDiabetic,
-                        bloodPressur = hasBloodPressureIssue,
-                        lattitude = 28.6139,
-                        longitude = 77.2090
-                    )
-                )
-                findNavController().navigate(R.id.donateFragment)
-            }
+                val address = binding?.addrEditText?.text?.toString()
+                if (!address.isNullOrEmpty()) {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val latLng = getLatLngFromAddress(address)
 
+                        withContext(Dispatchers.Main) {
+                            if (latLng != null) {
+                                donarDatabase.DonationDao().insertDonor(
+                                    DonorsDataClass(
+                                        donorName = binding?.nameEditText?.text?.toString(),
+                                        age = binding?.ageEditText?.text?.toString(),
+                                        gender = selectedGender,
+                                        number = binding?.numberEditText?.text?.toString(),
+                                        donationType = "Organ",
+                                        address = binding?.addrEditText?.text?.toString(),
+                                        donationfrequency = selectedOrgan,
+                                        createdDate = binding?.donationDate?.text?.toString(),
+                                        isHealthy = isHealthy,
+                                        traveledRecently = traveledRecently,
+                                        tookMedication = tookMedication,
+                                        consumesAlcohol = consumesAlcohol,
+                                        hadRecentSurgery = hadRecentSurgery,
+                                        tookRecentVaccine = tookRecentVaccine,
+                                        diabities = isDiabetic,
+                                        bloodPressur = hasBloodPressureIssue,
+                                        lattitude = latLng.latitude,
+                                        longitude = latLng.longitude,
+                                        donationMethod = selectedDonationType
+                                    )
+                                )
+                            }
+                            findNavController().navigate(R.id.donateFragment)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getLatLngFromAddress(address: Any): LatLng? {
+        return try {
+            val url = "https://nominatim.openstreetmap.org/search?format=json&q=$address"
+            val connection = URL(url).openConnection() as HttpURLConnection
+            connection.requestMethod = "GET"
+            connection.connect()
+
+            val inputStream = connection.inputStream.bufferedReader().use { it.readText() }
+            val responseArray = JSONArray(inputStream)
+
+            if (responseArray.length() > 0) {
+                val locationData = responseArray.getJSONObject(0)
+                val lat = locationData.getDouble("lat")
+                val lon = locationData.getDouble("lon")
+                Log.d("Geocode", "Address: $address -> Lat: $lat, Lon: $lon")
+                LatLng(lat, lon)
+            } else {
+                Log.e("Geocode", "No location found for address: $address")
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("Geocode", "Error fetching coordinates", e)
+            null
         }
     }
 
