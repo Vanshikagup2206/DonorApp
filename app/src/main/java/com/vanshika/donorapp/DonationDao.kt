@@ -47,6 +47,9 @@ interface DonationDao {
     @Insert
     fun insertToken(usersDataClass: UsersDataClass)
 
+    @Query("SELECT * FROM users WHERE fcmToken = :token LIMIT 1")
+    fun getUserByToken(token: String): UsersDataClass?
+
     @Query("SELECT * FROM users")
     fun getAllUsers(): List<UsersDataClass>
 

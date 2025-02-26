@@ -24,15 +24,8 @@ class DonationDetailsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var binding: FragmentDonationDetailsBinding? = null
-<<<<<<< Updated upstream
     var donorsDataClass = DonorsDataClass( lattitude = 28.6139,
         longitude = 77.2090 )
-=======
-    var donorsDataClass = DonorsDataClass(
-        lattitude = 28.6139,
-        longitude = 77.2090
-    )
->>>>>>> Stashed changes
     lateinit var donationDatabase: DonationDatabase
     var donorId = 0
     override fun onCreate(savedInstanceState: Bundle?) {
