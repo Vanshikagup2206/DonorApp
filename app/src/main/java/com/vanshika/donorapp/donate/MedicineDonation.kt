@@ -101,7 +101,7 @@ class MedicineDonation : Fragment() {
                 binding?.donationDate?.setError("Choose Date")
             } else if (binding?.editNumber?.length() != 10) {
                 binding?.editNumber?.setError("Enter your Name")
-            } else if (binding?.etAddress?.length() != 10) {
+            } else if (binding?.etAddress?.text.toString().isNullOrEmpty()) {
                 binding?.etAddress?.setError("Enter your Address")
             } else if (selectedGender == "Select Your Gender") {
                 Toast.makeText(

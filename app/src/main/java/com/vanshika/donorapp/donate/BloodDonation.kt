@@ -264,6 +264,7 @@ class BloodDonation : Fragment() {
                         "Please review your details.",
                         Toast.LENGTH_SHORT
                     ).show()
+                    findNavController().navigate(R.id.blood_donation)
                 }
                 builder.create().show()
 
