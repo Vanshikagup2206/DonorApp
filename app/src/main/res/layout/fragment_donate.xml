@@ -49,6 +49,7 @@
                         android:id="@+id/blood"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:background="@drawable/ripplr"
                         android:src="@drawable/baseline_bloodtype_24"
                         app:tint="@color/red" />
 
@@ -57,6 +58,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/blood"
                         android:textColor="@color/black"
+                        android:background="@drawable/ripplr"
                         android:textSize="@dimen/sp_16"
                         android:fontFamily="sans-serif-medium" />
                 </LinearLayout>
@@ -76,12 +78,14 @@
                         android:id="@+id/organ"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:background="@drawable/ripplr"
                         android:src="@drawable/baseline_local_hospital_24"
                         app:tint="@color/green" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/ripplr"
                         android:text="@string/organs"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_16"
@@ -103,12 +107,14 @@
                         android:id="@+id/money"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:background="@drawable/ripplr"
                         android:src="@drawable/baseline_attach_money_24"
                         app:tint="@color/yellow" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/ripplr"
                         android:text="@string/money"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_16"
@@ -130,12 +136,14 @@
                         android:id="@+id/medicine"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:background="@drawable/ripplr"
                         android:src="@drawable/baseline_medical_services_24"
                         app:tint="@color/blue" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/ripplr"
                         android:text="@string/medicine"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_16"
