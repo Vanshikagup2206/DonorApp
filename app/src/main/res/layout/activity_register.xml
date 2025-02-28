@@ -92,7 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/enter_aadhaar_no"
-                    android:inputType="textEmailAddress"
+                    android:inputType="number"
                     android:padding="@dimen/dp_12" />
             </com.google.android.material.textfield.TextInputLayout>
 
