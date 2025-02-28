@@ -2,18 +2,42 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/boundary"
-    android:layout_margin="@dimen/dp_24">
+    android:layout_margin="@dimen/dp_24"
+    android:background="@drawable/boundary_region">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_24"
+        android:padding="@dimen/dp_24"
+        android:background="@drawable/boundary_two"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Donor Name :"
+                android:textSize="@dimen/dp_16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textDonorName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="@dimen/dp_16"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_16"
             android:orientation="horizontal">
 
             <TextView
