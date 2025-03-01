@@ -9,11 +9,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.vanshika.donorapp.signInLogIn.LogInActivity
 import com.vanshika.donorapp.signInLogIn.RegisterActivity
 
 class SplashScreen : AppCompatActivity() {
     var sharedPreferences:SharedPreferences? = null
+    var auth:FirebaseAuth?=null
+    var db:FirebaseFirestore?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -24,10 +29,12 @@ class SplashScreen : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        auth=FirebaseAuth.getInstance()
+        db=FirebaseFirestore.getInstance()
         sharedPreferences = getSharedPreferences(resources.getString(R.string.app_name), MODE_PRIVATE)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            if(sharedPreferences?.contains("username") == true) {
+            if(FirebaseAuth.getInstance().currentUser != null) {
                 startActivity(
                     Intent(
                         this,
