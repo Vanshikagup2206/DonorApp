@@ -91,6 +91,7 @@
                     android:id="@+id/etAadhaarNo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="12"
                     android:hint="@string/enter_aadhaar_no"
                     android:inputType="number"
                     android:padding="@dimen/dp_12" />
