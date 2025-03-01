@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_margin="@dimen/dp_24"
+    android:orientation="vertical"
     android:padding="@dimen/dp_12"
     tools:context=".donate.MoneyDonation">
 
@@ -39,7 +39,7 @@
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
 
         <TextView
@@ -103,6 +103,7 @@
             android:hint="Your Age"
             android:inputType="number"
             android:padding="10dp" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -133,9 +134,9 @@
             android:textStyle="bold" />
 
         <Spinner
+            android:id="@+id/spinGender"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinGender"/>
+            android:layout_height="wrap_content" />
 
         <!-- Question for the donor -->
         <TextView
@@ -176,12 +177,12 @@
             android:background="@drawable/rounded_border"
             android:clickable="true"
             android:focusable="false"
-            android:inputType="none"
             android:hint="choose Date"
+            android:inputType="none"
             android:padding="12dp"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
-<!--        android:enabled="true"-->
+        <!--        android:enabled="true"-->
 
         <TextView
             android:layout_width="match_parent"
@@ -225,6 +226,11 @@
                 android:text="No" />
         </RadioGroup>
 
+        <CheckBox
+            android:id="@+id/resetCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check to reset form" />
         <!-- Submit Button -->
         <Button
             android:id="@+id/submit_button"
@@ -234,9 +240,5 @@
             android:layout_margin="@dimen/dp_20"
             android:padding="@dimen/dp_10"
             android:text="Donate Money" />
-
-
     </LinearLayout>
-
-
 </ScrollView>

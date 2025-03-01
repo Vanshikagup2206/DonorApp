@@ -20,6 +20,7 @@ class DonationAdapter(
     class ViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
         var donationType: TextView = view.findViewById(R.id.textDonationtype)
         var date: TextView = view.findViewById(R.id.textDate)
+        var name: TextView = view.findViewById(R.id.textDonorName)
 
     }
 
@@ -38,7 +39,8 @@ class DonationAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.donationType.setText(donation[position].donationType)
         holder.date.setText(donation[position].createdDate)
-        holder?.itemView?.setOnClickListener {
+        holder.name.setText(donation[position].donorName)
+        holder.itemView.setOnClickListener {
             donationInterface.clickInterface(position)
         }
 //        var calendar = Calendar.getInstance().also {

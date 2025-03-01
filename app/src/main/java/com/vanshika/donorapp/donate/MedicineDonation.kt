@@ -63,6 +63,12 @@ class MedicineDonation : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding?.resetCheckBox?.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                resetForm()
+                binding?.resetCheckBox?.isChecked = false // Auto uncheck kar dena reset ke baad
+            }
+        }
         val genderSpinner = binding?.genderSpinner
         val genderAdapter = ArrayAdapter.createFromResource(
             requireContext(),
@@ -120,46 +126,75 @@ class MedicineDonation : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                val selectedDonationType = when (selectedRadioButtonId) {
-                    R.id.anonymousYes -> "Anonymous"
-                    R.id.anonymousNo -> "Public"
-                    else -> ""
-                }
-                Toast.makeText(
-                    requireContext(),
-                    "Your Details is Filled Successfuly!",
-                    Toast.LENGTH_SHORT
-                ).show();
-                val address = binding?.etAddress?.text?.toString()
-                if (!address.isNullOrEmpty()) {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        val latLng = getLatLngFromAddress(address)
-
-                        withContext(Dispatchers.Main) {
-                            if (latLng != null) {
-                                donardatabase.DonationDao().insertDonor(
-                                    DonorsDataClass(
-                                        donationType = "Medicine",
-                                        donorName = binding?.editName?.text?.toString(),
-                                        age = binding?.editAge?.text?.toString(),
-                                        address = binding?.etAddress?.text?.toString(),
-                                        donationfrequency = binding?.editAmount?.text?.toString(),
-                                        gender = selectedGender,
-                                        number = binding?.editNumber?.text?.toString(),
-                                        createdDate = binding?.donationDate?.text?.toString(),
-                                        lattitude = latLng.latitude,
-                                        longitude = latLng.longitude,
-                                        donationMethod = selectedDonationType
+                val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                builder.setTitle("Check Your Details")
+                builder.setMessage("Are you sure your details are correct? This can't be edited later.")
+                builder.setPositiveButton("Yes") { _, _ ->
+                    val selectedDonationType = when (selectedRadioButtonId) {
+                        R.id.anonymousYes -> "Anonymous"
+                        R.id.anonymousNo -> "Public"
+                        else -> ""
+                    }
+                    Toast.makeText(
+                        requireContext(),
+                        "Your Details is Filled Successfuly!",
+                        Toast.LENGTH_SHORT
+                    ).show();
+                    val address = binding?.etAddress?.text?.toString()
+                    if (!address.isNullOrEmpty()) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val latLng = getLatLngFromAddress(address)
+                            withContext(Dispatchers.Main) {
+                                if (latLng != null) {
+                                    donardatabase.DonationDao().insertDonor(
+                                        DonorsDataClass(
+                                            donationType = "Medicine",
+                                            donorName = binding?.editName?.text?.toString(),
+                                            age = binding?.editAge?.text?.toString(),
+                                            address = binding?.etAddress?.text?.toString(),
+                                            donationfrequency = binding?.editAmount?.text?.toString(),
+                                            gender = selectedGender,
+                                            number = binding?.editNumber?.text?.toString(),
+                                            createdDate = binding?.donationDate?.text?.toString(),
+                                            lattitude = latLng.latitude,
+                                            longitude = latLng.longitude,
+                                            donationMethod = selectedDonationType
+                                        )
                                     )
-                                )
+                                }
+                                findNavController().navigate(R.id.donateFragment)
                             }
-                            findNavController().navigate(R.id.donateFragment)
                         }
                     }
                 }
+                builder.setNegativeButton("No") { dialog, _ ->
+                    dialog.dismiss()
+                    Toast.makeText(
+                        requireContext(),
+                        "Please review your details.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                builder.create().show()
             }
-
         }
+    }
+    private fun resetForm() {
+        binding?.editName?.setText("")
+        binding?.editAge?.setText("")
+        binding?.editNumber?.setText("")
+        binding?.donationDate?.setText("")
+        binding?.editMedicineType?.setText("")
+        binding?.editAmount?.setText("")
+//        binding?.donationFrequencyEditText?.setText("")
+        binding?.etAddress?.setText("")
+        binding?.donationDate?.setText("")
+        // Spinner reset
+        binding?.genderSpinner?.setSelection(0)
+        // Radio button reset
+        binding?.anonymousGroup?.clearCheck()
+
+        Toast.makeText(requireContext(), "Form reset successfully!", Toast.LENGTH_SHORT).show()
     }
 
     private fun getLatLngFromAddress(address: String): LatLng? {

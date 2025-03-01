@@ -102,7 +102,12 @@ class OrganDonation : Fragment() {
         organAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         organSpinner?.adapter = organAdapter
         val selectedOrgan = organSpinner?.selectedItem.toString()
-
+        binding?.resetCheckBox?.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                resetForm()
+                binding?.resetCheckBox?.isChecked = false // Auto uncheck kar dena reset ke baad
+            }
+        }
         binding?.submitButton?.setOnClickListener {
             val isHealthy = binding?.healthYes?.isChecked ?: false
             val traveledRecently = binding?.travelYes?.isChecked ?: false
@@ -199,53 +204,91 @@ class OrganDonation : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                val selectedDonationType = when (selectedRadioButtonId) {
-                    R.id.anonymousYes -> "Anonymous"
-                    R.id.anonymousNo -> "Public"
-                    else -> ""
-                }
-                Toast.makeText(
-                    requireContext(),
-                    "Your Details is Filled Successfuly!",
-                    Toast.LENGTH_SHORT
-                ).show();
-                val address = binding?.addrEditText?.text?.toString()
-                if (!address.isNullOrEmpty()) {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        val latLng = getLatLngFromAddress(address)
+                val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                builder.setTitle("Check Your Details")
+                builder.setMessage("Are you sure your details are correct? This can't be edited later.")
+                builder.setPositiveButton("Yes") { _, _ ->
+                    val selectedDonationType = when (selectedRadioButtonId) {
+                        R.id.anonymousYes -> "Anonymous"
+                        R.id.anonymousNo -> "Public"
+                        else -> ""
+                    }
+                    Toast.makeText(
+                        requireContext(),
+                        "Your Details is Filled Successfuly!",
+                        Toast.LENGTH_SHORT
+                    ).show();
+                    val address = binding?.addrEditText?.text?.toString()
+                    if (!address.isNullOrEmpty()) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val latLng = getLatLngFromAddress(address)
 
-                        withContext(Dispatchers.Main) {
-                            if (latLng != null) {
-                                donarDatabase.DonationDao().insertDonor(
-                                    DonorsDataClass(
-                                        donorName = binding?.nameEditText?.text?.toString(),
-                                        age = binding?.ageEditText?.text?.toString(),
-                                        gender = selectedGender,
-                                        number = binding?.numberEditText?.text?.toString(),
-                                        donationType = "Organ",
-                                        address = binding?.addrEditText?.text?.toString(),
-                                        donationfrequency = selectedOrgan,
-                                        createdDate = binding?.donationDate?.text?.toString(),
-                                        isHealthy = isHealthy,
-                                        traveledRecently = traveledRecently,
-                                        tookMedication = tookMedication,
-                                        consumesAlcohol = consumesAlcohol,
-                                        hadRecentSurgery = hadRecentSurgery,
-                                        tookRecentVaccine = tookRecentVaccine,
-                                        diabities = isDiabetic,
-                                        bloodPressur = hasBloodPressureIssue,
-                                        lattitude = latLng.latitude,
-                                        longitude = latLng.longitude,
-                                        donationMethod = selectedDonationType
+                            withContext(Dispatchers.Main) {
+                                if (latLng != null) {
+                                    donarDatabase.DonationDao().insertDonor(
+                                        DonorsDataClass(
+                                            donorName = binding?.nameEditText?.text?.toString(),
+                                            age = binding?.ageEditText?.text?.toString(),
+                                            gender = selectedGender,
+                                            number = binding?.numberEditText?.text?.toString(),
+                                            donationType = "Organ",
+                                            address = binding?.addrEditText?.text?.toString(),
+                                            donationfrequency = selectedOrgan,
+                                            createdDate = binding?.donationDate?.text?.toString(),
+                                            isHealthy = isHealthy,
+                                            traveledRecently = traveledRecently,
+                                            tookMedication = tookMedication,
+                                            consumesAlcohol = consumesAlcohol,
+                                            hadRecentSurgery = hadRecentSurgery,
+                                            tookRecentVaccine = tookRecentVaccine,
+                                            diabities = isDiabetic,
+                                            bloodPressur = hasBloodPressureIssue,
+                                            lattitude = latLng.latitude,
+                                            longitude = latLng.longitude,
+                                            donationMethod = selectedDonationType
+                                        )
                                     )
-                                )
+                                }
+                                findNavController().navigate(R.id.donateFragment)
                             }
-                            findNavController().navigate(R.id.donateFragment)
                         }
                     }
                 }
+                builder.setNegativeButton("No") { dialog, _ ->
+                    dialog.dismiss()
+                    Toast.makeText(
+                        requireContext(),
+                        "Please review your details.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                builder.create().show()
             }
         }
+    }
+
+    private fun resetForm() {
+        binding?.nameEditText?.setText("")
+        binding?.ageEditText?.setText("")
+        binding?.numberEditText?.setText("")
+        binding?.consentEditText?.setText("")
+//        binding?.donationFrequencyEditText?.setText("")
+        binding?.addrEditText?.setText("")
+        binding?.donationDate?.setText("")
+        // Spinner reset
+        binding?.spinOrgan?.setSelection(0)
+        binding?.genderSpinner?.setSelection(0)
+        // Radio button reset
+        binding?.anonymousGroup?.clearCheck()
+        binding?.healthRadioGroup?.clearCheck()
+        binding?.alcoholRadioGroup?.clearCheck()
+        binding?.surgeryRadioGroup?.clearCheck()
+        binding?.vaccineRadioGroup?.clearCheck()
+        binding?.travelRadioGroup?.clearCheck()
+        binding?.diabetesRadioGroup?.clearCheck()
+        binding?.bloodPressureRadioGroup?.clearCheck()
+        binding?.anonymousGroup?.clearCheck()
+        Toast.makeText(requireContext(), "Form reset successfully!", Toast.LENGTH_SHORT).show()
     }
 
     private fun getLatLngFromAddress(address: Any): LatLng? {

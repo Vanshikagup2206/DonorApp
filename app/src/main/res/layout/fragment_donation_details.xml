@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:layout_margin="@dimen/dp_12"
     android:elevation="@dimen/dp_24"
-    android:padding="@dimen/dp_24"
     app:cardCornerRadius="@dimen/dp_24"
     tools:context=".donate.DonationDetailsFragment">
 

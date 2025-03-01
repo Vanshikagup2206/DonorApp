@@ -74,7 +74,7 @@ class DonationDetailsFragment : Fragment() {
     }
 
     private fun booleanToYesNo(value: Boolean?): String {
-        return if (value == true) "Yes" else "Not Required "
+        return if (value == true) "Yes" else "No"
     }
 
     companion object {
