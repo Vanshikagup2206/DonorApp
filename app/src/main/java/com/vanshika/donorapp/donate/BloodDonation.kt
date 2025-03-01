@@ -89,7 +89,6 @@ class BloodDonation : Fragment() {
         binding?.donationDate?.setOnClickListener {
             val datePickerDialog = DatePickerDialog(
                 requireContext(),
-//                R.style.MyDatePickerStyle,
                 { _, year, month, date ->
                     calendar.set(year, month, date)
                     binding?.donationDate?.setText(simpleDateFormat.format(calendar.time))
@@ -310,10 +309,8 @@ class BloodDonation : Fragment() {
         binding?.donationFrequencyEditText?.setText("")
         binding?.addrEditText?.setText("")
         binding?.donationDate?.setText("")
-        // Spinner reset
         binding?.bloodGroupSpinner?.setSelection(0)
         binding?.genderSpinner?.setSelection(0)
-        // Radio button reset
         binding?.anonymousGroup?.clearCheck()
         binding?.healthRadioGroup?.clearCheck()
         binding?.alcoholRadioGroup?.clearCheck()

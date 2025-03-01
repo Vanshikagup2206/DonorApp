@@ -106,12 +106,14 @@ class EmergencyRequestFragment : Fragment() {
                             binding?.llMedicine?.visibility = View.VISIBLE
                             binding?.llMoney?.visibility = View.GONE
                             binding?.spinnerDynamic?.visibility = View.GONE
+                            binding?.tvDynamicSelection?.visibility = View.GONE
                         }
 
                         "Money" -> {
                             binding?.llMoney?.visibility = View.VISIBLE
                             binding?.llMedicine?.visibility = View.GONE
                             binding?.spinnerDynamic?.visibility = View.GONE
+                            binding?.tvDynamicSelection?.visibility = View.GONE
                         }
 
                         else -> {
@@ -170,43 +172,37 @@ class EmergencyRequestFragment : Fragment() {
 
 
         binding?.btnSubmitRequest?.setOnClickListener {
-
-
-                if (binding?.tvRecipientName?.text?.isEmpty() == true) {
-                    binding?.tvRecipientName?.error =
-                        resources.getString(R.string.enter_recipient_name)
-                } else if (binding?.tvContactHospital?.text?.isEmpty() == true) {
-                    binding?.tvContactHospital?.error =
-                        resources.getString(R.string.enter_hospital_contact)
-                } else if (binding?.urgencyRadioGroup?.checkedRadioButtonId == -1) {
-                    Toast.makeText(
-                        requireContext(), "Please select an urgency level",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+            if (binding?.tvRecipientName?.text?.isEmpty() == true) {
+                binding?.tvRecipientName?.error =
+                    resources.getString(R.string.enter_recipient_name)
+            } else if (binding?.tvContactHospital?.text?.isEmpty() == true) {
+                binding?.tvContactHospital?.error =
+                    resources.getString(R.string.enter_hospital_contact)
+            } else if (binding?.urgencyRadioGroup?.checkedRadioButtonId == -1) {
+                Toast.makeText(
+                    requireContext(), "Please select an urgency level",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
             val requestedItem = binding?.spinnerRequirement?.selectedItem.toString()
-            val recipientName = binding?.tvRecipientName?.text?.toString()?.trim() ?:" "
+            val recipientName = binding?.tvRecipientName?.text?.toString()?.trim() ?: " "
             val selectedRequirement = binding?.spinnerRequirement?.selectedItem?.toString()
             val selectedLocation = binding?.spinnerLocation?.selectedItem?.toString()
             val contact = binding?.tvContactHospital?.text?.toString()?.trim()
-
             val bloodOrganRequirement =
                 if (selectedRequirement == "Blood" || selectedRequirement == "Organ") {
                     binding?.spinnerDynamic?.selectedItem?.toString()
                 } else null
-
             val medicineMoneyDetails = if (selectedRequirement == "Medicine") {
                 binding?.etMedicine?.text?.toString()?.trim()
             } else if (selectedRequirement == "Money") {
                 binding?.etMoney?.text?.toString()?.trim()
             } else null
-
             if (recipientName.isNullOrEmpty() || selectedRequirement.isNullOrEmpty() || selectedLocation.isNullOrEmpty() || contact.isNullOrEmpty()) {
                 Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT)
                     .show()
                 return@setOnClickListener
             }
-
             val recipient = RecipientsDataClass(
                 recipientName = binding?.tvRecipientName?.text?.toString(),
                 requestedItem = requestedItem,
@@ -215,9 +211,7 @@ class EmergencyRequestFragment : Fragment() {
                 contact = binding?.tvContactHospital?.text?.toString(),
                 urgencyLevel = selectedUrgency,
                 medicineMoneyDetails = medicineMoneyDetails
-
             )
-
             CoroutineScope(Dispatchers.IO).launch {
                 donationDatabase.DonationDao().insertEmergencyRequest(recipient)
                 withContext(Dispatchers.Main) {

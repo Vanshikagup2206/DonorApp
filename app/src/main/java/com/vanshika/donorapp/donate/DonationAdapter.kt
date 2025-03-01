@@ -43,11 +43,5 @@ class DonationAdapter(
         holder.itemView.setOnClickListener {
             donationInterface.clickInterface(position)
         }
-//        var calendar = Calendar.getInstance().also {
-//            it.time = donation[position].createddate
-//        }
-////        holder.date.setText(donation[position].createddate.toString())
-//        holder.date.setText(SimpleDateFormat("dd/MM/yyyy").format(calendar.time))
-//    }
     }
 }
