@@ -131,6 +131,7 @@ class MoneyDonation : Fragment() {
                     "Please select a payment method!",
                     Toast.LENGTH_SHORT
                 ).show()
+
             }
             val selectedRadioButtonId = binding?.anonymousGroup?.checkedRadioButtonId
             if (selectedRadioButtonId == -1) {

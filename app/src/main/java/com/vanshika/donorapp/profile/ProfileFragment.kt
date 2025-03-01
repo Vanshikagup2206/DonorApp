@@ -180,7 +180,6 @@ class ProfileFragment : Fragment() {
         }
     }
 
-
     private fun loadHealthDetails() {
         val userId = auth?.currentUser?.uid ?: return  // Get current user ID
 
