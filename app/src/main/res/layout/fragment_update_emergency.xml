@@ -60,7 +60,7 @@
             android:text="Select an Option"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:visibility="gone" />  <!-- Initially hidden -->
+            android:visibility="gone" />
 
         <Spinner
             android:id="@+id/spinnerDynamic"
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/neumorphic_edittext"
             android:padding="8dp"
-            android:visibility="gone" />  <!-- Initially hidden -->
+            android:visibility="gone" />
         <LinearLayout
             android:id="@+id/llMedicine"
             android:layout_width="match_parent"

@@ -26,7 +26,7 @@ data class DonorsDataClass(
     val hadRecentSurgery: Boolean? = null,
     val tookRecentVaccine: Boolean? = null,
     val bloodPressur: Boolean? = null,
-    val paymentMethod: String? = "",
+    val paymentMethod: String? = "Not required",
     val donationMethod: String? = " ",//anonymous or public
     val lattitude: Double,
     val longitude: Double,
