@@ -270,8 +270,7 @@
                                 android:id="@+id/etHemoglobin"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Minimum 12.5 g/dL (grams per deciliter) for women
-Minimum 13.0 g/dL for men"
+                                android:hint="Minimum 12.5 g/dL (grams per deciliter) for women Minimum 13.0 g/dL for men"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -311,8 +310,7 @@ Minimum 13.0 g/dL for men"
                                 android:id="@+id/etBloodPressure"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Systolic (Upper): 90–140 mmHg
-Diastolic (Lower): 60–90 mmHg"
+                                android:hint="Systolic (Upper): 90–140 mmHg Diastolic (Lower): 60–90 mmHg"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -360,7 +358,62 @@ Diastolic (Lower): 60–90 mmHg"
             </LinearLayout>
         </ScrollView>
 
-    </LinearLayout>
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvProfileName"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_marginTop="@dimen/dp_10"-->
+<!--                android:text="@string/name"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="@dimen/sp_20"-->
+<!--                android:textStyle="bold" />-->
+
+            <TextView
+                android:id="@+id/tvProfileBloodGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_4"
+                android:text="@string/blood_group"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/tvProfileStreaks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_6"
+                android:text="@string/donation_streak"
+                android:textColor="@color/green"
+                android:textSize="@dimen/sp_14" />
+
+        </LinearLayout>
+
+        <!-- QR Code for Donor Verification -->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/dp_20"-->
+<!--            android:gravity="center">-->
+
+
+<!--        &lt;!&ndash; Donation History &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/dp_20"-->
+<!--            android:paddingLeft="5dp"-->
+<!--            android:text="@string/donation_history"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="@dimen/sp_18"-->
+<!--            android:textStyle="bold" />-->
+<!--    -->
+<!--        &lt;!&ndash; Edit Profile & Logout &ndash;&gt;-->
+<!--       -->
+<!--    </LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/llButtons"

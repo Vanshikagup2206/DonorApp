@@ -195,6 +195,7 @@ class OrganDonation : Fragment() {
                     "You can't donate blood if you had vaccination",
                     Toast.LENGTH_SHORT
                 ).show()
+
             }
             val selectedRadioButtonId = binding?.anonymousGroup?.checkedRadioButtonId
             if (selectedRadioButtonId == -1) {

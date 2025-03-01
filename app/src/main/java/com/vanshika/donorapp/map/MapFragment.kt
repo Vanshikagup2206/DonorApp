@@ -98,7 +98,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 searchLocation(toLocation, isFrom = false)
             }
 
-
         }
     }
 
@@ -241,6 +240,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
         val smallMarkerIcon = resizeMapIcon(icon, 50, 50)
 
+
+
         mGoogleMap?.addMarker(
             MarkerOptions()
                 .position(location)
@@ -249,4 +250,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         )
     }
 }
+
+
+
 

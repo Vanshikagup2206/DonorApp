@@ -137,6 +137,7 @@ class ProfileFragment : Fragment() {
             val bloodPressure = binding?.etBloodPressure?.text.toString()
             val pulserate = binding?.etPulserate?.text.toString()
 
+            val userEmail = auth?.currentUser?.email ?: ""
             if (bloodGroup.isNotEmpty() || donationStreak.isNotEmpty() || age.isNotEmpty() || weight.isNotEmpty()
                 || hemoglobin.isNotEmpty() || bloodPressure.isNotEmpty() || pulserate.isNotEmpty()
             ) {
@@ -180,31 +181,44 @@ class ProfileFragment : Fragment() {
         }
     }
 
-
     private fun loadHealthDetails() {
         val userId = auth?.currentUser?.uid ?: return  // Get current user ID
-
         fireStore.collection("users").document(userId).get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
-                    var bloodGroup =
-                        binding?.etBloodGroup?.setText(document.getString("bloodGroup") ?: "")
-                    var donationStreak = binding?.etDonationStreak?.setText(
-                        document.getString("donationStreak") ?: ""
-                    )
-                    var age = binding?.etAge?.setText(document.getString("age") ?: "")
-                    var weight = binding?.etWeight?.setText(document.getString("weight") ?: "")
-                    var hemoglobin =
-                        binding?.etHemoglobin?.setText(document.getString("hemoglobin") ?: "")
-                    var bloodPressure =
-                        binding?.etBloodPressure?.setText(document.getString("bloodPressure") ?: "")
-                    var pulseRate =
-                        binding?.etPulserate?.setText(document.getString("pulserate") ?: "")
-                    // Convert data into a QR-friendly format
-                    val qrData =
-                        "Blood Group: ${bloodGroup}\nDonation Streak: ${donationStreak}\nAge: ${age}\nWeight: ${weight}\nHemoglobin: ${hemoglobin}\nBlood Pressure: ${bloodPressure}\nPulse Rate: ${pulseRate}"
+                    val userEmail = auth?.currentUser?.email ?: ""
+                    val bloodGroup = document.getString("bloodGroup") ?: ""
+                    binding?.etBloodGroup?.setText(bloodGroup)
 
-                    // Generate QR Code
+                    val donationStreak = document.getString("donationStreak") ?: ""
+                    binding?.etDonationStreak?.setText(donationStreak)
+
+                    val age = document.getString("age") ?: ""
+                    binding?.etAge?.setText(age)
+
+                    val weight = document.getString("weight") ?: ""
+                    binding?.etWeight?.setText(weight)
+
+                    val hemoglobin = document.getString("hemoglobin") ?: ""
+                    binding?.etHemoglobin?.setText(hemoglobin)
+
+                    val bloodPressure = document.getString("bloodPressure") ?: ""
+                    binding?.etBloodPressure?.setText(bloodPressure)
+
+                    val pulseRate = document.getString("pulserate") ?: ""
+                    binding?.etPulserate?.setText(pulseRate)
+
+                    val qrData = """
+                        Email: $userEmail
+                        Blood Group: $bloodGroup
+                        Donation Streak: $donationStreak
+                        Age: $age
+                        Weight: $weight
+                        Hemoglobin: $hemoglobin
+                        Blood Pressure: $bloodPressure
+                        Pulse Rate: $pulseRate
+                    """.trimIndent()
+
                     generateQRCode(qrData)
                     Log.d("Firestore", "Health details loaded successfully")
                 } else {
@@ -216,7 +230,7 @@ class ProfileFragment : Fragment() {
             }
     }
 
-    private fun generateQRCode(data: CharSequence) {
+    private fun generateQRCode(data: String) {
         try {
             val barcodeEncoder = BarcodeEncoder()
             val bitMatrix: BitMatrix =
@@ -227,8 +241,8 @@ class ProfileFragment : Fragment() {
             Log.e("QRCode", "Error generating QR Code", e)
             Toast.makeText(requireContext(), "Error generating QR Code", Toast.LENGTH_SHORT).show()
         }
-    }
 
+    }
 
     companion object {
 
