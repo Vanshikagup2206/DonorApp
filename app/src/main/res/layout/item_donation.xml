@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp_24"
-        android:background="@drawable/boundary_two"
+        android:background="@drawable/donatebackground"
         android:layout_margin="@dimen/dp_16"
         android:orientation="vertical">
 
