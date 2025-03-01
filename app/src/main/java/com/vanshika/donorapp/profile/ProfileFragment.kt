@@ -36,8 +36,8 @@ class ProfileFragment : Fragment() {
     var editor: SharedPreferences.Editor? = null
     private var navController: NavController? = null
     var healthRecordsDataClass: HealthRecordsDataClass? = null
-    var healthRecords= arrayListOf<HealthRecordsDataClass>()
-    var donationDatabase:DonationDatabase?=null
+    var healthRecords = arrayListOf<HealthRecordsDataClass>()
+    var donationDatabase: DonationDatabase? = null
     private var fireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
     private var param1: String? = null
     private var param2: String? = null
@@ -70,7 +70,7 @@ class ProfileFragment : Fragment() {
 
         val currentUser = auth?.currentUser
         if (currentUser != null) {
-            generateQRCode(currentUser.email ?: "Unknown",loadHealthDetails())
+            generateQRCode(currentUser.email ?: "Unknown")
             loadHealthDetails()
         }
 
@@ -133,18 +133,25 @@ class ProfileFragment : Fragment() {
             val donationStreak = binding?.etDonationStreak?.text.toString()
             val age = binding?.etAge?.text.toString()
             val weight = binding?.etWeight?.text.toString()
-            val hemoglobin= binding?.etHemoglobin?.text.toString()
+            val hemoglobin = binding?.etHemoglobin?.text.toString()
             val bloodPressure = binding?.etBloodPressure?.text.toString()
             val pulserate = binding?.etPulserate?.text.toString()
 
             if (bloodGroup.isNotEmpty() || donationStreak.isNotEmpty() || age.isNotEmpty() || weight.isNotEmpty()
-                || hemoglobin.isNotEmpty() || bloodPressure.isNotEmpty() || pulserate.isNotEmpty())
-            {
+                || hemoglobin.isNotEmpty() || bloodPressure.isNotEmpty() || pulserate.isNotEmpty()
+            ) {
 
-                donationDatabase?.DonationDao()?.
-                insertHealthRecords(HealthRecordsDataClass(donorId = auth?.currentUser?.uid?.toInt(), donorBloodGroup = bloodGroup,
-                    donorDonationStreak = donationStreak, donorHemoglobin = hemoglobin, donorBp = bloodPressure, donorPulse = pulserate,
-                    donorWeight = weight))
+                donationDatabase?.DonationDao()?.insertHealthRecords(
+                    HealthRecordsDataClass(
+                        donorId = auth?.currentUser?.uid?.toInt(),
+                        donorBloodGroup = bloodGroup,
+                        donorDonationStreak = donationStreak,
+                        donorHemoglobin = hemoglobin,
+                        donorBp = bloodPressure,
+                        donorPulse = pulserate,
+                        donorWeight = weight
+                    )
+                )
 
                 val userMap = hashMapOf(
                     "bloodGroup" to bloodGroup,
@@ -173,10 +180,47 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun generateQRCode(data: CharSequence, loadHealthDetails: Unit) {
+
+    private fun loadHealthDetails() {
+        val userId = auth?.currentUser?.uid ?: return  // Get current user ID
+
+        fireStore.collection("users").document(userId).get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    var bloodGroup =
+                        binding?.etBloodGroup?.setText(document.getString("bloodGroup") ?: "")
+                    var donationStreak = binding?.etDonationStreak?.setText(
+                        document.getString("donationStreak") ?: ""
+                    )
+                    var age = binding?.etAge?.setText(document.getString("age") ?: "")
+                    var weight = binding?.etWeight?.setText(document.getString("weight") ?: "")
+                    var hemoglobin =
+                        binding?.etHemoglobin?.setText(document.getString("hemoglobin") ?: "")
+                    var bloodPressure =
+                        binding?.etBloodPressure?.setText(document.getString("bloodPressure") ?: "")
+                    var pulseRate =
+                        binding?.etPulserate?.setText(document.getString("pulserate") ?: "")
+                    // Convert data into a QR-friendly format
+                    val qrData =
+                        "Blood Group: ${bloodGroup}\nDonation Streak: ${donationStreak}\nAge: ${age}\nWeight: ${weight}\nHemoglobin: ${hemoglobin}\nBlood Pressure: ${bloodPressure}\nPulse Rate: ${pulseRate}"
+
+                    // Generate QR Code
+                    generateQRCode(qrData)
+                    Log.d("Firestore", "Health details loaded successfully")
+                } else {
+                    Log.d("Firestore", "No health details found for this user")
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error loading health details", e)
+            }
+    }
+
+    private fun generateQRCode(data: CharSequence) {
         try {
             val barcodeEncoder = BarcodeEncoder()
-            val bitMatrix: BitMatrix = barcodeEncoder.encode(data.toString(), BarcodeFormat.QR_CODE, 400, 400)
+            val bitMatrix: BitMatrix =
+                barcodeEncoder.encode(data.toString(), BarcodeFormat.QR_CODE, 400, 400)
             val bitmap: Bitmap = barcodeEncoder.createBitmap(bitMatrix)
             binding?.ivQrCode?.setImageBitmap(bitmap)
         } catch (e: WriterException) {
@@ -184,30 +228,6 @@ class ProfileFragment : Fragment() {
             Toast.makeText(requireContext(), "Error generating QR Code", Toast.LENGTH_SHORT).show()
         }
     }
-
-    private fun loadHealthDetails() {
-        val userId = auth?.currentUser?.uid ?: return  // Get current user ID
-
-        fireStore.collection("users").document(userId).get()
-                .addOnSuccessListener { document ->
-                    if (document.exists()) {
-                        binding?.etBloodGroup?.setText(document.getString("bloodGroup") ?: "")
-                        binding?.etDonationStreak?.setText(document.getString("donationStreak") ?: "")
-                        binding?.etAge?.setText(document.getString("age") ?: "")
-                        binding?.etWeight?.setText(document.getString("weight") ?: "")
-                        binding?.etHemoglobin?.setText(document.getString("hemoglobin") ?: "")
-                        binding?.etBloodPressure?.setText(document.getString("bloodPressure") ?: "")
-                        binding?.etPulserate?.setText(document.getString("pulserate") ?: "")
-
-                        Log.d("Firestore", "Health details loaded successfully")
-                    } else {
-                        Log.d("Firestore", "No health details found for this user")
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Log.e("Firestore", "Error loading health details", e)
-                }
-        }
 
 
     companion object {
