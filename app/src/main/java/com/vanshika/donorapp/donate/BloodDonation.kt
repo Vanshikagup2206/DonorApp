@@ -238,7 +238,7 @@ class BloodDonation : Fragment() {
                                 if (latLng != null) {
                                     donorDatabase.DonationDao().insertDonor(
                                         DonorsDataClass(
-                                            donorId = auth,
+                                            donorId = auth?.currentUser?.uid?.toInt() ?: 0,
                                             donorName = binding?.nameEditText?.text?.toString(),
                                             address = binding?.addrEditText?.text?.toString(),
                                             age = binding?.ageEditText?.text?.toString(),
