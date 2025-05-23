@@ -52,10 +52,10 @@ class RegisterActivity : AppCompatActivity() {
             val aadhaarNumber = registerBinding?.etAadhaarNo?.text.toString()
 
             if (name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && aadhaarNumber.isNotEmpty()) {
-                if (isValidAadhaar(aadhaarNumber)){
+                if (isValidAadhaar(aadhaarNumber)==true){
                     registerUser(name, email, password, aadhaarNumber)
                 } else{
-                    Toast.makeText(this, "Invalid Aadhaar Number!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Invalid Aadhaar Number(12 digits)!", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 Toast.makeText(this, "Fill all Fields", Toast.LENGTH_LONG).show()
@@ -64,10 +64,11 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun isValidAadhaar(aadhaarNumber: String): Boolean {
-        if (aadhaarNumber.length != 12 || !aadhaarNumber.all { it.isDigit() }){
+        if (aadhaarNumber.length == 12 || !aadhaarNumber.all { it.isDigit() }){
+            return true
+        }else{
             return false
         }
-        return verHoeffValidate(aadhaarNumber)
     }
 
     private fun registerUser(name: String, email: String, password: String, aadhaarNumber: String) {

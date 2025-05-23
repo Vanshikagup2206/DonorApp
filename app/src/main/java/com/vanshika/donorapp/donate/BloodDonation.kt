@@ -12,6 +12,8 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.StreetViewPanoramaLocation
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentBloodDonationBinding
@@ -42,6 +44,8 @@ class BloodDonation : Fragment() {
     private var param2: String? = null
     var binding: FragmentBloodDonationBinding? = null
     var bloodDonation = arrayListOf<DonorsDataClass>()
+    var auth:FirebaseAuth?=null
+    var db: FirebaseFirestore? = null
     var calendar = android.icu.util.Calendar.getInstance()
     var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
     lateinit var donorDatabase: DonationDatabase
@@ -234,6 +238,7 @@ class BloodDonation : Fragment() {
                                 if (latLng != null) {
                                     donorDatabase.DonationDao().insertDonor(
                                         DonorsDataClass(
+                                            donorId = auth,
                                             donorName = binding?.nameEditText?.text?.toString(),
                                             address = binding?.addrEditText?.text?.toString(),
                                             age = binding?.ageEditText?.text?.toString(),
@@ -257,6 +262,8 @@ class BloodDonation : Fragment() {
                                         )
                                     )
                                 }
+                                saveDonationToFirestore(auth?.currentUser.toString(),
+                                    latLng!!.latitude,latLng.longitude,"Blood")
                                 findNavController().navigate(R.id.donateFragment)
                             }
                         }
@@ -321,6 +328,31 @@ class BloodDonation : Fragment() {
         binding?.bloodPressureRadioGroup?.clearCheck()
         binding?.anonymousGroup?.clearCheck()
         Toast.makeText(requireContext(), "Form reset successfully!", Toast.LENGTH_SHORT).show()
+    }
+
+    fun saveDonationToFirestore(
+        currentUserId: String,
+        donationLat: Double,
+        donationLon: Double,
+        donationType: String
+    ) {
+        val firestore = FirebaseFirestore.getInstance()
+
+        val donationData = hashMapOf(
+            "donorId" to currentUserId,
+            "latitude" to donationLat,
+            "longitude" to donationLon,
+            "donationType" to donationType
+        )
+
+        firestore.collection("donations")
+            .add(donationData)
+            .addOnSuccessListener {
+                Log.d("Firestore", "Donation added successfully!")
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error adding donation", e)
+            }
     }
 
     private fun searchLocation(

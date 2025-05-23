@@ -24,6 +24,8 @@ import com.vanshika.donorapp.databinding.DeleteDailogBinding
 import com.vanshika.donorapp.databinding.FragmentProfileBinding
 import com.vanshika.donorapp.signInLogIn.LogInActivity
 import com.vanshika.donorapp.signInLogIn.RegisterActivity
+import kotlin.math.absoluteValue
+
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -62,6 +64,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         auth = FirebaseAuth.getInstance()
         fireStore = FirebaseFirestore.getInstance()
+        donationDatabase = DonationDatabase.getInstance(requireContext())
         sharedPreferences = requireActivity().getSharedPreferences(
             "R.string.app_name",
             AppCompatActivity.MODE_PRIVATE
@@ -137,14 +140,14 @@ class ProfileFragment : Fragment() {
             val bloodPressure = binding?.etBloodPressure?.text.toString()
             val pulserate = binding?.etPulserate?.text.toString()
 
-            val userEmail = auth?.currentUser?.email ?: ""
+
             if (bloodGroup.isNotEmpty() || donationStreak.isNotEmpty() || age.isNotEmpty() || weight.isNotEmpty()
                 || hemoglobin.isNotEmpty() || bloodPressure.isNotEmpty() || pulserate.isNotEmpty()
             ) {
 
                 donationDatabase?.DonationDao()?.insertHealthRecords(
                     HealthRecordsDataClass(
-                        donorId = auth?.currentUser?.uid?.toInt(),
+                        donorId = (auth?.currentUser?.uid?.hashCode() ?: 0).absoluteValue,
                         donorBloodGroup = bloodGroup,
                         donorDonationStreak = donationStreak,
                         donorHemoglobin = hemoglobin,
@@ -163,7 +166,6 @@ class ProfileFragment : Fragment() {
                     "bloodPressure" to bloodPressure,
                     "pulserate" to pulserate
                 )
-
                 fireStore.collection("users").document(auth?.currentUser?.uid.toString())
                     .set(userMap)
                     .addOnSuccessListener {

@@ -17,7 +17,7 @@ import com.vanshika.donorapp.requests.RecipientsDataClass
 
 @Database(
     entities = [DonorsDataClass::class, RecipientsDataClass::class, HospitalsDataClass::class, DonationsDataClass::class, HealthRecordsDataClass::class, SOSRequestsDataClass::class, UsersDataClass::class, NotificationRequestDataClass::class],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 @TypeConverters(Converters::class)
