@@ -25,21 +25,20 @@ import com.vanshika.donorapp.databinding.FragmentProfileBinding
 import com.vanshika.donorapp.signInLogIn.LogInActivity
 import com.vanshika.donorapp.signInLogIn.RegisterActivity
 import kotlin.math.absoluteValue
-
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-
 class ProfileFragment : Fragment() {
-    var auth: FirebaseAuth? = null
-    var binding: FragmentProfileBinding? = null
-    var sharedPreferences: SharedPreferences? = null
-    var editor: SharedPreferences.Editor? = null
+    private var auth: FirebaseAuth? = null
+    private var binding: FragmentProfileBinding? = null
+    private var sharedPreferences: SharedPreferences? = null
+    private var editor: SharedPreferences.Editor? = null
     private var navController: NavController? = null
-    var healthRecordsDataClass: HealthRecordsDataClass? = null
-    var healthRecords = arrayListOf<HealthRecordsDataClass>()
-    var donationDatabase: DonationDatabase? = null
+    private var donationDatabase: DonationDatabase? = null
     private var fireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
     private var param1: String? = null
     private var param2: String? = null
@@ -62,6 +61,7 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         auth = FirebaseAuth.getInstance()
         fireStore = FirebaseFirestore.getInstance()
         donationDatabase = DonationDatabase.getInstance(requireContext())
@@ -73,6 +73,7 @@ class ProfileFragment : Fragment() {
 
         val currentUser = auth?.currentUser
         if (currentUser != null) {
+            restoreHealthRecordsFromFirestore()  // Restore from Firestore after reinstall/login
             generateQRCode(currentUser.email ?: "Unknown")
             loadHealthDetails()
         }
@@ -85,7 +86,7 @@ class ProfileFragment : Fragment() {
 
         binding?.btnEditProfile?.setOnClickListener {
             Dialog(requireContext()).apply {
-                var dialogBinding = DeleteDailogBinding.inflate(layoutInflater)
+                val dialogBinding = DeleteDailogBinding.inflate(layoutInflater)
                 setContentView(dialogBinding.root)
                 window?.setLayout(
                     ViewGroup.LayoutParams.MATCH_PARENT,
@@ -95,37 +96,26 @@ class ProfileFragment : Fragment() {
                 dialogBinding.etProfileName.setText(sharedPreferences?.getString("name", ""))
                 show()
                 dialogBinding.imgConfirm.setOnClickListener {
-                    if (dialogBinding.etProfileName.text.toString()
-                            .isNotEmpty() && dialogBinding.etProfileName.text.toString()
-                            .isNotEmpty()
-                    ) {
+                    if (dialogBinding.etProfileName.text.toString().isNotEmpty() && dialogBinding.etProfileMail.text.toString().isNotEmpty()) {
                         editor?.putString("name", dialogBinding.etProfileName.text.toString())
                         editor?.putString("email", dialogBinding.etProfileMail.text.toString())
                         val user = FirebaseAuth.getInstance().currentUser
-                        user?.delete()
-                            ?.addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    Log.d("FirebaseAuth", "User account deleted successfully.")
-                                    dismiss()
-                                    startActivity(
-                                        Intent(
-                                            requireContext(),
-                                            RegisterActivity::class.java
-                                        )
-                                    )
-                                    requireActivity().finish()
-
-                                } else {
-                                    Log.e("FirebaseAuth", "Error deleting user", task.exception)
-                                    dismiss()
-                                }
+                        user?.delete()?.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Log.d("FirebaseAuth", "User account deleted successfully.")
+                                dismiss()
+                                startActivity(Intent(requireContext(), RegisterActivity::class.java))
+                                requireActivity().finish()
+                            } else {
+                                Log.e("FirebaseAuth", "Error deleting user", task.exception)
+                                dismiss()
                             }
+                        }
                     } else {
-                        Toast.makeText(requireContext(), "Fields can't be empty", Toast.LENGTH_LONG)
-                            .show()
+                        Toast.makeText(requireContext(), "Fields can't be empty", Toast.LENGTH_LONG).show()
                     }
                 }
-                dialogBinding?.imgDiscard?.setOnClickListener {
+                dialogBinding.imgDiscard.setOnClickListener {
                     dismiss()
                 }
             }
@@ -140,23 +130,28 @@ class ProfileFragment : Fragment() {
             val bloodPressure = binding?.etBloodPressure?.text.toString()
             val pulserate = binding?.etPulserate?.text.toString()
 
-
             if (bloodGroup.isNotEmpty() || donationStreak.isNotEmpty() || age.isNotEmpty() || weight.isNotEmpty()
                 || hemoglobin.isNotEmpty() || bloodPressure.isNotEmpty() || pulserate.isNotEmpty()
             ) {
-
-                donationDatabase?.DonationDao()?.insertHealthRecords(
-                    HealthRecordsDataClass(
-                        donorId = (auth?.currentUser?.uid?.hashCode() ?: 0).absoluteValue,
-                        donorBloodGroup = bloodGroup,
-                        donorDonationStreak = donationStreak,
-                        donorHemoglobin = hemoglobin,
-                        donorBp = bloodPressure,
-                        donorPulse = pulserate,
-                        donorWeight = weight
-                    )
+                val healthRecord = HealthRecordsDataClass(
+                    donorId = (auth?.currentUser?.uid?.hashCode() ?: 0).absoluteValue,
+                    donorBloodGroup = bloodGroup,
+                    donorDonationStreak = donationStreak,
+                    donorHemoglobin = hemoglobin,
+                    donorBp = bloodPressure,
+                    donorPulse = pulserate,
+                    donorWeight = weight
                 )
 
+                // Insert locally
+                CoroutineScope(Dispatchers.IO).launch {
+                    donationDatabase?.DonationDao()?.insertHealthRecords(healthRecord)
+                }
+
+                // Sync to Firestore
+                syncHealthRecordToFirestore(healthRecord)
+
+                // Also update Firestore users collection for easy display
                 val userMap = hashMapOf(
                     "bloodGroup" to bloodGroup,
                     "donationStreak" to donationStreak,
@@ -169,15 +164,10 @@ class ProfileFragment : Fragment() {
                 fireStore.collection("users").document(auth?.currentUser?.uid.toString())
                     .set(userMap)
                     .addOnSuccessListener {
-                        Toast.makeText(
-                            requireContext(),
-                            "Health details added successfully",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(requireContext(), "Health details added successfully", Toast.LENGTH_SHORT).show()
                     }
                     .addOnFailureListener { e ->
                         Log.e("Firestore", "Error saving user data", e)
-
                     }
             }
         }
@@ -235,19 +225,72 @@ class ProfileFragment : Fragment() {
     private fun generateQRCode(data: String) {
         try {
             val barcodeEncoder = BarcodeEncoder()
-            val bitMatrix: BitMatrix =
-                barcodeEncoder.encode(data.toString(), BarcodeFormat.QR_CODE, 400, 400)
+            val bitMatrix: BitMatrix = barcodeEncoder.encode(data, BarcodeFormat.QR_CODE, 400, 400)
             val bitmap: Bitmap = barcodeEncoder.createBitmap(bitMatrix)
             binding?.ivQrCode?.setImageBitmap(bitmap)
         } catch (e: WriterException) {
             Log.e("QRCode", "Error generating QR Code", e)
             Toast.makeText(requireContext(), "Error generating QR Code", Toast.LENGTH_SHORT).show()
         }
+    }
 
+    private fun syncHealthRecordToFirestore(record: HealthRecordsDataClass) {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val db = FirebaseFirestore.getInstance()
+
+        val firestoreData = hashMapOf(
+            "donorId" to record.donorId,
+            "donorWeight" to record.donorWeight,
+            "donorBp" to record.donorBp,
+            "donorPulse" to record.donorPulse,
+            "donorBloodGroup" to record.donorBloodGroup,
+            "donorDonationStreak" to record.donorDonationStreak,
+            "donorHemoglobin" to record.donorHemoglobin
+        )
+
+        db.collection("healthrecords")
+            .document(uid)
+            .collection("data")
+            .add(firestoreData)
+            .addOnSuccessListener {
+                Log.d("FirestoreSync", "Health record synced to Firestore.")
+            }
+            .addOnFailureListener {
+                Log.e("FirestoreSync", "Sync failed: ${it.message}")
+            }
+    }
+
+    private fun restoreHealthRecordsFromFirestore() {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("healthrecords")
+            .document(uid)
+            .collection("data")
+            .get()
+            .addOnSuccessListener { result ->
+                for (doc in result) {
+                    val record = HealthRecordsDataClass(
+                        donorId = (doc.getLong("donorId") ?: 0).toInt(),
+                        donorWeight = doc.getString("donorWeight"),
+                        donorBp = doc.getString("donorBp"),
+                        donorPulse = doc.getString("donorPulse"),
+                        donorBloodGroup = doc.getString("donorBloodGroup"),
+                        donorDonationStreak = doc.getString("donorDonationStreak"),
+                        donorHemoglobin = doc.getString("donorHemoglobin") ?: ""
+                    )
+                    CoroutineScope(Dispatchers.IO).launch {
+                        donationDatabase?.DonationDao()?.insertHealthRecords(record)
+                    }
+                }
+                Log.d("FirestoreRestore", "Health records restored to Room")
+            }
+            .addOnFailureListener {
+                Log.e("FirestoreRestore", "Restore failed: ${it.message}")
+            }
     }
 
     companion object {
-
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             ProfileFragment().apply {

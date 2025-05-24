@@ -19,8 +19,8 @@ class EmergencyRequestAdapter(
         var tvRecipientName: TextView = view.findViewById(R.id.tvRecipientName)
         var tvRequirement: TextView = view.findViewById(R.id.tvRequirement)
         var tvDetails: TextView = view.findViewById(R.id.tvDetails)
-        var tvHospitalLocation: TextView = view.findViewById(R.id.tvHospitalLocation)
-        var tvContactNumber: TextView = view.findViewById(R.id.tvContactNumber)
+        var tvHospitalLocation: TextView = view.findViewById(R.id.tvLocation)
+        var tvContactNumber: TextView = view.findViewById(R.id.tvContact)
         var tvUrgency: TextView = view.findViewById(R.id.tvUrgency)
         var btnEdit: TextView = view.findViewById(R.id.btnEdit)
         var btnDelete: TextView = view.findViewById(R.id.btnDelete)
@@ -41,16 +41,16 @@ class EmergencyRequestAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recipient = emergencyRequestList[position]
-        holder.tvRecipientName.setText(emergencyRequestList[position].recipientName)
+        holder.tvRecipientName.setText(emergencyRequestList[position].name)
         holder.tvHospitalLocation.setText(emergencyRequestList[position].location)
-        holder.tvContactNumber.setText(emergencyRequestList[position].contact)
+        holder.tvContactNumber.setText(emergencyRequestList[position].contactNo)
         holder.tvUrgency.text = when (emergencyRequestList[position].urgencyLevel) {
             1 -> "Low"
             2 -> "Medium"
             else -> "High"
         }
-        holder.tvRequirement.text = "Requirement: ${emergencyRequestList[position].requestedItem}"
-        holder.tvDetails.text = when (emergencyRequestList[position].requestedItem) {
+        holder.tvRequirement.text = "Requirement: ${emergencyRequestList[position].requirement}"
+        holder.tvDetails.text = when (emergencyRequestList[position].requirement) {
             "Blood", "Organ" -> "Type: ${emergencyRequestList[position].bloodOrganRequirement}"
             "Medicine", "Money" -> "Details: ${emergencyRequestList[position].medicineMoneyDetails}"
             else -> ""

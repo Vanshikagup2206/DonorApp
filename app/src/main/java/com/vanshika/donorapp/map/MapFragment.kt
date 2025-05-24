@@ -17,15 +17,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolylineOptions
-import com.vanshika.donorapp.DonationDatabase
+import com.google.android.gms.maps.model.*
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentMapBinding
-import com.vanshika.donorapp.donate.DonorsDataClass
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,26 +27,17 @@ import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import java.net.HttpURLConnection
 import java.net.URL
+import com.google.firebase.firestore.FirebaseFirestore
+import com.vanshika.donorapp.donate.DonorsDataClass
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MapFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MapFragment : Fragment(), OnMapReadyCallback {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var binding: FragmentMapBinding? = null
     private var mGoogleMap: GoogleMap? = null
     private var fromLatLng: LatLng? = null
     private var toLatLng: LatLng? = null
-    private var donorId: Int = 1 // Replace with actual donor ID
+    private var donorId: Int = 1
     private val waypoints = mutableListOf<LatLng>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +52,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentMapBinding.inflate(layoutInflater)
         return binding?.root
     }
@@ -97,7 +81,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 searchLocation(fromLocation, isFrom = true)
                 searchLocation(toLocation, isFrom = false)
             }
-
         }
     }
 
@@ -106,32 +89,26 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             val url = "https://nominatim.openstreetmap.org/search?format=json&q=$location"
             val response = fetchLocationData(url)
             withContext(Dispatchers.Main) {
-                if (response != null) {
-                    if (response.length() > 0) {
-                        val locationData = response.getJSONObject(0)
-                        val lat = locationData.getDouble("lat").toDouble()
-                        val lon = locationData.getDouble("lon").toDouble()
-                        val latLng = LatLng(lat, lon)
-                        // 🛠 Debugging: Log the fetched lat/lon
-                        Log.d("LocationDebug", "Location: $location, Lat: $lat, Lon: $lon")
-                        if (isFrom) {
-                            fromLatLng = latLng
-                        } else {
-                            toLatLng = latLng
-                        }
-
-                        mGoogleMap?.addMarker(MarkerOptions().position(latLng).title(location))
-
-                        // 🌟 Ensure Map Moves to Correct Location
-                        mGoogleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12f))
-
-                        if (fromLatLng != null && toLatLng != null) {
-                            drawRoute()
-                        }
+                if (response != null && response.length() > 0) {
+                    val locationData = response.getJSONObject(0)
+                    val lat = locationData.getDouble("lat")
+                    val lon = locationData.getDouble("lon")
+                    val latLng = LatLng(lat, lon)
+                    Log.d("LocationDebug", "Location: $location, Lat: $lat, Lon: $lon")
+                    if (isFrom) {
+                        fromLatLng = latLng
                     } else {
-                        Toast.makeText(requireContext(), "Location not found!", Toast.LENGTH_SHORT)
-                            .show()
+                        toLatLng = latLng
                     }
+
+                    mGoogleMap?.addMarker(MarkerOptions().position(latLng).title(location))
+                    mGoogleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12f))
+
+                    if (fromLatLng != null && toLatLng != null) {
+                        drawRoute()
+                    }
+                } else {
+                    Toast.makeText(requireContext(), "Location not found!", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -144,7 +121,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             connection.requestMethod = "GET"
             connection.connect()
             val inputStream = connection.inputStream.bufferedReader().use { it.readText() }
-            // 🛠 Debug API Response
             Log.d("LocationAPI", "Response: $inputStream")
             JSONArray(inputStream).takeIf { it.length() > 0 }
         } catch (e: Exception) {
@@ -167,7 +143,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun zoomOnMap() {
-        val builder = com.google.android.gms.maps.model.LatLngBounds.Builder()
+        val builder = LatLngBounds.Builder()
         fromLatLng?.let { builder.include(it) }
         toLatLng?.let { builder.include(it) }
         waypoints.forEach { builder.include(it) }
@@ -176,17 +152,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mGoogleMap?.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
     }
 
-
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MapFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+        private const val ARG_PARAM1 = "param1"
+        private const val ARG_PARAM2 = "param2"
+
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             MapFragment().apply {
@@ -210,47 +179,52 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         return BitmapDescriptorFactory.fromBitmap(resizedBitmap)
     }
 
+    // 🔄 Firestore-based donor marker loading
     private fun loadDonorLocations() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val donors = DonationDatabase.getInstance(requireContext())
-                .DonationDao()
-                .getDonationList()  // Database se saare donors le aao
+        val firestore = FirebaseFirestore.getInstance()
 
-            withContext(Dispatchers.Main) {
-                for (donor in donors) {
-                    val location = LatLng(donor.lattitude, donor.longitude)
-                    // 🛠 Debugging: Check stored lat/lon values
-                    Log.d(
-                        "DonorLocation",
-                        "Donor ID: ${donor.donorId}, Lat: ${donor.lattitude}, Lon: ${donor.longitude}"
-                    )
-                    addMarker(location, donor.donationType.toString())
+        firestore.collection("donations")
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    Log.e("FirestoreError", "Error fetching donations: ", error)
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null && !snapshot.isEmpty) {
+                    mGoogleMap?.clear()
+                    for (doc in snapshot.documents) {
+                        val lat = doc.getDouble("latitude") ?: continue
+                        val lon = doc.getDouble("longitude") ?: continue
+                        val donationType = doc.getString("donationType") ?: "Unknown"
+                        val location = LatLng(lat, lon)
+                        Log.d("FirestoreDonor", "Lat: $lat, Lon: $lon, Type: $donationType")
+                        addMarker(DonorsDataClass(lattitude = lat, longitude = lon, donationType = donationType))
+                    }
+                } else {
+                    Log.d("Firestore", "No donor data found in Firestore.")
                 }
             }
-        }
     }
 
-    private fun addMarker(location: LatLng, donationType: Any) {
-        val icon = when (donationType) {
+    private fun addMarker(donor: DonorsDataClass) {
+        val location = LatLng(donor.lattitude, donor.longitude)
+        val donationType = donor.donationType
+
+        val icon = when (donationType.toString().trim().capitalize()) {
             "Blood" -> R.drawable.blood_download
-            "Medicine" -> R.drawable.download
+            "Medicine" -> R.drawable.medicine
             "Money" -> R.drawable.money_download
             "Organ" -> R.drawable.organ_download
-            else -> R.drawable.defalut
+            else -> R.drawable.blood_download
         }
-        val smallMarkerIcon = resizeMapIcon(icon, 50, 50)
 
-
+        val smallMarkerIcon = resizeMapIcon(icon, width = 50, height = 50)
 
         mGoogleMap?.addMarker(
             MarkerOptions()
                 .position(location)
-                .title("$donationType Donor")
+                .title("${donor.donationType} by ${donor.donorName}")
                 .icon(smallMarkerIcon)
         )
     }
 }
-
-
-
-

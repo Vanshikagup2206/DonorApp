@@ -10,30 +10,19 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentRequestsBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class RequestsFragment : Fragment(), RequestInterface {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RequestsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class RequestsFragment : Fragment(),RequestInterface {
-
-    var binding: FragmentRequestsBinding? = null
-    var recipientsDataClass = RecipientsDataClass()
-    lateinit var linearLayoutManager: LinearLayoutManager
-    var emergencyRequestList = arrayListOf<RecipientsDataClass>()
-    lateinit var emergencyRequestAdapter: EmergencyRequestAdapter
-    lateinit var donationDatabase: DonationDatabase
-
+    private var binding: FragmentRequestsBinding? = null
+    private lateinit var donationDatabase: DonationDatabase
+    private lateinit var emergencyRequestAdapter: EmergencyRequestAdapter
+    private var emergencyRequestList = arrayListOf<RecipientsDataClass>()
+    private val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -44,61 +33,46 @@ class RequestsFragment : Fragment(),RequestInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         donationDatabase = DonationDatabase.getInstance(requireContext())
-        emergencyRequestAdapter=EmergencyRequestAdapter(emergencyRequestList,this)
-        linearLayoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        binding?.rvRecipients?.adapter=emergencyRequestAdapter
+        emergencyRequestAdapter = EmergencyRequestAdapter(emergencyRequestList, this)
+        binding?.rvRecipients?.layoutManager = LinearLayoutManager(requireContext())
+        binding?.rvRecipients?.adapter = emergencyRequestAdapter
 
-        binding?.rvRecipients?.layoutManager = linearLayoutManager
-        getEmergencyRequestList()
+        // Initial load: show my requests
+        getMyRequests()
+
         binding?.btnEmergencyRequest?.setOnClickListener {
             findNavController().navigate(R.id.emergencyRequestFragment)
         }
 
-        binding?.btnAll?.setOnClickListener {
-            getEmergencyRequestList()
-        }
-        binding?.btnBlood?.setOnClickListener {
-            getBloodList()
-        }
-        binding?.btnOrgans?.setOnClickListener {
-            getOrganList()
-        }
-        binding?.btnMedicine?.setOnClickListener {
-            getMedicineList()
-        }
-        binding?.btnMoney?.setOnClickListener {
-            getMoneyList()
-        }
+        // Filter buttons
+        binding?.btnAll?.setOnClickListener { getEmergencyRequestList() }
+        binding?.btnBlood?.setOnClickListener { getFilteredList("Blood") }
+        binding?.btnOrgans?.setOnClickListener { getFilteredList("Organ") }
+        binding?.btnMedicine?.setOnClickListener { getFilteredList("Medicine") }
+        binding?.btnMoney?.setOnClickListener { getFilteredList("Money") }
+
+        // Show only requests created by current user
+        getMyRequests()
     }
 
-    private fun getMoneyList() {
-        val typeOfRequirement = "Money"
+    private fun getMyRequests() {
         emergencyRequestList.clear()
-        emergencyRequestList.addAll(donationDatabase.DonationDao().getRecipientListAccToReq(typeOfRequirement))
+        emergencyRequestList.addAll(
+            donationDatabase.DonationDao().getEmergencyRequestList().filter {
+                it.userId == currentUserId
+            }
+        )
         emergencyRequestAdapter.notifyDataSetChanged()
     }
 
-    private fun getMedicineList() {
-        val typeOfRequirement = "Medicine"
+    private fun getFilteredList(typeOfRequirement: String) {
         emergencyRequestList.clear()
-        emergencyRequestList.addAll(donationDatabase.DonationDao().getRecipientListAccToReq(typeOfRequirement))
-        emergencyRequestAdapter.notifyDataSetChanged()
-    }
-
-    private fun getOrganList() {
-        val typeOfRequirement = "Organ"
-        emergencyRequestList.clear()
-        emergencyRequestList.addAll(donationDatabase.DonationDao().getRecipientListAccToReq(typeOfRequirement))
-        emergencyRequestAdapter.notifyDataSetChanged()
-    }
-
-    private fun getBloodList() {
-        val typeOfRequirement = "Blood"
-        emergencyRequestList.clear()
-        emergencyRequestList.addAll(donationDatabase.DonationDao().getRecipientListAccToReq(typeOfRequirement))
+        emergencyRequestList.addAll(
+            donationDatabase.DonationDao().getRecipientListAccToReq(typeOfRequirement)
+        )
         emergencyRequestAdapter.notifyDataSetChanged()
     }
 
@@ -108,27 +82,8 @@ class RequestsFragment : Fragment(),RequestInterface {
         emergencyRequestAdapter.notifyDataSetChanged()
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RequestsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) = RequestsFragment().apply {
-            arguments = Bundle().apply {
-                putString(ARG_PARAM1, param1)
-                putString(ARG_PARAM2, param2)
-            }
-        }
-    }
-
     override fun editRequest(position: Int) {
-        var convertToString = Gson().toJson(emergencyRequestList[position])
+        val convertToString = Gson().toJson(emergencyRequestList[position])
         val bundle = bundleOf(
             "id" to emergencyRequestList[position].recipientId,
             "name" to convertToString,
@@ -146,11 +101,14 @@ class RequestsFragment : Fragment(),RequestInterface {
             .setMessage("Are you sure you want to delete this request?")
             .setPositiveButton("Delete") { _, _ ->
                 donationDatabase.DonationDao().deleteEmergencyRequest(emergencyRequestList[position])
-                getEmergencyRequestList()
+                getMyRequests() // Refresh only my requests after deletion
             }
             .setNegativeButton("Cancel", null)
             .show()
-        emergencyRequestAdapter.notifyDataSetChanged()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 }

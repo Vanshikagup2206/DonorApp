@@ -163,8 +163,8 @@ class UpdateEmergencyFragment : Fragment() {
 
         // Populate the spinner
         setupSpinner()
-        binding?.tvRecipientName?.setText(recipientsDataClass.recipientName)
-        binding?.tvContactHospital?.setText(recipientsDataClass.contact)
+        binding?.tvRecipientName?.setText(recipientsDataClass.name)
+        binding?.tvContactHospital?.setText(recipientsDataClass.contactNo)
         binding?.etMedicine?.setText(recipientsDataClass.medicineMoneyDetails)
         binding?.etMoney?.setText(recipientsDataClass.medicineMoneyDetails)
         when (recipientsDataClass.urgencyLevel) {
@@ -199,13 +199,12 @@ class UpdateEmergencyFragment : Fragment() {
                 } else null
                 donationDatabase.DonationDao().updateEmergencyRequest(
                     RecipientsDataClass(
-                        recipientId = recipientId,
-                        recipientName = binding?.tvRecipientName?.text?.toString(),
-                        requestedItem = requestedItem,
+                        name = binding?.tvRecipientName?.text?.toString(),
+                        requirement = requestedItem,
                         bloodOrganRequirement = bloodOrganRequirement,
                         medicineMoneyDetails = medicineMoneyDetails,
                         location = selectedLocation,
-                        contact = binding?.tvContactHospital?.text?.toString(),
+                        contactNo = binding?.tvContactHospital?.text?.toString(),
                         urgencyLevel = selectedUrgency,
                         )
                 )

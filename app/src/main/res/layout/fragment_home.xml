@@ -51,41 +51,26 @@
         android:textColor="@color/white"
         android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_16"
-        android:text="@string/active_requests"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp_18"
-        android:textStyle="bold" />
 
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_4"
-            android:id="@+id/btnHigh"
-            android:text="@string/high" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_4"
-            android:id="@+id/btnMedium"
-            android:text="@string/medium"
-            android:backgroundTint="@color/yellow"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_4"
-            android:id="@+id/btnLow"
-            android:text="@string/low"
-            android:backgroundTint="@color/green"/>
-    </LinearLayout>
+        android:layout_height="1dp"
+        android:background="#CCC"
+        android:layout_marginVertical="8dp" />
+
+    <TextView
+        android:text="Active Requests"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvActiveRequests"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRequests"

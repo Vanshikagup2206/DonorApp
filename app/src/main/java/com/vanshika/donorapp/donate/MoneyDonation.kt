@@ -40,12 +40,13 @@ class MoneyDonation : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var binding: FragmentMoneyDonationBinding? = null
-    lateinit var donardatabase: DonationDatabase
+    lateinit var donordatabase: DonationDatabase
     var donation = arrayListOf<DonorsDataClass>()
     var calendar = android.icu.util.Calendar.getInstance()
-    var auth: FirebaseAuth? = null
+    lateinit var auth: FirebaseAuth
     var db: FirebaseFirestore? = null
     var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +61,8 @@ class MoneyDonation : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        donardatabase = DonationDatabase.getInstance(requireContext())
+        donordatabase = DonationDatabase.getInstance(requireContext())
+        auth= FirebaseAuth.getInstance()
         binding = FragmentMoneyDonationBinding.inflate(layoutInflater)
         return binding?.root
     }
@@ -166,8 +168,8 @@ class MoneyDonation : Fragment() {
 
                             withContext(Dispatchers.Main) {
                                 if (latLng != null) {
-                                    donardatabase.DonationDao().insertDonor(
-                                        DonorsDataClass(
+                                    donordatabase.DonationDao().insertDonor(
+                                        donor = DonorsDataClass(
                                             donorName = binding?.editName?.text?.toString(),
                                             age = binding?.editAge?.text?.toString(),
                                             number = binding?.editNumber?.text?.toString(),
@@ -183,7 +185,9 @@ class MoneyDonation : Fragment() {
                                         )
                                     )
                                 }
-                                saveDonationToFirestore(currentUserId = auth?.currentUser.toString(),latLng!!.latitude,latLng.longitude,"Money")
+                                if (latLng != null) {
+                                    saveDonationToFirestore(auth.currentUser?.uid ?: "", latLng.latitude, latLng.longitude, "Money")
+                                }
                                 findNavController().navigate(R.id.donateFragment)
                             }
                         }
@@ -242,29 +246,18 @@ class MoneyDonation : Fragment() {
             null
         }
     }
-    fun saveDonationToFirestore(
-        currentUserId: String,
-        donationLat: Double,
-        donationLon: Double,
-        donationType: String
-    ) {
+    private fun saveDonationToFirestore(userId: String, lat: Double, lon: Double, type: String) {
         val firestore = FirebaseFirestore.getInstance()
-
-        val donationData = hashMapOf(
-            "donorId" to currentUserId,
-            "latitude" to donationLat,
-            "longitude" to donationLon,
-            "donationType" to donationType
+        val donation = hashMapOf(
+            "userId" to userId,
+            "latitude" to lat,
+            "longitude" to lon,
+            "donationType" to type
         )
-
         firestore.collection("donations")
-            .add(donationData)
-            .addOnSuccessListener {
-                Log.d("Firestore", "Donation added successfully!")
-            }
-            .addOnFailureListener { e ->
-                Log.e("Firestore", "Error adding donation", e)
-            }
+            .add(donation)
+            .addOnSuccessListener { Log.d("Firestore", "Donation added") }
+            .addOnFailureListener { Log.e("Firestore", "Failed", it) }
     }
 
     companion object {

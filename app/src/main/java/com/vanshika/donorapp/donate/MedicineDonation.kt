@@ -166,7 +166,9 @@ class MedicineDonation : Fragment() {
                                         )
                                     )
                                 }
-                                saveDonationToFirestore(currentUserId = auth?.currentUser.toString(),latLng!!.latitude,latLng.longitude,"Medicine")
+                                if (latLng != null) {
+                                    saveDonationToFirestore(auth?.currentUser?.uid ?: "", latLng.latitude, latLng.longitude, "Medicine")
+                                }
                                 findNavController().navigate(R.id.donateFragment)
                             }
                         }
@@ -227,29 +229,18 @@ class MedicineDonation : Fragment() {
             null
         }
     }
-    fun saveDonationToFirestore(
-        currentUserId: String,
-        donationLat: Double,
-        donationLon: Double,
-        donationType: String
-    ) {
+    private fun saveDonationToFirestore(userId: String, lat: Double, lon: Double, type: String) {
         val firestore = FirebaseFirestore.getInstance()
-
-        val donationData = hashMapOf(
-            "donorId" to currentUserId,
-            "latitude" to donationLat,
-            "longitude" to donationLon,
-            "donationType" to donationType
+        val donation = hashMapOf(
+            "userId" to userId,
+            "latitude" to lat,
+            "longitude" to lon,
+            "donationType" to type
         )
-
         firestore.collection("donations")
-            .add(donationData)
-            .addOnSuccessListener {
-                Log.d("Firestore", "Donation added successfully!")
-            }
-            .addOnFailureListener { e ->
-                Log.e("Firestore", "Error adding donation", e)
-            }
+            .add(donation)
+            .addOnSuccessListener { Log.d("Firestore", "Donation added") }
+            .addOnFailureListener { Log.e("Firestore", "Failed", it) }
     }
 
     companion object {

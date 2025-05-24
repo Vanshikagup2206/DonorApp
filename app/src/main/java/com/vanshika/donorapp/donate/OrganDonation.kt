@@ -24,345 +24,259 @@ import org.json.JSONArray
 import java.net.HttpURLConnection
 import java.net.URL
 import java.text.SimpleDateFormat
+import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [OrganDonation.newInstance] factory method to
- * create an instance of this fragment.
- */
 class OrganDonation : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    var binding: FragmentOrganDonationBinding? = null
-    lateinit var donarDatabase: DonationDatabase
 
-    //    var donation = arrayListOf<DonorsDataClass>()
-    var calendar = android.icu.util.Calendar.getInstance()
-    var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var binding: FragmentOrganDonationBinding? = null
+    private lateinit var donationDatabase: DonationDatabase
+    private val calendar = Calendar.getInstance()
+    private val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    private val auth = FirebaseAuth.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        donarDatabase = DonationDatabase.getInstance(requireContext())
-        binding = FragmentOrganDonationBinding.inflate(layoutInflater)
+        donationDatabase = DonationDatabase.getInstance(requireContext())
+        binding = FragmentOrganDonationBinding.inflate(inflater, container, false)
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // date
-        val genderSpinner = binding?.genderSpinner
-        val organSpinner = binding?.spinOrgan
-        var auth: FirebaseAuth? = null
+
+        setupSpinners()
+        setupDatePicker()
+        setupSubmitButton()
+        setupResetButton()
+    }
+
+    private fun setupSpinners() {
+        val genderAdapter = ArrayAdapter.createFromResource(
+            requireContext(), R.array.gender_types, android.R.layout.simple_spinner_item
+        ).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+        binding?.genderSpinner?.adapter = genderAdapter
+
+        val organAdapter = ArrayAdapter.createFromResource(
+            requireContext(), R.array.organ_types, android.R.layout.simple_spinner_item
+        ).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+        binding?.spinOrgan?.adapter = organAdapter
+    }
+
+    private fun setupDatePicker() {
         binding?.donationDate?.setOnClickListener {
             val datePickerDialog = DatePickerDialog(
                 requireContext(),
-//                R.style.MyDatePickerStyle,
-                { _, year, month, date ->
-                    calendar.set(year, month, date)
+                { _, year, month, day ->
+                    calendar.set(year, month, day)
                     binding?.donationDate?.setText(simpleDateFormat.format(calendar.time))
                 },
-                android.icu.util.Calendar.getInstance().get(android.icu.util.Calendar.YEAR),
-                android.icu.util.Calendar.getInstance().get(android.icu.util.Calendar.MONTH),
-                android.icu.util.Calendar.getInstance().get(android.icu.util.Calendar.DATE),
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
             )
-            val calendar = android.icu.util.Calendar.getInstance()
-            datePickerDialog.datePicker.minDate = calendar.timeInMillis
-            calendar.add(android.icu.util.Calendar.YEAR, +1)
+
+            datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+            calendar.add(Calendar.YEAR, 1)
             datePickerDialog.datePicker.maxDate = calendar.timeInMillis
             datePickerDialog.show()
         }
-        val genderAdapter = ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.gender_types,
-            android.R.layout.simple_spinner_item
-        )
-        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        genderSpinner?.adapter = genderAdapter
-        val selectedGender = genderSpinner?.selectedItem.toString()
-        val organAdapter = ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.organ_types,
-            android.R.layout.simple_spinner_item
-        )
-        organAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        organSpinner?.adapter = organAdapter
-        val selectedOrgan = organSpinner?.selectedItem.toString()
+    }
+
+    private fun setupResetButton() {
         binding?.resetCheckBox?.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 resetForm()
-                binding?.resetCheckBox?.isChecked = false // Auto uncheck kar dena reset ke baad
+                binding?.resetCheckBox?.isChecked = false
             }
         }
+    }
+
+    private fun setupSubmitButton() {
         binding?.submitButton?.setOnClickListener {
-            val isHealthy = binding?.healthYes?.isChecked ?: false
-            val traveledRecently = binding?.travelYes?.isChecked ?: false
-            val tookMedication = binding?.medYes?.isChecked ?: false
-            val consumesAlcohol = binding?.alcoholYes?.isChecked ?: false
-            val hasBloodPressureIssue =
-                binding?.bloodPressureYes?.isChecked ?: false // true if "Yes" is selected
-            val isDiabetic =
-                binding?.diabetesYes?.isChecked ?: false // true if "Yes" is selected
-            val hadRecentSurgery =
-                binding?.surgeryYes?.isChecked ?: false // true if "Yes" is selected
-            val tookRecentVaccine =
-                binding?.vaccineYes?.isChecked ?: false // true if "Yes" is selected
-            if (binding?.nameEditText?.text?.toString().isNullOrEmpty()) {
-                binding?.nameEditText?.setError("Your Name")
-            } else if (binding?.ageEditText?.text?.toString().isNullOrEmpty()) {
-                binding?.ageEditText?.setError("Enter age")
-            } else if (binding?.numberEditText?.length() != 10) {
-                binding?.numberEditText?.setError("Enter 10 digit number")
-            } else if (binding?.addrEditText?.text?.toString().isNullOrEmpty()) {
-                binding?.addrEditText?.setError("Enter your Address")
-            } else if (binding?.donationDate?.text.isNullOrEmpty()) {
-                binding?.donationDate?.error = "Please select a donation date"
-                Toast.makeText(requireContext(), "Donation date is required!", Toast.LENGTH_SHORT)
-                    .show()
-            } else if (selectedOrgan == "Select Organ") {
-                Toast.makeText(
-                    requireContext(),
-                    "Please select Organ to Donate",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (selectedGender == "Select Gender") {
-                Toast.makeText(
-                    requireContext(),
-                    "Please select Your Gender",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (binding?.consentEditText?.text?.toString().isNullOrEmpty()) {
-                binding?.consentEditText?.setError("Enter Your Wish")
-            } else if (!isHealthy) {
-                Toast.makeText(
-                    requireContext(),
-                    "You must be healthy to donate blood!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (traveledRecently) {
-                Toast.makeText(
-                    requireContext(),
-                    "Please wait 6 months after international travel!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (tookMedication) {
-                Toast.makeText(
-                    requireContext(),
-                    "Wait 7 days after taking medication!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (consumesAlcohol) {
-                Toast.makeText(
-                    requireContext(),
-                    "Avoid alcohol 24 hours before donating!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (hasBloodPressureIssue) {
-                Toast.makeText(
-                    requireContext(),
-                    "You can't donate blood if you have blood pressure",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (isDiabetic) {
-                Toast.makeText(
-                    requireContext(),
-                    "You can't donate blood if you have diabetes",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (hadRecentSurgery) {
-                Toast.makeText(
-                    requireContext(),
-                    "You can't donate blood if you had Surgery",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (tookRecentVaccine) {
-                Toast.makeText(
-                    requireContext(),
-                    "You can't donate blood if you had vaccination",
-                    Toast.LENGTH_SHORT
-                ).show()
+            val name = binding?.nameEditText?.text?.toString()
+            val age = binding?.ageEditText?.text?.toString()
+            val number = binding?.numberEditText?.text?.toString()
+            val address = binding?.addrEditText?.text?.toString()
+            val date = binding?.donationDate?.text?.toString()
+            val gender = binding?.genderSpinner?.selectedItem.toString()
+            val organ = binding?.spinOrgan?.selectedItem.toString()
+            val consent = binding?.consentEditText?.text?.toString()
 
+            if (name.isNullOrEmpty()) {
+                binding?.nameEditText?.error = "Enter your name"
+                return@setOnClickListener
             }
-            val selectedRadioButtonId = binding?.anonymousGroup?.checkedRadioButtonId
-            if (selectedRadioButtonId == -1) {
-                Toast.makeText(
-                    requireContext(),
-                    "Please select a donation type (Anonymous or Public)!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-                builder.setTitle("Check Your Details")
-                builder.setMessage("Are you sure your details are correct? This can't be edited later.")
-                builder.setPositiveButton("Yes") { _, _ ->
-                    val selectedDonationType = when (selectedRadioButtonId) {
-                        R.id.anonymousYes -> "Anonymous"
-                        R.id.anonymousNo -> "Public"
-                        else -> ""
-                    }
-                    Toast.makeText(
-                        requireContext(),
-                        "Your Details is Filled Successfuly!",
-                        Toast.LENGTH_SHORT
-                    ).show();
-                    val address = binding?.addrEditText?.text?.toString()
-                    if (!address.isNullOrEmpty()) {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            val latLng = getLatLngFromAddress(address)
+            if (age.isNullOrEmpty()) {
+                binding?.ageEditText?.error = "Enter age"
+                return@setOnClickListener
+            }
+            if (number?.length != 10) {
+                binding?.numberEditText?.error = "Enter 10 digit number"
+                return@setOnClickListener
+            }
+            if (address.isNullOrEmpty()) {
+                binding?.addrEditText?.error = "Enter address"
+                return@setOnClickListener
+            }
+            if (date.isNullOrEmpty()) {
+                binding?.donationDate?.error = "Select donation date"
+                return@setOnClickListener
+            }
+            if (gender == "Select Gender") {
+                Toast.makeText(requireContext(), "Select gender", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (organ == "Select Organ") {
+                Toast.makeText(requireContext(), "Select organ", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (consent.isNullOrEmpty()) {
+                binding?.consentEditText?.error = "Enter your wish"
+                return@setOnClickListener
+            }
 
-                            withContext(Dispatchers.Main) {
-                                if (latLng != null) {
-                                    donarDatabase.DonationDao().insertDonor(
-                                        DonorsDataClass(
-                                            donorName = binding?.nameEditText?.text?.toString(),
-                                            age = binding?.ageEditText?.text?.toString(),
-                                            gender = selectedGender,
-                                            number = binding?.numberEditText?.text?.toString(),
-                                            donationType = "Organ",
-                                            address = binding?.addrEditText?.text?.toString(),
-                                            donationfrequency = selectedOrgan,
-                                            createdDate = binding?.donationDate?.text?.toString(),
-                                            isHealthy = isHealthy,
-                                            traveledRecently = traveledRecently,
-                                            tookMedication = tookMedication,
-                                            consumesAlcohol = consumesAlcohol,
-                                            hadRecentSurgery = hadRecentSurgery,
-                                            tookRecentVaccine = tookRecentVaccine,
-                                            diabities = isDiabetic,
-                                            bloodPressur = hasBloodPressureIssue,
-                                            lattitude = latLng.latitude,
-                                            longitude = latLng.longitude,
-                                            donationMethod = selectedDonationType
-                                        )
-                                    )
-                                }
-                                saveDonationToFirestore(currentUserId = auth?.currentUser.toString(),latLng!!.latitude,latLng.longitude,"Organ")
-                                findNavController().navigate(R.id.donateFragment)
-                            }
+            val isHealthy = binding?.healthYes?.isChecked == true
+            val traveled = binding?.travelYes?.isChecked == true
+            val medication = binding?.medYes?.isChecked == true
+            val alcohol = binding?.alcoholYes?.isChecked == true
+            val bp = binding?.bloodPressureYes?.isChecked == true
+            val diabetes = binding?.diabetesYes?.isChecked == true
+            val surgery = binding?.surgeryYes?.isChecked == true
+            val vaccine = binding?.vaccineYes?.isChecked == true
+
+            if (!isHealthy) {
+                Toast.makeText(requireContext(), "You must be healthy!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (traveled) {
+                Toast.makeText(requireContext(), "Wait 6 months after travel!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (medication) {
+                Toast.makeText(requireContext(), "Wait 7 days after medication!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (alcohol) {
+                Toast.makeText(requireContext(), "Avoid alcohol 24 hrs before!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (bp || diabetes || surgery || vaccine) {
+                Toast.makeText(requireContext(), "Not eligible due to health conditions!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val donationTypeId = binding?.anonymousGroup?.checkedRadioButtonId
+            if (donationTypeId == -1) {
+                Toast.makeText(requireContext(), "Select donation type!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val donationType = when (donationTypeId) {
+                R.id.anonymousYes -> "Anonymous"
+                R.id.anonymousNo -> "Public"
+                else -> ""
+            }
+
+            androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                .setTitle("Confirm Details")
+                .setMessage("Are your details correct?")
+                .setPositiveButton("Yes") { _, _ ->
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val latLng = getLatLngFromAddress(address)
+                        if (latLng != null) {
+                            val donor = DonorsDataClass(
+                                donorName = name,
+                                age = age,
+                                gender = gender,
+                                number = number,
+                                donationType = "Organ",
+                                address = address,
+                                donationfrequency = organ,
+                                createdDate = date,
+                                isHealthy = true,
+                                traveledRecently = false,
+                                tookMedication = false,
+                                consumesAlcohol = false,
+                                hadRecentSurgery = false,
+                                tookRecentVaccine = false,
+                                diabities = false,
+                                bloodPressur = false,
+                                lattitude = latLng.latitude,
+                                longitude = latLng.longitude,
+                                donationMethod = donationType
+                            )
+                            donationDatabase.DonationDao().insertDonor(donor)
+                            saveDonationToFirestore(auth.currentUser?.uid ?: "", latLng.latitude, latLng.longitude, "Organ")
+                        }
+                        withContext(Dispatchers.Main) {
+                            findNavController().navigate(R.id.donateFragment)
                         }
                     }
                 }
-                builder.setNegativeButton("No") { dialog, _ ->
-                    dialog.dismiss()
-                    Toast.makeText(
-                        requireContext(),
-                        "Please review your details.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                builder.create().show()
-            }
+                .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
+                .create().show()
         }
     }
 
     private fun resetForm() {
-        binding?.nameEditText?.setText("")
-        binding?.ageEditText?.setText("")
-        binding?.numberEditText?.setText("")
-        binding?.consentEditText?.setText("")
-//        binding?.donationFrequencyEditText?.setText("")
-        binding?.addrEditText?.setText("")
-        binding?.donationDate?.setText("")
-        // Spinner reset
-        binding?.spinOrgan?.setSelection(0)
-        binding?.genderSpinner?.setSelection(0)
-        // Radio button reset
-        binding?.anonymousGroup?.clearCheck()
-        binding?.healthRadioGroup?.clearCheck()
-        binding?.alcoholRadioGroup?.clearCheck()
-        binding?.surgeryRadioGroup?.clearCheck()
-        binding?.vaccineRadioGroup?.clearCheck()
-        binding?.travelRadioGroup?.clearCheck()
-        binding?.diabetesRadioGroup?.clearCheck()
-        binding?.bloodPressureRadioGroup?.clearCheck()
-        binding?.anonymousGroup?.clearCheck()
-        Toast.makeText(requireContext(), "Form reset successfully!", Toast.LENGTH_SHORT).show()
+        binding?.apply {
+            nameEditText.setText("")
+            ageEditText.setText("")
+            numberEditText.setText("")
+            consentEditText.setText("")
+            addrEditText.setText("")
+            donationDate.setText("")
+            spinOrgan.setSelection(0)
+            genderSpinner.setSelection(0)
+            anonymousGroup.clearCheck()
+            healthRadioGroup.clearCheck()
+            alcoholRadioGroup.clearCheck()
+            surgeryRadioGroup.clearCheck()
+            vaccineRadioGroup.clearCheck()
+            travelRadioGroup.clearCheck()
+            diabetesRadioGroup.clearCheck()
+            bloodPressureRadioGroup.clearCheck()
+        }
+        Toast.makeText(requireContext(), "Form reset!", Toast.LENGTH_SHORT).show()
     }
 
-    private fun getLatLngFromAddress(address: Any): LatLng? {
+    private fun getLatLngFromAddress(address: String): LatLng? {
         return try {
-            val url = "https://nominatim.openstreetmap.org/search?format=json&q=$address"
-            val connection = URL(url).openConnection() as HttpURLConnection
+            val url = URL("https://nominatim.openstreetmap.org/search?format=json&q=$address")
+            val connection = url.openConnection() as HttpURLConnection
             connection.requestMethod = "GET"
             connection.connect()
 
-            val inputStream = connection.inputStream.bufferedReader().use { it.readText() }
-            val responseArray = JSONArray(inputStream)
+            val response = connection.inputStream.bufferedReader().use { it.readText() }
+            val jsonArray = JSONArray(response)
 
-            if (responseArray.length() > 0) {
-                val locationData = responseArray.getJSONObject(0)
-                val lat = locationData.getDouble("lat")
-                val lon = locationData.getDouble("lon")
-                Log.d("Geocode", "Address: $address -> Lat: $lat, Lon: $lon")
-                LatLng(lat, lon)
-            } else {
-                Log.e("Geocode", "No location found for address: $address")
-                null
-            }
+            if (jsonArray.length() > 0) {
+                val obj = jsonArray.getJSONObject(0)
+                LatLng(obj.getDouble("lat"), obj.getDouble("lon"))
+            } else null
         } catch (e: Exception) {
-            Log.e("Geocode", "Error fetching coordinates", e)
+            Log.e("Geocode", "Error: ${e.message}", e)
             null
         }
     }
-    fun saveDonationToFirestore(
-        currentUserId: String,
-        donationLat: Double,
-        donationLon: Double,
-        donationType: String
-    ) {
+
+    private fun saveDonationToFirestore(userId: String, lat: Double, lon: Double, type: String) {
         val firestore = FirebaseFirestore.getInstance()
-
-        val donationData = hashMapOf(
-            "donorId" to currentUserId,
-            "latitude" to donationLat,
-            "longitude" to donationLon,
-            "donationType" to donationType
+        val donation = hashMapOf(
+            "userId" to userId,
+            "latitude" to lat,
+            "longitude" to lon,
+            "donationType" to type
         )
-
         firestore.collection("donations")
-            .add(donationData)
-            .addOnSuccessListener {
-                Log.d("Firestore", "Donation added successfully!")
-            }
-            .addOnFailureListener { e ->
-                Log.e("Firestore", "Error adding donation", e)
-            }
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment OrganDonation.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            OrganDonation().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+            .add(donation)
+            .addOnSuccessListener { Log.d("Firestore", "Donation added") }
+            .addOnFailureListener { Log.e("Firestore", "Failed", it) }
     }
 }

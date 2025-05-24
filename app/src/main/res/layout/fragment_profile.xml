@@ -53,18 +53,6 @@
 
         </LinearLayout>
 
-
-        <TextView
-            android:id="@+id/tvProfileName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/dp_10"
-            android:text="@string/name"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_20"
-            android:textStyle="bold" />
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

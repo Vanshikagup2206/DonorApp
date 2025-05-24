@@ -1,5 +1,6 @@
 package com.vanshika.donorapp.donate
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
@@ -9,11 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.StreetViewPanoramaLocation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.vanshika.donorapp.DonationDao
 import com.vanshika.donorapp.DonationDatabase
 import com.vanshika.donorapp.R
 import com.vanshika.donorapp.databinding.FragmentBloodDonationBinding
@@ -44,8 +47,9 @@ class BloodDonation : Fragment() {
     private var param2: String? = null
     var binding: FragmentBloodDonationBinding? = null
     var bloodDonation = arrayListOf<DonorsDataClass>()
-    var auth:FirebaseAuth?=null
-    var db: FirebaseFirestore? = null
+    var auth = FirebaseAuth.getInstance()
+    var db = FirebaseFirestore.getInstance()
+    lateinit var donorDao: DonationDao
     var calendar = android.icu.util.Calendar.getInstance()
     var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
     lateinit var donorDatabase: DonationDatabase
@@ -64,6 +68,7 @@ class BloodDonation : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         donorDatabase = DonationDatabase.getInstance(requireContext())
+        donorDao= donorDatabase.DonationDao()
         binding = FragmentBloodDonationBinding.inflate(layoutInflater)
         return binding?.root
     }
@@ -118,170 +123,197 @@ class BloodDonation : Fragment() {
             val traveledRecently = binding?.travelYes?.isChecked ?: false
             val tookMedication = binding?.medYes?.isChecked ?: false
             val consumesAlcohol = binding?.alcoholYes?.isChecked ?: false
-            val hasBloodPressureIssue =
-                binding?.bloodPressureYes?.isChecked ?: false // true if "Yes" is selected
-            val isDiabetic =
-                binding?.diabetesYes?.isChecked ?: false // true if "Yes" is selected
-            val hadRecentSurgery =
-                binding?.surgeryYes?.isChecked ?: false // true if "Yes" is selected
-            val tookRecentVaccine =
-                binding?.vaccineYes?.isChecked ?: false // true if "Yes" is selected
-            if (binding?.nameEditText?.text.toString().isNullOrEmpty()) {
-                binding?.nameEditText?.error = "Fill Your Name"
-            } else if (binding?.ageEditText?.text.toString().isNullOrEmpty()) {
-                binding?.ageEditText?.error = "Fill Your Age"
-            } else if (binding?.addrEditText?.text?.toString().isNullOrEmpty()) {
-                binding?.addrEditText?.error = "Fill Your Age"
+            val hasBloodPressureIssue = binding?.bloodPressureYes?.isChecked ?: false
+            val isDiabetic = binding?.diabetesYes?.isChecked ?: false
+            val hadRecentSurgery = binding?.surgeryYes?.isChecked ?: false
+            val tookRecentVaccine = binding?.vaccineYes?.isChecked ?: false
 
-            } else if (binding?.contactEditText?.text.toString().isNullOrEmpty()) {
-                binding?.contactEditText?.error = "Enter Your Mobile Number"
-            } else if (binding?.contactEditText?.length() != 10) {
-                binding?.contactEditText?.error = "Enter Your 10 digit Number"
+            when {
+                binding?.nameEditText?.text.toString().isEmpty() ->
+                    binding?.nameEditText?.error = "Fill Your Name"
 
-            } else if (binding?.donationDate?.text.isNullOrEmpty()) {
-                binding?.donationDate?.error = "Please select a donation date"
-                Toast.makeText(requireContext(), "Donation date is required!", Toast.LENGTH_SHORT)
-                    .show()
-            } else if (binding?.donationFrequencyEditText?.text.toString().isNullOrEmpty()) {
-                binding?.donationFrequencyEditText?.setError("Fill the frequency")
-            } else if (selectedBloodGroup == "Select Blood Group") {
-                Toast.makeText(
-                    requireContext(),
-                    "Please select your blood group",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (selectedGender == "Select Your Gender") {
-                Toast.makeText(
-                    requireContext(),
-                    "Please select your Gender",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (binding?.donationDate?.text.toString().isEmpty()) {
-                binding?.donationDate?.error = "Enter the Enter Date"
-            } else if (!isHealthy) {
-                Toast.makeText(
-                    requireContext(),
-                    "You must be healthy to donate blood!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (traveledRecently) {
-                Toast.makeText(
-                    requireContext(),
-                    "Please wait 6 months after international travel!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (tookMedication) {
-                Toast.makeText(
-                    requireContext(),
-                    "Wait 7 days after taking medication!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (consumesAlcohol) {
-                Toast.makeText(
-                    requireContext(),
-                    "Avoid alcohol 24 hours before donating!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (hasBloodPressureIssue) {
-                Toast.makeText(
-                    requireContext(),
-                    "You can't donate blood if you have blood pressure",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (isDiabetic) {
-                Toast.makeText(
-                    requireContext(),
-                    "You can't donate blood if you have diabetes",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (hadRecentSurgery) {
-                Toast.makeText(
-                    requireContext(),
-                    "You can't donate blood if you had Surgery",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (tookRecentVaccine) {
-                Toast.makeText(
-                    requireContext(),
-                    "You can't donate blood if you had vaccination",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            val selectedRadioButtonId = binding?.anonymousGroup?.checkedRadioButtonId
-            if (selectedRadioButtonId == -1) {
-                Toast.makeText(
-                    requireContext(),
-                    "Please select a donation type (Anonymous or Public)!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-                builder.setTitle("Check Your Details")
-                builder.setMessage("Are you sure your details are correct? This can't be edited later.")
-                builder.setPositiveButton("Yes") { _, _ ->
-                    val selectedDonationType = when (selectedRadioButtonId) {
-                        R.id.anonymousYes -> "Anonymous"
-                        R.id.anonymousNo -> "Public"
-                        else -> ""
-                    }
+                binding?.ageEditText?.text.toString().isEmpty() ->
+                    binding?.ageEditText?.error = "Fill Your Age"
+
+                binding?.addrEditText?.text.toString().isEmpty() ->
+                    binding?.addrEditText?.error = "Fill Your Address"
+
+                binding?.contactEditText?.text.toString().isEmpty() ->
+                    binding?.contactEditText?.error = "Enter Your Mobile Number"
+
+                binding?.contactEditText?.length() != 10 ->
+                    binding?.contactEditText?.error = "Enter Your 10 digit Number"
+
+                binding?.donationDate?.text.isNullOrEmpty() -> {
+                    binding?.donationDate?.error = "Please select a donation date"
                     Toast.makeText(
                         requireContext(),
-                        "Your Details is Filled Successfully!",
-                        Toast.LENGTH_SHORT
-                    ).show();
-
-                    val address = binding?.addrEditText?.text?.toString()
-                    if (!address.isNullOrEmpty()) {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            val latLng = getLatLngFromAddress(address)
-                            withContext(Dispatchers.Main) {
-                                if (latLng != null) {
-                                    donorDatabase.DonationDao().insertDonor(
-                                        DonorsDataClass(
-                                            donorId = auth?.currentUser?.uid?.toInt() ?: 0,
-                                            donorName = binding?.nameEditText?.text?.toString(),
-                                            address = binding?.addrEditText?.text?.toString(),
-                                            age = binding?.ageEditText?.text?.toString(),
-                                            gender = selectedGender,
-                                            number = binding?.contactEditText?.text?.toString(),
-                                            donationfrequency = binding?.donationFrequencyEditText?.text?.toString(),
-                                            donationType = "Blood",
-                                            createdDate = binding?.donationDate?.text?.toString(),
-                                            lattitude = latLng.latitude,
-                                            longitude = latLng.longitude,
-                                            isHealthy = isHealthy,
-                                            bloodType = selectedBloodGroup,
-                                            traveledRecently = traveledRecently,
-                                            tookMedication = tookMedication,
-                                            consumesAlcohol = consumesAlcohol,
-                                            hadRecentSurgery = hadRecentSurgery,
-                                            tookRecentVaccine = tookRecentVaccine,
-                                            diabities = isDiabetic,
-                                            bloodPressur = hasBloodPressureIssue,
-                                            donationMethod = selectedDonationType
-                                        )
-                                    )
-                                }
-                                saveDonationToFirestore(auth?.currentUser.toString(),
-                                    latLng!!.latitude,latLng.longitude,"Blood")
-                                findNavController().navigate(R.id.donateFragment)
-                            }
-                        }
-                    }
-                }
-                builder.setNegativeButton("No") { dialog, _ ->
-                    dialog.dismiss()
-                    Toast.makeText(
-                        requireContext(),
-                        "Please review your details.",
+                        "Donation date is required!",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                builder.create().show()
 
+                binding?.donationFrequencyEditText?.text.toString().isEmpty() ->
+                    binding?.donationFrequencyEditText?.error = "Fill the frequency"
+
+                selectedBloodGroup == "Select Blood Group" ->
+                    Toast.makeText(
+                        requireContext(),
+                        "Please select your blood group",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                selectedGender == "Select Your Gender" ->
+                    Toast.makeText(
+                        requireContext(),
+                        "Please select your Gender",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                !isHealthy ->
+                    Toast.makeText(
+                        requireContext(),
+                        "You must be healthy to donate blood!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                traveledRecently ->
+                    Toast.makeText(
+                        requireContext(),
+                        "Please wait 6 months after international travel!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                tookMedication ->
+                    Toast.makeText(
+                        requireContext(),
+                        "Wait 7 days after taking medication!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                consumesAlcohol ->
+                    Toast.makeText(
+                        requireContext(),
+                        "Avoid alcohol 24 hours before donating!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                hasBloodPressureIssue ->
+                    Toast.makeText(
+                        requireContext(),
+                        "You can't donate blood if you have blood pressure",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                isDiabetic ->
+                    Toast.makeText(
+                        requireContext(),
+                        "You can't donate blood if you have diabetes",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                hadRecentSurgery ->
+                    Toast.makeText(
+                        requireContext(),
+                        "You can't donate blood if you had Surgery",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                tookRecentVaccine ->
+                    Toast.makeText(
+                        requireContext(),
+                        "You can't donate blood if you had vaccination",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                binding?.anonymousGroup?.checkedRadioButtonId == -1 ->
+                    Toast.makeText(
+                        requireContext(),
+                        "Please select a donation type (Anonymous or Public)!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                else -> {
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setTitle("Check Your Details")
+                    builder.setMessage("Are you sure your details are correct? This can't be edited later.")
+                    builder.setPositiveButton("Yes") { _, _ ->
+                        val address = binding?.addrEditText?.text?.toString() ?: ""
+
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val latLng = getLatLngFromAddress(address)
+                            withContext(Dispatchers.Main) {
+                                if (latLng == null) {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Invalid address. Please enter a valid location.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    return@withContext
+                                }
+
+                                val selectedDonationType =
+                                    when (binding?.anonymousGroup?.checkedRadioButtonId) {
+                                        R.id.anonymousYes -> "Anonymous"
+                                        R.id.anonymousNo -> "Public"
+                                        else -> ""
+                                    }
+
+                                val donor = DonorsDataClass(
+                                    donorName = binding?.nameEditText?.text?.toString(),
+                                    address = address,
+                                    age = binding?.ageEditText?.text?.toString(),
+                                    gender = selectedGender,
+                                    number = binding?.contactEditText?.text?.toString(),
+                                    donationfrequency = binding?.donationFrequencyEditText?.text?.toString(),
+                                    donationType = "Blood",
+                                    createdDate = binding?.donationDate?.text?.toString(),
+                                    lattitude = latLng.latitude,
+                                    longitude = latLng.longitude,
+                                    isHealthy = isHealthy,
+                                    bloodType = selectedBloodGroup,
+                                    traveledRecently = traveledRecently,
+                                    tookMedication = tookMedication,
+                                    consumesAlcohol = consumesAlcohol,
+                                    hadRecentSurgery = hadRecentSurgery,
+                                    tookRecentVaccine = tookRecentVaccine,
+                                    diabities = isDiabetic,
+                                    bloodPressur = hasBloodPressureIssue,
+                                    donationMethod = selectedDonationType
+                                )
+
+                                lifecycleScope.launch(Dispatchers.IO) {
+                                    donorDao.insertDonor(donor)
+                                    saveDonationToFirestore(auth.currentUser?.uid ?: "", latLng.latitude, latLng.longitude, "Blood")
+
+
+                                    withContext(Dispatchers.Main) {
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "Blood Donation Details Submitted",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        findNavController().navigate(R.id.donateFragment)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    builder.setNegativeButton("No") { dialog, _ ->
+                        dialog.dismiss()
+                        Toast.makeText(
+                            requireContext(),
+                            "Please review your details.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    builder.create().show()
+                }
             }
         }
     }
+
+
 
     private fun getLatLngFromAddress(address: String): LatLng? {
         return try {
@@ -330,30 +362,25 @@ class BloodDonation : Fragment() {
         Toast.makeText(requireContext(), "Form reset successfully!", Toast.LENGTH_SHORT).show()
     }
 
-    fun saveDonationToFirestore(
-        currentUserId: String,
-        donationLat: Double,
-        donationLon: Double,
-        donationType: String
-    ) {
-        val firestore = FirebaseFirestore.getInstance()
-
+    fun saveDonationToFirestore(userId: String, lat: Double, lng: Double, donationType: String) {
         val donationData = hashMapOf(
-            "donorId" to currentUserId,
-            "latitude" to donationLat,
-            "longitude" to donationLon,
+            "userId" to userId, // 🔑 required!
+            "latitude" to lat,
+            "longitude" to lng,
             "donationType" to donationType
         )
 
-        firestore.collection("donations")
+        FirebaseFirestore.getInstance()
+            .collection("donations")
             .add(donationData)
             .addOnSuccessListener {
-                Log.d("Firestore", "Donation added successfully!")
+                Log.d("Firestore", "Donation saved!")
             }
             .addOnFailureListener { e ->
-                Log.e("Firestore", "Error adding donation", e)
+                Log.e("Firestore", "Error saving donation", e)
             }
     }
+
 
     private fun searchLocation(
         location: String,

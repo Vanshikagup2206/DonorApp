@@ -3,6 +3,7 @@ package com.vanshika.donorapp
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.vanshika.donorapp.donate.DonorsDataClass
@@ -23,7 +24,10 @@ interface DonationDao {
     fun getDonationList(): List<DonorsDataClass>
 
     @Insert
-    fun insertEmergencyRequest(recipientsDataClass: RecipientsDataClass)
+    fun insertRecipient(recipientsDataClass: RecipientsDataClass)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertRequest(request: RecipientsDataClass)
 
     @Query("SELECT * FROM RecipientsDataClass")
     fun getEmergencyRequestList(): List<RecipientsDataClass>
@@ -38,7 +42,7 @@ interface DonationDao {
     @Delete
     fun deleteEmergencyRequest(recipient: RecipientsDataClass)
 
-    @Query("SELECT * FROM RecipientsDataClass WHERE requestedItem =:typeOfRequirement")
+    @Query("SELECT * FROM RecipientsDataClass WHERE requirement =:typeOfRequirement")
     fun getRecipientListAccToReq(typeOfRequirement : String): List<RecipientsDataClass>
 
     @Query("SELECT * FROM RecipientsDataClass WHERE urgencyLevel =:urgencyLevel")
@@ -53,7 +57,7 @@ interface DonationDao {
     @Query("SELECT * FROM users")
     fun getAllUsers(): List<UsersDataClass>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertHealthRecords(healthRecordsDataClass: HealthRecordsDataClass)
 
 }
