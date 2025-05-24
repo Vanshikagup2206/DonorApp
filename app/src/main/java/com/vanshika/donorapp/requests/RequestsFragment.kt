@@ -85,7 +85,7 @@ class RequestsFragment : Fragment(), RequestInterface {
     override fun editRequest(position: Int) {
         val convertToString = Gson().toJson(emergencyRequestList[position])
         val bundle = bundleOf(
-            "id" to emergencyRequestList[position].recipientId,
+            "id" to emergencyRequestList[position].userId,
             "name" to convertToString,
             "requirement" to convertToString,
             "location" to convertToString,

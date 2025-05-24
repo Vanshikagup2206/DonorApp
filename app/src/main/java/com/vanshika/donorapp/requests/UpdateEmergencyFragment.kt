@@ -205,7 +205,7 @@ class UpdateEmergencyFragment : Fragment() {
                         medicineMoneyDetails = medicineMoneyDetails,
                         location = selectedLocation,
                         contactNo = binding?.tvContactHospital?.text?.toString(),
-                        urgencyLevel = selectedUrgency,
+                        urgencyLevel = selectedUrgency
                         )
                 )
                 findNavController().popBackStack()
@@ -251,7 +251,7 @@ class UpdateEmergencyFragment : Fragment() {
 
 
     private fun getRecipientList() {
-        recipientsDataClass = donationDatabase.DonationDao().getEmergencyRequestAccToId(recipientId)
+        recipientsDataClass = donationDatabase.DonationDao().getEmergencyRequestAccToId(userId = recipientId)
     }
 
     companion object {

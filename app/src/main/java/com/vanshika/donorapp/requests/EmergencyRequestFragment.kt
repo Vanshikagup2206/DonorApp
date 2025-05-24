@@ -134,7 +134,7 @@ class EmergencyRequestFragment : Fragment() {
             val userId = FirebaseAuth.getInstance().currentUser?.uid ?: "anonymous"
 
             val request = RecipientsDataClass(
-                recipientId = requestId,
+                userId = userId,
                 name = recipientName,
                 requirement = selectedRequirement,
                 bloodOrganRequirement = bloodOrganRequirement,
@@ -142,7 +142,6 @@ class EmergencyRequestFragment : Fragment() {
                 contactNo = contact,
                 urgencyLevel = selectedUrgency,
                 medicineMoneyDetails = medicineMoneyDetails,
-                userId = userId
             )
 
             val firestore = FirebaseFirestore.getInstance()

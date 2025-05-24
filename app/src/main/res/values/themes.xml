@@ -8,8 +8,7 @@
         <item name="colorPrimaryContainer">@color/red</item>
         <item name="colorOnPrimaryContainer">@color/black</item>
         <item name="colorSecondaryContainer">@color/red</item>
-        <item name="fontFamily">@font/montserrat</item>
-        <item name="font">@font/montserrat</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 
     <style name="Theme.DonorApp" parent="Base.Theme.DonorApp" />

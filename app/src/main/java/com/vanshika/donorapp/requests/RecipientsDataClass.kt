@@ -6,13 +6,13 @@ import androidx.room.PrimaryKey
 @Entity
 data class RecipientsDataClass(
     @PrimaryKey
-    val recipientId: String = "",
-    val name: String? = "",
-    val requirement: String? = "",
-    val bloodOrganRequirement: String? = null,
-    val location: String? = "",
-    val contactNo: String? = "",
-    val urgencyLevel: Int = 1,
-    val medicineMoneyDetails: String? = null,
-    val userId: String = "" // to track which user created the request
+    var userId: String = "",
+    var name: String? = "",
+    var requirement: String? = "",
+    var bloodOrganRequirement: String? = null,
+    var location: String? = "",
+    var contactNo: String? = "",
+    var urgencyLevel: Int = 1,
+    var medicineMoneyDetails: String? = null,
+     // to track which user created the request
 )
