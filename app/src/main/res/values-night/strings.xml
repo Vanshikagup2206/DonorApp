@@ -1,11 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="SignIn">SignIn</string>
-    <string name="Register">Register</string>
+    <string name="address">Your Address</string>
+    <string name="city">City Name</string>
+    <string name="number">Mobile Number</string>
+    <string name="entervalidnumber">Enter valid number</string>
+    <string name="bloodtype">Blood Type?</string>
+    <string name="donateionquote">We make a living by what we get, but we make a life by what we give.</string>
+
+    <string name="sign_in">Sign In</string>
+    <string name="register">Register</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="already_have_account">Already have an account?</string>
+
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="emergency_request_details">Emergency Request Details</string>
+    <string name="contact_hospital">Hospital Contact</string>
+    <string name="submit">Submit</string>
+    <string name="requirement">Requirement</string>
+    <string name="hospitalLocation">Hospital Location</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="enter_recipient_name">Enter Recipient Name</string>
+    <string name="enter_hospital_contact">Enter Hospital Contact</string>
+    <string name="search">Search</string>
+    <string name="delete_acc">Delete Account</string>
+    <string name="select_urgency">Select Urgency</string>
+    <string name="enter_aadhaar_no">Enter Aadhaar No.</string>
+    <string name="enter_your_medicine_type">Enter Your Medicine Name</string>
+    <string name="enter_money">Enter Amount Required</string>
+    <string name="choose_me">Choose Me!</string>
+    <string name="donation_type">Donation Type:</string>
+    <string name="date">Date:</string>
+    <string name="my_donation">My Donation</string>
+    <string name="all">All</string>
+    <string name="default_notification_channel_id">donor_alerts</string>
+    <string name="enter_date">Enter Date</string>
+    <string name="update">Update</string>
+    <string name="hi">HI!</string>
+    <string name="high">High</string>
+    <string name="medium">Medium</string>
+    <string name="low">Low</string>
+
     <string name="weight">Weight</string>
     <string name="age">Age</string>
     <string name="haemoglobin">Hemoglobin</string>
-    <string name="bloodPressure">Blood Pressure</string>
-    <string name="pulserate">Pulse Rate</string>
-    <string name="Add_details">Add Health Details</string>
+    <string name="blood_pressure">Blood Pressure</string>
+    <string name="pulse_rate">Pulse Rate</string>
+    <string name="add_details">Add Health Details</string>
+    <string name="addresss">Address</string>
+    <string name="blood_group">Blood Group</string>
 </resources>
